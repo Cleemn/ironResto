@@ -15,6 +15,7 @@ authRoutes.post("/signup", (req, res, next) => {
 
   User.create({ username, email, passwordHash, phone, type })
     .then((userFromDB) => {
+      req.session.user = userFromDB;
       res.status(200).json(userFromDB);
     })
     .catch((error) => {
@@ -66,8 +67,23 @@ authRoutes.post("/logout", (req, res, next) => {
   res.status(400).json({ message: "post logout" });
 });
 
-authRoutes.post("/user:id", (req, res, next) => {
-  res.status(400).json({ message: "post user:id" });
+authRoutes.put("/edit", (req, res, next) => {
+  const { username, email, password, phone, type } = req.body;
+  const id = req.session.user._id
+
+  if (!req.session.user) {
+    res.status(401).json({message: "You need to be logged in!"});
+    return;
+  }
+
+  User.findByIdAndUpdate(id, { username, email, password, phone, type }, {new: true})
+  .then(user => {
+    req.session.user = user
+    res.status(200).json(user);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
 });
 
 module.exports = authRoutes;

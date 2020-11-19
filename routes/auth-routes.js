@@ -30,7 +30,28 @@ authRoutes.post("/signup", (req, res, next) => {
 });
 
 authRoutes.post("/login", (req, res, next) => {
-  res.status(400).json({ message: "post login" });
+  const { username, email, password } = req.body;
+
+  User.findOne({ username, email })
+    .then((user) => {
+      if (!user) {
+        res
+          .status(400)
+          .json({ message: "User not found. Email or username invalid." });
+        return;
+      }
+
+      if (bcrypt.compareSync(password, user.passwordHash) !== true) {
+        res.status(400).json({ message: "Wrong password" });
+        return;
+      } else {
+        req.session.user = user;
+        res.status(200).json(user);
+      }
+    })
+    .catch((err) => {
+      res.status(400).json({ message: "Something went wrong while login" });
+    });
 });
 
 authRoutes.get("/loggedin", (req, res, next) => {

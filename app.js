@@ -31,6 +31,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000']
+}));
+
+
+// Session
+app.use(
+  session({
+    secret: 'some secret goes here',
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
 // Express View engine setup
 
 app.use(require('node-sass-middleware')({
@@ -48,8 +63,6 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
-
-
 
 
 const index = require('./routes/index');

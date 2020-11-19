@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose');
-require("../models/User.model");
-require("../models/Product.model");
+require("./User.model");
+require("./Product.model");
 
-const commandSchema = new Schema(
+const orderSchema = new Schema(
   {
     user_id: { 
       type: Schema.Types.ObjectId,
@@ -37,4 +37,4 @@ const commandSchema = new Schema(
   }
 );
 
-module.exports = model('Command', commandSchema);
+module.exports = model('Order', orderSchema);

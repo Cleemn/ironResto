@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Command = require('../models/Command.model');
+const Order = require('../models/Order.model');
 const Product = require('../models/Product.model');
 const User = require('../models/User.model');
  
@@ -13,7 +13,7 @@ mongoose.connect(`mongodb://localhost/${dbtitle}`, {useCreateIndex: true, useNew
 });
 
 
-Command.collection.drop();
+Order.collection.drop();
 
 const user_list = [];
 const product_list = [];
@@ -46,7 +46,7 @@ Promise.all([users, products])
   now.setMinutes(now.getMinutes() + 30);
   now = new Date(now);
 
-  const dataCommand = [
+  const dataOrder = [
       { 
         user_id: user_list[0]._id,
         items: [
@@ -99,12 +99,12 @@ Promise.all([users, products])
         status: 'en_attente'
       }
   ];    
-  Command.insertMany(dataCommand)
+  Order.insertMany(dataOrder)
     .then( data => {
       console.log("data inserted");
       mongoose.connection.close();
     })
     .catch(err => {
-      console.log(`Error while inserting commands: ${err}`);
+      console.log(`Error while inserting orders: ${err}`);
     });
 })

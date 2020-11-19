@@ -55,7 +55,11 @@ authRoutes.post("/login", (req, res, next) => {
 });
 
 authRoutes.get("/loggedin", (req, res, next) => {
-  res.status(400).json({ message: "get loggedin" });
+  if (req.session.user) {
+    res.status(200).json(req.session.user);
+    return;
+  }
+  res.status(403).json({ message: "Unauthorized" });
 });
 
 authRoutes.post("/logout", (req, res, next) => {

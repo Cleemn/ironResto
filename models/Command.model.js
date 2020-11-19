@@ -13,7 +13,7 @@ const commandSchema = new Schema(
         {
           id: { type: Schema.Types.ObjectId, ref: 'Product'},
           quantity: { type: Number },
-          price: { type: Schema.Types.ObjectId, ref: 'Product' }
+          price: { type: Number }
         }
       ]
     },

@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 require("../models/User.model");
+require("../models/Product.model");
 
 const commandSchema = new Schema(
   {
@@ -12,8 +13,8 @@ const commandSchema = new Schema(
       [
         {
           id: { type: Schema.Types.ObjectId, ref: 'Product'},
-          quantity: { type: Number },
-          price: { type: Number }
+          quantity: { type: Number }
+          // price: { type: Number }
         }
       ]
     },

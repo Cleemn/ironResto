@@ -20,6 +20,7 @@ router.get('/products/:id', (req, res, next) => {
 });
 
 router.put('/products/:id', (req, res, next) => {
+  // vérifier si l'utilisateur est connecté et est le restaurateur
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: 'Specified id is not valid' });
     return;
@@ -35,6 +36,7 @@ router.put('/products/:id', (req, res, next) => {
 });
 
 router.delete('/products/:id', (req, res, next) => {
+  // vérifier si l'utilisateur est connecté et est le restaurateur
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: 'Specified id is not valid' });
     return;
@@ -50,6 +52,7 @@ router.delete('/products/:id', (req, res, next) => {
 });
 
 router.post('/products', (req, res, next) => {
+  // vérifier si l'utilisateur est connecté et est le restaurateur
   const { name, price, description, type } = req.body;
 
   if (name === '' || price === '' || description === '' || type === '') {

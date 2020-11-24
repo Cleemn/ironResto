@@ -69,5 +69,7 @@ const index = require('./routes/index');
 app.use('/', index);
 
 app.use('/', require('./routes/auth-routes'));
+app.use('/api', require('./routes/product-routes'));
+
 
 module.exports = app;

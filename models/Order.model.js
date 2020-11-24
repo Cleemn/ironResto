@@ -1,7 +1,8 @@
 const { Schema, model } = require('mongoose');
-require("../models/User.model");
+require("./User.model");
+require("./Product.model");
 
-const commandSchema = new Schema(
+const orderSchema = new Schema(
   {
     user_id: { 
       type: Schema.Types.ObjectId,
@@ -11,7 +12,7 @@ const commandSchema = new Schema(
       type: 
       [
         {
-          id: { type: Schema.Types.ObjectId, ref: 'Product'},
+          product_id: { type: Schema.Types.ObjectId, ref: 'Product'},
           quantity: { type: Number },
           price: { type: Number }
         }
@@ -36,4 +37,4 @@ const commandSchema = new Schema(
   }
 );
 
-module.exports = model('Product', commandSchema);
+module.exports = model('Order', orderSchema);

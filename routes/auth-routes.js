@@ -64,7 +64,8 @@ authRoutes.get("/loggedin", (req, res, next) => {
 });
 
 authRoutes.post("/logout", (req, res, next) => {
-  res.status(400).json({ message: "post logout" });
+  req.session.destroy();
+  res.json({message: 'Your are now logged out.'});
 });
 
 authRoutes.put("/edit", (req, res, next) => {

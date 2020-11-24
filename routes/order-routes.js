@@ -10,12 +10,12 @@ orderRoutes.post("/orders", (req, res, next) => {
   const { items } = req.body;
   // items = [{id : 1, quantity: 1}, {id : 2, quantity: 2} ]
 
-    // if (req.session.user) {
-    //   res
-    //     .status(403)
-    //     .json({ message: "Vous n'etes pas connecté. Veuillez vous connecter." });
-    //   return;
-    // }
+    if (!req.session.user) {
+      res
+        .status(403)
+        .json({ message: "Vous n'etes pas connecté. Veuillez vous connecter." });
+      return;
+    }
 
   let promises = [];
   for (item of items) {

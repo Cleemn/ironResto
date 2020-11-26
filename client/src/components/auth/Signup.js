@@ -1,26 +1,28 @@
 import React from 'react';
-import {signup} from './auth-service';
+import { signup } from './auth-service';
 import { Link } from 'react-router-dom';
 
 
 class Signup extends React.Component {
   state = { 
     username: '',
-    passwordHash: '',
+    password: '',
     email: '',
-    phone: ''
+    phone: '',
+    type: 'user'
   }
 
   handleFormSubmit = (event) => {
     event.preventDefault();
     const username = this.state.username;
-    const passwordHash = this.state.passwordHash;
+    const password = this.state.password;
     const phone = this.state.phone;
     const email = this.state.email;
+    const type = this.state.type;
 
-    signup(username, passwordHash, phone, email)
+    signup(username, password, email, phone, type)
       .then(response => {
-        this.setState({username: "", passwordHash: "", phone: "", email: ""});
+        this.setState({username: "", password: "", phone: "", email: "", type: "user"});
         this.props.updateUser(response)
       })
       .catch( error => console.log(error) )
@@ -35,7 +37,7 @@ class Signup extends React.Component {
     return(
       <div>
         <img src="logo.png" alt=""/>
-        <form>
+        <form onSubmit={this.handleFormSubmit}>
           <div className="form-group">
               <label>Email address</label>
               <input type="email" className="form-control" placeholder="Entrez votre email" name="email" id="email" value={this.state.email} onChange={e => this.handleChange(e)}/>
@@ -43,7 +45,7 @@ class Signup extends React.Component {
 
           <div className="form-group">
               <label>Password</label>
-              <input type="text" name="password" placeholder="Entrez votre mot de passe" id="password" value={this.state.password} onChange={e => this.handleChange(e)} className="form-control"/>
+              <input type="password" name="password" placeholder="Entrez votre mot de passe" id="password" value={this.state.password} onChange={e => this.handleChange(e)} className="form-control"/>
           </div>
           
           <div className="form-group">

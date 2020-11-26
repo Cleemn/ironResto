@@ -2,6 +2,7 @@ const { Schema, model } = require('mongoose');
 require("./User.model");
 require("./Product.model");
 
+
 const orderSchema = new Schema(
   {
     user_id: { 
@@ -12,9 +13,9 @@ const orderSchema = new Schema(
       type: 
       [
         {
-          product_id: { type: Schema.Types.ObjectId, ref: 'Product'},
-          quantity: { type: Number },
-          price: { type: Number }
+          id: { type: Schema.Types.ObjectId, ref: 'Product'},
+          quantity: { type: Number }
+          // price: { type: Number }
         }
       ]
     },

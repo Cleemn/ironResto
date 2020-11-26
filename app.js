@@ -38,13 +38,14 @@ app.use(cors({
 
 
 // Session
-app.use(
-  session({
-    secret: 'some secret goes here',
-    resave: true,
-    saveUninitialized: true,
-  })
-);
+const sessionMiddleware = session({
+  secret: 'some secret goes here',
+  resave: true,
+  saveUninitialized: true,
+})
+
+app.use(sessionMiddleware);
+
 
 // Express View engine setup
 
@@ -69,8 +70,6 @@ const index = require('./routes/index');
 app.use('/', index);
 
 app.use('/', require('./routes/auth-routes'));
-
 app.use('/', require('./routes/order-routes'));
 
-
-module.exports = app;
+module.exports = {app:app, session:sessionMiddleware};

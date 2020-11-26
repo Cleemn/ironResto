@@ -24,6 +24,11 @@ router.put("/products/:id", (req, res, next) => {
     return;
   }
 
+  if(!req.session.user || req.session.user.type === "user"){
+    res.status(403).json({ message: "Not authorised." });
+    return;
+  }
+
   Product.findByIdAndUpdate(req.params.id, req.body)
     .then(() => {
       res
@@ -39,6 +44,11 @@ router.delete("/products/:id", (req, res, next) => {
   // vérifier si l'utilisateur est connecté et est le restaurateur
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: "Specified id is not valid" });
+    return;
+  }
+
+  if(!req.session.user || req.session.user.type === "user"){
+    res.status(403).json({ message: "Not authorised." });
     return;
   }
 

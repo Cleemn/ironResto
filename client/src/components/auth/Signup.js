@@ -35,7 +35,7 @@ class Signup extends React.Component {
 
   render() {
     return(
-      <div>
+      <div className="auth">
         <img src="logo.png" alt=""/>
         <form onSubmit={this.handleFormSubmit}>
           <div className="form-group">

@@ -5,7 +5,10 @@ require("./Product.model");
 =======
 require("../models/User.model");
 require("../models/Product.model");
+<<<<<<< HEAD:models/Order.model.js
 >>>>>>> Up:models/Command.model.js
+=======
+>>>>>>> eb6d1ea5d5f4a734e38d941b3c56fd18a55b3622:models/Command.model.js
 
 const orderSchema = new Schema(
   {
@@ -17,9 +20,9 @@ const orderSchema = new Schema(
       type: 
       [
         {
-          product_id: { type: Schema.Types.ObjectId, ref: 'Product'},
-          quantity: { type: Number },
-          price: { type: Number }
+          id: { type: Schema.Types.ObjectId, ref: 'Product'},
+          quantity: { type: Number }
+          // price: { type: Number }
         }
       ]
     },

@@ -1,14 +1,7 @@
 const { Schema, model } = require('mongoose');
-<<<<<<< HEAD:models/Order.model.js
 require("./User.model");
 require("./Product.model");
-=======
-require("../models/User.model");
-require("../models/Product.model");
-<<<<<<< HEAD:models/Order.model.js
->>>>>>> Up:models/Command.model.js
-=======
->>>>>>> eb6d1ea5d5f4a734e38d941b3c56fd18a55b3622:models/Command.model.js
+
 
 const orderSchema = new Schema(
   {

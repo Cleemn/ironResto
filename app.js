@@ -69,4 +69,7 @@ app.use('/', index);
 app.use('/', require('./routes/auth-routes'));
 app.use('/api', require('./routes/product-routes'));
 
+app.use('/', require('./routes/order-routes'));
+
+
 module.exports = app;

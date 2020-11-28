@@ -25,7 +25,7 @@ orderRoutes.post("/orders", (req, res, next) => {
     .then((products) => {
       for (product of products) {
         items.map((item) => {
-          if (product._id == item.id) {
+          if (product._id.toString() === item.id.toString()) {
             item.price = product.price;
           }
         });
@@ -53,14 +53,21 @@ orderRoutes.post("/orders", (req, res, next) => {
 });
 
 orderRoutes.get("/orders", (req, res, next) => {
-  if (!req.session.user || req.session.user.type === "user") {
+  if (!req.session.user) {
     res.status(403).json({ message: "Not autorised." });
     return;
   }
 
   Order.find() // faut on mettre une filtre de la journée ? {time:Date.now}
     .then((allOrders) => {
-      res.status(200).json(allOrders);
+      let orders = allOrders;
+
+      if (req.session.user.type === "user") {
+        orders = allOrders.filter((order) => {
+          return order.user_id === req.session._id.toString();
+        });
+      }
+      res.status(200).json(orders);
     })
     .catch((err) => res.status(500).json({ message: err.message }));
 });
@@ -82,7 +89,7 @@ orderRoutes.get("/orders/:id", (req, res, next) => {
     .then((selectedOrder) => {
       if (
         req.session.user.type === "user" &&
-        !(selectedOrder.user_id == req.session.user._id)
+        !(selectedOrder.user_id === req.session.user._id.toString())
       ) {
         res.status(403).json({ message: "Not autorised." });
         return;
@@ -110,17 +117,13 @@ orderRoutes.put("/orders/:id", (req, res, next) => {
   Order.findByIdAndUpdate(orderId, { status: newStatus }, { new: true })
     .then((updatedOrder) => {
       if (req.session.user.type === "user") {
-
-        if (!(updatedOrder.user_id == req.session.user._id)) {
+        if (!(updatedOrder.user_id === req.session.user._id.toString())) {
           res.status(403).json({ message: "Not autorised." });
           return;
-        }
-
-        else if(newStatus !== "annule"){
+        } else if (newStatus !== "annule") {
           res.status(401).json({ message: "Not autorised." });
           return;
         }
-
       }
 
       res.status(200).json(updatedOrder);

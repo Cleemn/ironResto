@@ -37,8 +37,6 @@ class Login extends React.Component {
         }
       })
       .catch( error => {
-        console.log("error", error)
-        console.log('coucou', error.response.data)
         this.setState({errorMessage:error.response.data.message})
 >>>>>>> resdirection de la page login vers les pages de profiles
       })

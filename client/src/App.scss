@@ -1,28 +1,24 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@mixin breakpoint($breakpoint, $direction) {
+  $breakpoint-value: map-get($breakpoints, $breakpoint);
+  @if ($direction == max) {
+    @media (max-width: ($breakpoint-value - 1)) {
+      @content;
+    }
+  }
+  @if ($direction == min) {
+    @media (min-width: ($breakpoint-value)) {
+      @content;
+    }
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+$breakpoints: (
+  mobile: 768px,
+  between: 1280px
+  );
+  
+@import "./stylesheets/home";
 
 .App-link {
   color: #61dafb;

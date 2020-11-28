@@ -1,0 +1,112 @@
+#home {
+  .hero {
+    margin: auto 24px;
+
+    .left {
+      input:focus {
+        outline: 0;
+        box-shadow: none;
+      }
+    }
+
+    .right {
+      display: none;
+    }
+
+  }
+
+  .buttons {
+    overflow-x: scroll;
+    display: flex;
+    margin-top: 48px;
+
+    button {
+      border: none;
+      background: #F6F5F4;
+      border-radius: 24px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      font-size: 14px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .swiper-container {
+    padding: 0 24px;
+
+    .swiper-card {
+      img {
+        height: 180px;
+        width: 180px;
+        object-fit: cover;
+      }
+    }
+  
+    .swiper-pagination-bullet-active {
+      background-color: black;
+    }
+  
+    .swiper-pagination {
+      margin-top: 12px;
+      position: initial;
+    }
+  }
+
+
+  @include breakpoint(mobile, min) {
+    .hero {
+      margin: 0;
+      display: flex;
+      padding: 80px;
+      align-items: center;
+      justify-content: space-between;
+      background-image: linear-gradient(rgba(226, 226, 226, 0.7), rgba(226, 226, 226, 0.7)), url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHxlbnwwfHwwfA%3D%3D&auto=format&fit=crop&w=800&q=60');
+      background-size: cover;
+
+      .right {
+        display: block;
+        width: 40%;
+        margin-left: 48px;
+      }
+
+      .left {
+        width: 50%;
+
+        input {
+          border: 0;
+        }
+      }
+    }
+
+    .buttons {
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .products {
+      margin: auto 24px;
+      max-width: 1280px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+
+      .card {
+        padding: 24px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+        background-color: #F6F5F4;
+        margin: 24px auto;
+        width: 244px;
+        border: 0;
+
+        img {
+          width: 180px;
+          height: 180px;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}

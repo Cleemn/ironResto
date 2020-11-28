@@ -5,13 +5,16 @@ import ProductDetails from './components/products/ProductDetails';
 import Navbar from './components/Navbar';
 import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
+import ProfileRestaurant from './components/profilePage/ProfileRestaurant'
+import ProfileUser from './components/profilePage/ProfileUser'
 // import ProductList from './components/products/ProductList';
 import { Route, Switch } from 'react-router-dom';
 
 import { loggedin } from './components/auth/auth-service';
 
 class App extends React.Component {
-  state = { loggedInUser: null }
+  state = { loggedInUser: null}
+
  
   // HERE
   fetchUser() {
@@ -43,10 +46,11 @@ class App extends React.Component {
           <Navbar userInSession={this.state.loggedInUser} updateUser={this.updateLoggedInUser} />
           <Switch>
             <Route exact path="/" component={HomePage} />
-            {/* <Route exact path='/' render={() => <Login updateUser={this.updateLoggedInUser}/>}/> */}
-            <Route exact path="/login" component={Login} />
-            <Route exact path='/signup' render={() => <Signup updateUser={this.updateLoggedInUser}/>}/>
+            <Route exact path='/login' render={(props) => <Login updateUser={this.updateLoggedInUser} {...props}/>}/>
+            <Route exact path='/signup' render={() => <Signup updateUser={this.updateLoggedInUser} {...props}/>}/>
             <Route exact path="/products/:id" component={ProductDetails}/>
+            <Route exact path="/profile/user" component={ProfileUser}/> 
+            <Route exact path="/profile/restaurant" component={ProfileRestaurant}/> 
           </Switch>
       </div>
     );

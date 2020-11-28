@@ -65,9 +65,9 @@ router.delete("/products/:id", (req, res, next) => {
 
 router.post("/products", (req, res, next) => {
   // vérifier si l'utilisateur est connecté et est le restaurateur
-  const { name, price, description, type } = req.body;
+  const { name, price, description, type, portion, calories } = req.body;
 
-  if (name === "" || price === "" || description === "" || type === "") {
+  if (name === "" || price === "" || description === "" || type === "" || portion === "" || calories === "") {
     res.status(400).json({ message: "Create product went wrong" });
     return;
   }
@@ -82,6 +82,8 @@ router.post("/products", (req, res, next) => {
     price,
     description,
     type,
+    portion,
+    calories
     // photo: req.file.path
   })
     .then((newProduct) => {

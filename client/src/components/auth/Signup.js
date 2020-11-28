@@ -1,16 +1,16 @@
-import React from 'react';
-import { signup } from './auth-service';
-import { Link } from 'react-router-dom';
-
+import React from "react";
+import { signup } from "./auth-service";
+import { Link } from "react-router-dom";
 
 class Signup extends React.Component {
-  state = { 
-    username: '',
-    password: '',
-    email: '',
-    phone: '',
-    type: 'user'
-  }
+  state = {
+    username: "",
+    password: "",
+    email: "",
+    phone: "",
+    type: "user",
+    errorMessage: "",
+  };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
@@ -21,55 +21,104 @@ class Signup extends React.Component {
     const type = this.state.type;
 
     signup(username, password, email, phone, type)
-      .then(response => {
-        this.setState({username: "", password: "", phone: "", email: "", type: "user"});
-        this.props.updateUser(response)
+      .then((response) => {
+        this.setState({
+          username: "",
+          password: "",
+          phone: "",
+          email: "",
+          type: "user",
+        });
+        this.props.updateUser(response);
+        if (response.type === "user") {
+          this.props.history.push("/profile/user");
+        } else if (response.type === "restaurant") {
+          this.props.history.push("/profile/restaurant");
+        }
       })
-      .catch( error => console.log(error) )
-  }
+      .catch((error) => {
+        this.setState({ errorMessage: error.response.data.message });
+      });
+  };
 
-  handleChange = (event) => {  
-    const {name, value} = event.target;
-    this.setState({[name]: value});
-  }
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
 
   render() {
-    return(
+    return (
       <div className="auth">
-        <img src="logo.png" alt=""/>
+        <img src="logo.png" alt="" />
         <form onSubmit={this.handleFormSubmit}>
           <div className="form-group">
-              <label>Email address</label>
-              <input type="email" className="form-control" placeholder="Entrez votre email" name="email" id="email" value={this.state.email} onChange={e => this.handleChange(e)}/>
+            <label>Email address</label>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Entrez votre email"
+              name="email"
+              id="email"
+              value={this.state.email}
+              onChange={(e) => this.handleChange(e)}
+            />
           </div>
 
           <div className="form-group">
-              <label>Password</label>
-              <input type="password" name="password" placeholder="Entrez votre mot de passe" id="password" value={this.state.password} onChange={e => this.handleChange(e)} className="form-control"/>
-          </div>
-          
-          <div className="form-group">
-              <label>Username</label>
-              <input type="text" className="form-control" placeholder="Entrez votre username" name="username" id="username" value={this.state.username} onChange={e => this.handleChange(e)}/>
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Entrez votre mot de passe"
+              id="password"
+              value={this.state.password}
+              onChange={(e) => this.handleChange(e)}
+              className="form-control"
+            />
           </div>
 
           <div className="form-group">
-              <label>Phone</label>
-              <input type="tel" className="form-control" placeholder="Entrez votre téléphone" name="phone" id="phone" value={this.state.phone} onChange={e => this.handleChange(e)}/>
+            <label>Username</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Entrez votre username"
+              name="username"
+              id="username"
+              value={this.state.username}
+              onChange={(e) => this.handleChange(e)}
+            />
           </div>
-          <button type="submit" className="btn btn-orange btn-block">Sign Up</button>
-          <p className="forgot-password text-right">
+
+          <div className="form-group">
+            <label>Phone</label>
+            <input
+              type="tel"
+              className="form-control"
+              placeholder="Entrez votre téléphone"
+              name="phone"
+              id="phone"
+              value={this.state.phone}
+              onChange={(e) => this.handleChange(e)}
+            />
+          </div>
+          <button type="submit" className="btn btn-orange btn-block">
+            Sign Up
+          </button>
+          <div className="forgot-password text-right">
             <p>
-              Already registered ? 
-              <Link to="/login">
-                Login
-              </Link>
+              Already registered ?<Link to="/login">Login</Link>
             </p>
-          </p>
+          </div>
 
+          {this.state.errorMessage && (
+            <div className="message">
+              <p>{this.state.errorMessage}</p>
+            </div>
+          )}
         </form>
       </div>
-    )
+    );
   }
 }
 

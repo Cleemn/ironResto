@@ -43,15 +43,20 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-          <Navbar userInSession={this.state.loggedInUser} updateUser={this.updateLoggedInUser} />
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route exact path='/login' render={(props) => <Login updateUser={this.updateLoggedInUser} {...props}/>}/>
-            <Route exact path='/signup' render={(props) => <Signup updateUser={this.updateLoggedInUser} {...props}/>}/>
-            <Route exact path="/products/:id" component={ProductDetails}/>
-            <Route exact path="/profile/user" component={ProfileUser}/> 
-            <Route exact path="/profile/restaurant" component={ProfileRestaurant}/> 
-          </Switch>
+        <Route render={props => (
+          <>
+            <Navbar userInSession={this.state.loggedInUser} updateUser={this.updateLoggedInUser} {...props}/>
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route exact path='/login' render={(props) => <Login updateUser={this.updateLoggedInUser} {...props}/>}/>
+              <Route exact path='/signup' render={(props) => <Signup updateUser={this.updateLoggedInUser} {...props}/>}/>
+              <Route exact path="/products/:id" component={ProductDetails}/>
+              <Route exact path="/profile/user" render={(props) => <ProfileUser userInSession={this.state.loggedInUser} {...props}/> }/> 
+              <Route exact path="/profile/restaurant" render={(props) => <ProfileRestaurant userInSession={this.state.loggedInUser} {...props}/>}/> 
+            </Switch>
+          </>
+        )} />
+          
       </div>
     );
   }

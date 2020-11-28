@@ -69,11 +69,15 @@ app.use('/', index);
 app.use('/api', require('./routes/auth-routes'));
 app.use('/api', require('./routes/product-routes'));
 
+
 app.use((err, req, res, next) => {
   // always log the error
   console.error('ERROR', req.method, req.path, err);
 
   res.json({message: err.message});
 });
+
+app.use('/', require('./routes/order-routes'));
+
 
 module.exports = app;

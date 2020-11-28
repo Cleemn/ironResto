@@ -66,8 +66,16 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 const index = require('./routes/index');
 app.use('/', index);
-app.use('/', require('./routes/auth-routes'));
+app.use('/api', require('./routes/auth-routes'));
 app.use('/api', require('./routes/product-routes'));
+
+
+app.use((err, req, res, next) => {
+  // always log the error
+  console.error('ERROR', req.method, req.path, err);
+
+  res.json({message: err.message});
+});
 
 app.use('/', require('./routes/order-routes'));
 

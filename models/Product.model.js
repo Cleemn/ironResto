@@ -12,6 +12,12 @@ const productSchema = new Schema(
     description: {
       type: String
     },
+    calories: {
+      type: String
+    },
+    portion: {
+      type: Number
+    },
     photo: {
       type: String
     },

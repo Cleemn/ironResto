@@ -35,8 +35,6 @@ class Login extends React.Component {
         }
       })
       .catch( error => {
-        console.log("error", error)
-        console.log('coucou', error.response.data)
         this.setState({errorMessage:error.response.data.message})
       })
   }

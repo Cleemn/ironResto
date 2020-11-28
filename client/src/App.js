@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import React from 'react';
 import HomePage from './components/HomePage';
 import ProductDetails from './components/products/ProductDetails';

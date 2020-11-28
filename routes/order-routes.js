@@ -53,13 +53,17 @@ orderRoutes.post("/orders", (req, res, next) => {
 });
 
 orderRoutes.get("/orders", (req, res, next) => {
-  if (!req.session.user || req.session.user.type === "user") {
+  if (!req.session.user) {
     res.status(403).json({ message: "Not autorised." });
     return;
   }
-
+  
   Order.find() // faut on mettre une filtre de la journée ? {time:Date.now}
     .then((allOrders) => {
+      // if(req.session.user.type === "user"){
+      //   orders = 
+      // }
+
       res.status(200).json(allOrders);
     })
     .catch((err) => res.status(500).json({ message: err.message }));

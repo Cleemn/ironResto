@@ -1,12 +1,10 @@
 #!/usr/bin/env node
-
 const http = require("http");
 const socket = require('socket.io');
 
 let App = require("../app");
 let app = App.app
 let session = App.session
-
 
 // catch 404 and render a not-found.hbs template
 app.use((req, res, next) => {
@@ -26,7 +24,12 @@ app.use((err, req, res, next) => {
 });
 
 let server = http.createServer(app);
-const io = socket(server);
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    // methods: ["GET", "POST"]
+  }
+});
 
 server.on("error", (error) => {
   if (error.syscall !== "listen") {
@@ -48,16 +51,16 @@ server.on("error", (error) => {
   }
 });
 
-
 // Socket.io Setup
 io.use((socket, next) => {
   session(socket.request, {}, next)
 });
 
 io.on('connection', socket => {
-  socket.emit('message', '??')
+  console.log("coucou le client!")
+  socket.emit("myEvent", 3)
+  socket.emit("myEvent2", "ème")
 })
-
 
 server.listen(process.env.PORT, () => {
   console.log(`Listening on http://localhost:${process.env.PORT}`);

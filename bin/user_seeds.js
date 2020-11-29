@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const User = require('../models/User.model');
-require('dotenv').config();
  
 User.collection.drop();
  

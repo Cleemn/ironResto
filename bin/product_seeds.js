@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Product = require('../models/Product.model');
+require('dotenv').config();
  
 const dbtitle = 'ironresto';
 mongoose.connect(process.env.MONGODB_URI, {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true})

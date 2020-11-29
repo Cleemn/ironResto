@@ -12,7 +12,7 @@ class HomePage extends React.Component {
   state = { listOfProducts: [] }
 
   getAllProducts = () =>{
-    axios.get(`http://localhost:5000/api/products`)
+    axios.get(`${process.env.REACT_APP_API_URL}/products`)
       .then(responseFromApi => {
         this.setState({
           listOfProducts: responseFromApi.data
@@ -26,7 +26,7 @@ class HomePage extends React.Component {
   }
 
   sortByType = (e) => {
-    axios.get(`http://localhost:5000/api/products`)
+    axios.get(`${process.env.REACT_APP_API_URL}/api/products`)
       .then(responseFromApi => {
         const sortProducts = responseFromApi.data.filter(product => product.type === e.target.id);
         this.setState({

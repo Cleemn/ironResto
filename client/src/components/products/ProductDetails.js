@@ -13,7 +13,7 @@ class ProductDetails extends Component {
   // 👨‍🏫
   getSingleProduct = () => {
       const { params } = this.props.match;
-      axios.get(`http://localhost:5000/api/products/${params.id}`)
+      axios.get(`${process.env.REACT_APP_API_URL}/api/products/${params.id}`)
         .then( responseFromApi =>{
           const theProduct = responseFromApi.data;
           this.setState(theProduct);

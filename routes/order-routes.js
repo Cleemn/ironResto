@@ -64,7 +64,7 @@ orderRoutes.get("/orders", (req, res, next) => {
 
       if (req.session.user.type === "user") {
         orders = allOrders.filter((order) => {
-          return order.user_id === req.session._id.toString();
+          return order.user_id == req.session._id;
         });
       }
       res.status(200).json(orders);

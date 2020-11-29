@@ -2,7 +2,9 @@ import React from "react";
 // import { Link } from "react-router-dom";
 
 class ProfileRestaurant extends React.Component {
-  state = {};
+  state = {
+      
+  };
 
   render() {
     return (

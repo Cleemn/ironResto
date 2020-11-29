@@ -77,7 +77,7 @@ app.use((err, req, res, next) => {
   res.json({message: err.message});
 });
 
-app.use('/', require('./routes/order-routes'));
+app.use('/api', require('./routes/order-routes'));
 
 
 module.exports = app;

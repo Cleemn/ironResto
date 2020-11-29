@@ -12,7 +12,7 @@ class HomePage extends React.Component {
   state = { listOfProducts: [] }
 
   getAllProducts = () =>{
-    axios.get(`${process.env.REACT_APP_API_URL}/products`)
+    axios.get(`${process.env.REACT_APP_API_URL}/api/products`)
       .then(responseFromApi => {
         this.setState({
           listOfProducts: responseFromApi.data

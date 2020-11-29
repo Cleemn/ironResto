@@ -1,7 +1,6 @@
 import React from 'react';
 import { login } from './auth-service';
 import { Link } from 'react-router-dom';
-// import { Redirect } from "react-router";
 
 class Login extends React.Component {
   state = { 
@@ -25,7 +24,6 @@ class Login extends React.Component {
 =======
 
         console.log("response", response)
-        // console.log("props", this.props)
         
         if(response.type === "user"){
 

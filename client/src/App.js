@@ -43,8 +43,8 @@ class App extends React.Component {
           <Navbar userInSession={this.state.loggedInUser} updateUser={this.updateLoggedInUser} />
           <Switch>
             <Route exact path="/" component={HomePage} />
-            {/* <Route exact path='/' render={() => <Login updateUser={this.updateLoggedInUser}/>}/> */}
-            <Route exact path="/login" component={Login} />
+            <Route exact path='/login' render={() => <Login updateUser={this.updateLoggedInUser}/>}/>
+            {/* <Route exact path="/login" component={Login} /> */}
             <Route exact path='/signup' render={() => <Signup updateUser={this.updateLoggedInUser}/>}/>
             <Route exact path="/products/:id" component={ProductDetails}/>
           </Switch>

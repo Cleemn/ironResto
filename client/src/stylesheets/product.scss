@@ -57,19 +57,18 @@
         background-color: #F6F5F4;
         position: relative;
         top: 0;
-        right: 248px;
+        right: 106px;
         z-index: 0;
         height: 100%;
         border-radius: 10px;
-        width: 784px;
         display: flex;
 
         .left {
-          width: 40%;
+          width: 20%;
         }
 
         .right {
-          width: 60%;
+          width: 80%;
         }
       }
     }

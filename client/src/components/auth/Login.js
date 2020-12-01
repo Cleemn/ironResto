@@ -21,7 +21,10 @@ class Login extends React.Component {
         this.setState({username: "", password: "", email: ""});
         this.props.updateUser(response)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 0002dad67efca9867db8f3d3243824b8bd7b5261
 
         console.log("response", response)
         
@@ -36,7 +39,10 @@ class Login extends React.Component {
       })
       .catch( error => {
         this.setState({errorMessage:error.response.data.message})
+<<<<<<< HEAD
 >>>>>>> resdirection de la page login vers les pages de profiles
+=======
+>>>>>>> 0002dad67efca9867db8f3d3243824b8bd7b5261
       })
   }
 

@@ -1,10 +1,9 @@
-
 @mixin breakpoint($breakpoint, $direction) {
   $breakpoint-value: map-get($breakpoints, $breakpoint);
   @if ($direction == max) {
     @media (max-width: ($breakpoint-value - 1)) {
-      @content;
-    }
+          @content;
+        }
   }
   @if ($direction == min) {
     @media (min-width: ($breakpoint-value)) {
@@ -13,10 +12,19 @@
   }
 }
 
+
 $breakpoints: (
   mobile: 768px,
   between: 1280px
-  );
+);
+
+@import "./stylesheets/auth.scss";
+@import "./stylesheets/button";
+@import "./stylesheets/font";
+@import "./stylesheets/navbar";
+@import "./stylesheets/product";
+@import "./stylesheets/swiper";
+
   
 @import "./stylesheets/home";
 
@@ -30,50 +38,5 @@ $breakpoints: (
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-
-.auth {
-  form {
-    padding: 12px 24px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 4px;
-    background-color: #F6F5F4;
-    margin-bottom: 24px;
-  }
-}
-
-.text-right {
-  margin-top: 1rem;
-}
-
-.btn {
-  background-color: #FA8334 !important;
-  border-radius: 30px !important;
-  border: none !important;
-  color: white !important;
-}
-
-.swiper-card {
-  padding: 24px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
-  background-color: #F6F5F4;
-  margin-bottom: 24px;
-  margin-top: 24px;
-  width: 244px;
-  height: 284px;
-}
-
-.swiper-card {
-  img {
-    width: 180px;
-  }
-}
-
-#product-detail {
-  img {
-    width: 100%;
   }
 }

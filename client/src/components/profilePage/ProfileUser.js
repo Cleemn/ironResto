@@ -52,7 +52,7 @@ class ProfileUser extends React.Component {
     return (
       <div className="profile-user">
         <div className="user-info">
-
+        
         </div>
         <div {...{ className: "wrapper" }}>
           <ul {...{ className: "accordion-list" }}>

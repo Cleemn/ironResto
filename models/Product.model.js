@@ -13,7 +13,7 @@ const productSchema = new Schema(
       type: String
     },
     calories: {
-      type: String
+      type: Number
     },
     portion: {
       type: Number

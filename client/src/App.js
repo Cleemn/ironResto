@@ -9,6 +9,7 @@ import Login from './components/auth/Login';
 import { Route, Switch } from 'react-router-dom';
 
 import { loggedin } from './components/auth/auth-service';
+import Fade from 'react-reveal/Fade';
 
 class App extends React.Component {
   state = { loggedInUser: null }
@@ -46,7 +47,9 @@ class App extends React.Component {
             <Route exact path='/login' render={() => <Login updateUser={this.updateLoggedInUser}/>}/>
             {/* <Route exact path="/login" component={Login} /> */}
             <Route exact path='/signup' render={() => <Signup updateUser={this.updateLoggedInUser}/>}/>
-            <Route exact path="/products/:id" component={ProductDetails}/>
+            <Fade bottom>
+              <Route exact path="/products/:id" component={ProductDetails}/>
+            </Fade>
           </Switch>
       </div>
     );

@@ -9,16 +9,13 @@ const orderSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
-    items: {
-      type: 
-      [
-        {
-          id: { type: Schema.Types.ObjectId, ref: 'Product'},
-          quantity: { type: Number }
-          // price: { type: Number }
-        }
-      ]
-    },
+    items: [
+      {
+        product_id: { type: Schema.Types.ObjectId, ref: 'Product'},
+        quantity: { type: Number }
+        // price: { type: Number }
+      }
+    ],
     total_price: {
       type: Number
     },

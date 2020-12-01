@@ -58,26 +58,17 @@ orderRoutes.get("/orders", (req, res, next) => {
     return;
   }
 
-  Order.find() // faut on mettre une filtre de la journée ? {time:Date.now}
-    .then((allOrders) => {
-      let orders = allOrders
-      console.log(orders)
-      
-      // let orders = allOrders.map(order=>{
-      //   let promises = []
-      //   order.items.map(item=>{
-      //     promise = Product.findById(item.id)
-      //     promises.push(promise)
-      //   })
-      //   return {promises, ...order._doc}
-      // })
+  const o = {}
 
-      if (req.session.user.type === "user") {
-        orders = allOrders.filter((order) => {
-          return order.user_id.toString() === req.session.user._id;
-        });
-      }
-      res.status(200).json(orders);
+  if (req.session.user.type === "user") {
+    o.user_id = req.session.user._id;
+  }
+
+  Order.find(o).populate('items.product_id') // faut on mettre une filtre de la journée ? {time:Date.now}
+    .then((allOrders) => {
+
+        console.log(allOrders)
+      res.status(200).json(allOrders);
     })
     .catch((err) => res.status(500).json({ message: err.message }));
 });

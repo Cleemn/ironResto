@@ -1,6 +1,7 @@
 import React from 'react';
 import { login } from './auth-service';
 import { Link } from 'react-router-dom';
+// import { Redirect } from "react-router";
 
 class Login extends React.Component {
   state = { 
@@ -20,13 +21,9 @@ class Login extends React.Component {
       .then(response => {
         this.setState({username: "", password: "", email: ""});
         this.props.updateUser(response)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 0002dad67efca9867db8f3d3243824b8bd7b5261
 
         console.log("response", response)
+        // console.log("props", this.props)
         
         if(response.type === "user"){
 
@@ -38,11 +35,9 @@ class Login extends React.Component {
         }
       })
       .catch( error => {
+        console.log("error", error)
+        console.log('coucou', error.response.data)
         this.setState({errorMessage:error.response.data.message})
-<<<<<<< HEAD
->>>>>>> resdirection de la page login vers les pages de profiles
-=======
->>>>>>> 0002dad67efca9867db8f3d3243824b8bd7b5261
       })
   }
 

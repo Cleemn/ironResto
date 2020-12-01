@@ -47,7 +47,6 @@ class ProfileUser extends React.Component {
   }
 
   render() {
-    console.log(this.state.orders);
 
     return (
       <>
@@ -107,18 +106,27 @@ class AccordionItem extends React.Component {
       >
         <div {...{ className: "accordion-item__line" }}>
           <h3 {...{ className: "accordion-item__title" }}>
-            {date} <h4 {...{ className: "accordion-item__price" }}>{price}</h4>
+            {date} 
           </h3>
+          <h4 {...{ className: "accordion-item__price" }}>Total: {price}</h4>
 
           <span {...{ className: "accordion-item__icon" }} />
         </div>
         <div {...{ className: "accordion-item__inner" }}>
           <div {...{ className: "accordion-item__content" }}>
             {items.map((item, i) => {
+              const product = item.product_id
+              console.log(product)
               return (
-                <p key={i} {...{ className: "accordion-item__product" }}>
-                  {item._id}
-                </p>
+                <div key={i} {...{ className: "accordion-item__product" }}>
+                  <img
+                    src={`${product.photo}`}
+                    alt=""
+                  ></img>
+                  <p>{item.quantity}</p>
+                  <p>{product.name}</p>
+                  <p className="price">{product.price}€</p>
+                </div>
               );
             })}
           </div>

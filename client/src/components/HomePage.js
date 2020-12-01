@@ -1,3 +1,4 @@
+
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -17,6 +18,7 @@ class HomePage extends React.Component {
   }
 
   getAllProducts = () =>{
+    console.log(process.env.REACT_APP_API_URL)
     axios.get(`${process.env.REACT_APP_API_URL}/products`)
       .then(responseFromApi => {
         this.setState({

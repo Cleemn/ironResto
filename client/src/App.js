@@ -29,6 +29,7 @@ class App extends React.Component {
  
   // HERE
   componentDidMount() {
+    console.log("process.env => ", process.env)
     this.fetchUser();
   }
  

@@ -35,7 +35,6 @@ class ProfileUser extends React.Component {
     let orderDate = new Date(Date(date));
     let dayWeek = frenchDays[orderDate.getDay()];
     let day = orderDate.getDate();
-    console.log("orderDate.getMonth()", orderDate.getMonth())
     let month = frenchMonths[orderDate.getMonth()];
     let year = orderDate.getFullYear();
     return { dayWeek, day, month, year };
@@ -52,6 +51,9 @@ class ProfileUser extends React.Component {
 
     return (
       <div className="profile-user">
+        <div className="user-info">
+
+        </div>
         <div {...{ className: "wrapper" }}>
           <ul {...{ className: "accordion-list" }}>
             {this.state.orders.map((order, key) => {
@@ -59,7 +61,6 @@ class ProfileUser extends React.Component {
                 order.date
               );
               const date = `${dayWeek} ${day} ${month}`;
-              console.log("month", month)
               const price = `${order.total_price}€`;
               return (
                 <li {...{ className: "accordion-list__item", key }}>

@@ -9,16 +9,16 @@ $cLightGray: rgba(#000, 0.1);
     justify-content: space-around;
 
     h1{
-        font-size: 2.5vw;
-        margin: 1.25vw 0 0 2.5vw;
+        font-size: 2em;
+        margin: 1.25em 0 0 2.5em;
         font-weight: 800;
         color: $cBlack;
         text-align: left;
     }
     img {
-        width: 5vw;
-        height: 5vw;
-        margin: 1.25vw 2.5vw 0 0;
+        width: 5em;
+        height: 5em;
+        margin: 1.25em 2.5em 0 0;
       }
 }
 
@@ -33,16 +33,16 @@ $cLightGray: rgba(#000, 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.25vw;
+    padding: 0.25em;
     margin: 0;
     flex-direction: column;
     h2{
-        font-size: 1.5vw;
+        font-size: 1.5em;
         margin: 0;
         font-weight: 500;
         color: $cBlack;
         text-align: center;
-        margin: 2.5vw 1.25vw 1.25vw 0;
+        margin: 2.5em 1.25em 1.25em 0;
     }
 }
 
@@ -50,8 +50,8 @@ $cLightGray: rgba(#000, 0.1);
     list-style: none;
     margin: 0 ;
     padding: 0;
-    max-width: 250vw;
-    border-radius: 0.5vw;
+    max-width: 250em;
+    border-radius: 0.5em;
     overflow: hidden;
 
     __article{
@@ -60,7 +60,7 @@ $cLightGray: rgba(#000, 0.1);
 
     &__item {
         &+& {
-            margin-top: 2vw;
+            margin-top: 2em;
             background-color: #F6F5F4;
         }
     }
@@ -75,7 +75,7 @@ $cLightGray: rgba(#000, 0.1);
         }
 
         #{ $self }__inner {
-            max-height: 100vw;
+            max-height: 100em;
             transition-timing-function: cubic-bezier(0.895, 0.03, 0.685, 0.22);
             transition-duration: 0.5s;
             transition-property: max-height;
@@ -93,7 +93,7 @@ $cLightGray: rgba(#000, 0.1);
 
     &__line {
         display: block;
-        padding: 0.8vw 1.2vw;
+        padding: 0.8em 1.2em;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -103,14 +103,14 @@ $cLightGray: rgba(#000, 0.1);
     }
 
     &__title {
-        font-size: 1.75vw;
+        font-size: 1.75em;
         margin: 0;
         font-weight: 500;
         color: $cBlack;
     }
 
     &__price {
-        font-size: 1vw;
+        font-size: 1em;
         margin: 0;
         font-weight: 300;
         color: $cBlack;
@@ -119,8 +119,8 @@ $cLightGray: rgba(#000, 0.1);
     }
 
     &__icon {
-        width: 2.4vw;
-        height: 2.4vw;
+        width: 2.4em;
+        height: 2.4em;
         transition: transform 0.3s ease-in-out;
         background-size: contain;
         background-repeat: no-repeat;
@@ -141,18 +141,18 @@ $cLightGray: rgba(#000, 0.1);
 
     &__content {
         opacity: 0;
-        transform: translateY(-1vw);
+        transform: translateY(-1em);
         transition-timing-function: linear, ease;
         transition-duration: 0.1s;
         transition-property: opacity, transform;
         transition-delay: 0.5s;
-        padding: 0 1.2vw 1.2vw;
+        padding: 0 1.2em 1.2em;
         background-color: #F6F5F4;
     }
 
     &__product {
         // margin: 0;
-        font-size: 1vw;
+        font-size: 1em;
         color: $cGray;
         font-weight: 300;
         line-height: 1.3;

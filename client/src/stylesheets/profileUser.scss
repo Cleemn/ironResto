@@ -3,33 +3,55 @@ $cBlack: #121212;
 $cGray: #333;
 $cLightGray: rgba(#000, 0.1);
 
-// html {
-//   font-size: 16px;
-//   height: 100%;
-// }
 
-// body {
+.user-info{
+    display: flex;
+    justify-content: space-around;
 
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   padding: 5rem 0;
-// }
+    h1{
+        font-size: 2.5vw;
+        margin: 1.25vw 0 0 2.5vw;
+        font-weight: 800;
+        color: $cBlack;
+        text-align: left;
+    }
+    img {
+        width: 5vw;
+        height: 5vw;
+        margin: 1.25vw 2.5vw 0 0;
+      }
+}
 
-.profile-user {
+.mes-commandes{
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.profile-orders {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5rem 0;
+    padding: 0.25vw;
+    margin: 0;
+    flex-direction: column;
+    h2{
+        font-size: 1.5vw;
+        margin: 0;
+        font-weight: 500;
+        color: $cBlack;
+        text-align: center;
+        margin: 2.5vw 1.25vw 1.25vw 0;
+    }
 }
-
 
 .accordion-list {
     list-style: none;
     margin: 0 ;
     padding: 0;
-    max-width: 120rem;
-    border-radius: 0.4rem;
+    max-width: 250vw;
+    border-radius: 0.5vw;
     overflow: hidden;
 
     __article{
@@ -38,7 +60,7 @@ $cLightGray: rgba(#000, 0.1);
 
     &__item {
         &+& {
-            margin-top: 2rem;
+            margin-top: 2vw;
             background-color: #F6F5F4;
         }
     }
@@ -53,7 +75,7 @@ $cLightGray: rgba(#000, 0.1);
         }
 
         #{ $self }__inner {
-            max-height: 100rem;
+            max-height: 100vw;
             transition-timing-function: cubic-bezier(0.895, 0.03, 0.685, 0.22);
             transition-duration: 0.5s;
             transition-property: max-height;
@@ -71,7 +93,7 @@ $cLightGray: rgba(#000, 0.1);
 
     &__line {
         display: block;
-        padding: 0.8rem 1.2rem;
+        padding: 0.8vw 1.2vw;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -81,28 +103,30 @@ $cLightGray: rgba(#000, 0.1);
     }
 
     &__title {
-        font-size: 1.2rem;
+        font-size: 1.75vw;
         margin: 0;
         font-weight: 500;
         color: $cBlack;
     }
 
     &__price {
-        font-size: 1rem;
+        font-size: 1vw;
         margin: 0;
         font-weight: 300;
         color: $cBlack;
         display: inline;
+        text-align: left;
     }
 
     &__icon {
-        width: 1.2rem;
-        height: 1.2rem;
+        width: 2.4vw;
+        height: 2.4vw;
         transition: transform 0.3s ease-in-out;
         background-size: contain;
         background-repeat: no-repeat;
         background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAABGklEQVR4Ae3RAcZCQRiF4buDfwshBGi+2UQgcIGAVtpSIuS/KyilG+UTcbk6zIH3GQBm3mM6AAAAAAAAAACA+eqf/yZBXcV/2XeCVPYx1FXj/FjGUMd45AQp/1HHGGLZNL+e61jHnKDmv8652YT1IvPfE2LX/Sh27/ycsF60yT/lk58JYn6eU4MJccjnlAmZ/33i0OAH4jg9Qcw/5g9YJpS+m6n0xvzpCfVe+nn59S7kGyYo+YYJWz3fO+E2PaFs9XzPhMy/6fmWCXq+YUJs9HzrhLh+JsQmrnq+bYKeb52g53snXPR88wQ93z9Bz/dP0PP9E/R89wQ93zpBz7dO0POtE/R86wQ93zpBzzdP+MoHAAAAAAAAAADAExTnTW20AtjhAAAAAElFTkSuQmCC);
         opacity: 0.6;
+        border: none;
     }
 
     &__inner {
@@ -117,18 +141,18 @@ $cLightGray: rgba(#000, 0.1);
 
     &__content {
         opacity: 0;
-        transform: translateY(-1rem);
+        transform: translateY(-1vw);
         transition-timing-function: linear, ease;
         transition-duration: 0.1s;
         transition-property: opacity, transform;
         transition-delay: 0.5s;
-        padding: 0 1.2rem 1.2rem;
+        padding: 0 1.2vw 1.2vw;
         background-color: #F6F5F4;
     }
 
     &__product {
         // margin: 0;
-        font-size: 1rem;
+        font-size: 1vw;
         color: $cGray;
         font-weight: 300;
         line-height: 1.3;

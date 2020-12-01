@@ -23,6 +23,10 @@ $cLightGray: rgba(#000, 0.1);
     padding: 5rem 0;
 }
 
+.user-info{
+    
+}
+
 .accordion-list {
     list-style: none;
     margin: 0 ;
@@ -31,6 +35,9 @@ $cLightGray: rgba(#000, 0.1);
     border-radius: 0.4rem;
     overflow: hidden;
 
+    __article{
+        background-color: #F6F5F4;
+    }
 
     &__item {
         &+& {
@@ -123,7 +130,7 @@ $cLightGray: rgba(#000, 0.1);
     }
 
     &__product {
-        margin: 0;
+        // margin: 0;
         font-size: 1rem;
         color: $cGray;
         font-weight: 300;

@@ -18,12 +18,8 @@ class HomePage extends React.Component {
   }
 
   getAllProducts = () =>{
-<<<<<<< HEAD
     console.log(process.env.REACT_APP_API_URL)
     axios.get(`${process.env.REACT_APP_API_URL}/products`)
-=======
-    axios.get(`http://localhost:5000/api/products`)
->>>>>>> 7502f0c13e371b8c32aca38e6e2ac9ec54e4fd77
       .then(responseFromApi => {
         this.setState({
           listOfProducts: responseFromApi.data

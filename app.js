@@ -43,6 +43,7 @@ app.use(
     secret: 'some secret goes here',
     resave: true,
     saveUninitialized: true,
+    // cookie:{maxAge:6000}
   })
 );
 

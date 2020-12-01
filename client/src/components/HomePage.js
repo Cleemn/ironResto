@@ -33,7 +33,7 @@ class HomePage extends React.Component {
   }
 
   sortByType = (e) => {
-    axios.get(`http://localhost:5000/api/products`)
+    axios.get(`${process.env.REACT_APP_API_URL}/products`)
       .then(responseFromApi => {
         const sortProducts = responseFromApi.data.filter(product => product.type === e.target.id);
         this.setState({
@@ -45,7 +45,7 @@ class HomePage extends React.Component {
 
   searchFilter = (e) => {
     this.setState({search: e.target.value});
-    axios.get(`http://localhost:5000/api/products`)
+    axios.get(`${process.env.REACT_APP_API_URL}/products`)
       .then(responseFromApi => {
         const sortProducts = responseFromApi.data.filter(product => product.name.toLowerCase().includes(this.state.search.toLowerCase()));
         this.setState({

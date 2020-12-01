@@ -50,27 +50,37 @@ class ProfileUser extends React.Component {
     console.log(this.state.orders);
 
     return (
-      <div className="profile-user">
+      <>
         <div className="user-info">
-        
+          <h1>
+            Petit <br /> Nicolas
+          </h1>
+          <img
+            src="https://icon-library.net/icon/default-user-icon-29.html"
+            alt=""
+          ></img>
         </div>
-        <div {...{ className: "wrapper" }}>
-          <ul {...{ className: "accordion-list" }}>
-            {this.state.orders.map((order, key) => {
-              const { dayWeek, day, month, year } = this.convertDate(
-                order.date
-              );
-              const date = `${dayWeek} ${day} ${month}`;
-              const price = `${order.total_price}€`;
-              return (
-                <li {...{ className: "accordion-list__item", key }}>
-                  <AccordionItem {...{ date, price, items: order.items }} />
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </div>
+
+          <div className="profile-orders">
+          <h2>Mes commandes</h2>
+            <div {...{ className: "wrapper" }}>
+              <ul {...{ className: "accordion-list" }}>
+                {this.state.orders.map((order, key) => {
+                  const { dayWeek, day, month, year } = this.convertDate(
+                    order.date
+                  );
+                  const date = `${dayWeek} ${day} ${month}`;
+                  const price = `${order.total_price}€`;
+                  return (
+                    <li {...{ className: "accordion-list__item", key }}>
+                      <AccordionItem {...{ date, price, items: order.items }} />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+      </>
     );
   }
 }
@@ -97,9 +107,9 @@ class AccordionItem extends React.Component {
       >
         <div {...{ className: "accordion-item__line" }}>
           <h3 {...{ className: "accordion-item__title" }}>
-            {date}{" "}
-            <h4 {...{ className: "accordion-item__price" }}>Total: {price}</h4>
+            {date} <h4 {...{ className: "accordion-item__price" }}>{price}</h4>
           </h3>
+
           <span {...{ className: "accordion-item__icon" }} />
         </div>
         <div {...{ className: "accordion-item__inner" }}>

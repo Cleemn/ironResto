@@ -25,7 +25,7 @@ orderRoutes.post("/orders", (req, res, next) => {
     .then((products) => {
       for (product of products) {
         items.map((item) => {
-          if (product._id.toString() === item.id.toString()) {
+          if (product._id == item.id) {
             item.price = product.price;
           }
         });
@@ -60,11 +60,21 @@ orderRoutes.get("/orders", (req, res, next) => {
 
   Order.find() // faut on mettre une filtre de la journée ? {time:Date.now}
     .then((allOrders) => {
-      let orders = allOrders;
+      let orders = allOrders
+      console.log(orders)
+      
+      // let orders = allOrders.map(order=>{
+      //   let promises = []
+      //   order.items.map(item=>{
+      //     promise = Product.findById(item.id)
+      //     promises.push(promise)
+      //   })
+      //   return {promises, ...order._doc}
+      // })
 
       if (req.session.user.type === "user") {
         orders = allOrders.filter((order) => {
-          return order.user_id == req.session._id;
+          return order.user_id.toString() === req.session.user._id;
         });
       }
       res.status(200).json(orders);

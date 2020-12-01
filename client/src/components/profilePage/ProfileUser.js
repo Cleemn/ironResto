@@ -35,7 +35,8 @@ class ProfileUser extends React.Component {
     let orderDate = new Date(Date(date));
     let dayWeek = frenchDays[orderDate.getDay()];
     let day = orderDate.getDate();
-    let month = frenchMonths[orderDate.getMonth() + 1];
+    console.log("orderDate.getMonth()", orderDate.getMonth())
+    let month = frenchMonths[orderDate.getMonth()];
     let year = orderDate.getFullYear();
     return { dayWeek, day, month, year };
   }
@@ -58,6 +59,7 @@ class ProfileUser extends React.Component {
                 order.date
               );
               const date = `${dayWeek} ${day} ${month}`;
+              console.log("month", month)
               const price = `${order.total_price}€`;
               return (
                 <li {...{ className: "accordion-list__item", key }}>

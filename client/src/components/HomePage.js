@@ -18,7 +18,6 @@ class HomePage extends React.Component {
   }
 
   getAllProducts = () =>{
-    console.log(process.env.REACT_APP_API_URL)
     axios.get(`${process.env.REACT_APP_API_URL}/products`)
       .then(responseFromApi => {
         this.setState({
@@ -28,8 +27,15 @@ class HomePage extends React.Component {
       .catch(err => console.log('Error while fetching products', err))
   }
 
+  addToBasket = (e, product_id) => {
+    if(product_id){
+      this.props.updateBasket({ product_id, quantity:1})
+    }
+  }
+
   componentDidMount() {
     this.getAllProducts();
+    this.addToBasket();
   }
 
   sortByType = (e) => {
@@ -92,7 +98,7 @@ class HomePage extends React.Component {
                   </Link>
                   <h5>{product.name}</h5>
                   <p>{product.price}€</p>
-                  <button type="submit" className="btn btn-orange btn-block">Ajouter au panier</button>
+                  <button type="submit" className="btn btn-orange btn-block" onClick={(e) => this.addToBasket(e, product._id)}>Ajouter au panier</button>
                 </SwiperSlide>
               )})
             }
@@ -107,7 +113,7 @@ class HomePage extends React.Component {
                     </Link>
                     <h5>{product.name}</h5>
                     <p>{product.price}€</p>
-                    <button type="submit" className="btn btn-orange btn-block">Ajouter au panier</button>
+                    <button type="submit" className="btn btn-orange btn-block" onClick={(e) => this.addToBasket(e, product._id)}>Ajouter au panier</button>
                   </div>
                 )})
               }

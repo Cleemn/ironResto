@@ -20,11 +20,7 @@ class Login extends React.Component {
     login(username, password, email)
       .then(response => {
         this.setState({username: "", password: "", email: ""});
-        this.props.updateUser(response)
-
-        console.log("response", response)
-        // console.log("props", this.props)
-        
+        this.props.updateUser(response)        
         if(response.type === "user"){
 
 
@@ -35,8 +31,6 @@ class Login extends React.Component {
         }
       })
       .catch( error => {
-        console.log("error", error)
-        console.log('coucou', error.response.data)
         this.setState({errorMessage:error.response.data.message})
       })
   }

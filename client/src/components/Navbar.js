@@ -7,12 +7,11 @@ class Navbar extends React.Component {
   };
 
   logoutHandler = (e) => {
-    console.log(this.props);
     this.props.history.push("/login");
   };
 
   render() {
-
+    console.log(this.props.basket.length);
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="collapse navbar-collapse">
@@ -30,13 +29,18 @@ class Navbar extends React.Component {
                     logout()
                       .then(() => {
                         this.props.updateUser(null);
-                        this.props.history.push('/')
+                        this.props.history.push("/");
                       })
                       .catch((err) => console.log(err));
                   }}
                 >
                   Logout
                 </button>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/user/order">
+                  {this.props.basket.length}
+                </Link>
               </li>
             </ul>
           ) : (
@@ -59,6 +63,11 @@ class Navbar extends React.Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/products">
                   Produits
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/user/order">
+                  {this.props.basket.length}
                 </Link>
               </li>
             </ul>

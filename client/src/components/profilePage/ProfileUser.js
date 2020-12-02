@@ -116,7 +116,6 @@ class AccordionItem extends React.Component {
           <div {...{ className: "accordion-item__content" }}>
             {items.map((item, i) => {
               const product = item.product_id
-              console.log(product)
               return (
                 <div key={i} {...{ className: "accordion-item__product" }}>
                   <img

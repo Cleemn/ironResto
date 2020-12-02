@@ -7,17 +7,18 @@ import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
 import ProfileRestaurant from './components/profilePage/ProfileRestaurant'
 import ProfileUser from './components/profilePage/ProfileUser'
-// import ProductList from './components/products/ProductList';
+import UserBasket from './components/orders/UserBasket'
 import { Route, Switch } from 'react-router-dom';
 
 import { loggedin } from './components/auth/auth-service';
 import Fade from 'react-reveal/Fade';
 
 class App extends React.Component {
-  state = { loggedInUser: null}
+  state = { 
+    loggedInUser: null,
+    basket:[]
+  }
 
- 
-  // HERE
   fetchUser() {
     if (this.state.loggedInUser === null){
       loggedin()
@@ -30,9 +31,13 @@ class App extends React.Component {
     }
   }
  
-  // HERE
+  updateBasket = (item) => {
+    this.setState({
+      basket:[...this.state.basket, item]
+    })
+  }
+
   componentDidMount() {
-    console.log("process.env => ", process.env)
     this.fetchUser();
   }
  
@@ -43,18 +48,20 @@ class App extends React.Component {
   }
   
   render() {
+    console.log("basket",this.state.basket)
     return (
       <div className="App">
         <Route render={props => (
           <>
-            <Navbar userInSession={this.state.loggedInUser} updateUser={this.updateLoggedInUser} {...props}/>
+            <Navbar userInSession={this.state.loggedInUser} updateUser={this.updateLoggedInUser} basket={this.state.basket} {...props}/>
             <Switch>
-              <Route exact path="/" component={HomePage} />
+              <Route exact path="/" render= {(props) => <HomePage updateBasket={this.updateBasket} {...props}/>}/>
               <Route exact path='/login' render={(props) => <Login updateUser={this.updateLoggedInUser} {...props}/>}/>
               <Route exact path='/signup' render={(props) => <Signup updateUser={this.updateLoggedInUser} {...props}/>}/>
               <Route exact path="/products/:id" component={ProductDetails}/>
               <Route exact path="/profile/user" render={(props) => <ProfileUser userInSession={this.state.loggedInUser} {...props}/> }/> 
-              <Route exact path="/profile/restaurant" render={(props) => <ProfileRestaurant userInSession={this.state.loggedInUser} {...props}/>}/> 
+              <Route exact path="/profile/restaurant" render={(props) => <ProfileRestaurant userInSession={this.state.loggedInUser} {...props}/>}/>
+              <Route exact path="/user/order" render={(props) => <UserBasket userInSession={this.state.loggedInUser} updateBasket={this.updateBasket} basket={this.state.basket} {...props}/>}/> 
             </Switch>
           </>
         )} />

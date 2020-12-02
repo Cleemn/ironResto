@@ -1,17 +1,17 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 import { createOrder } from "../services/order-service";
 
+const INIT_STATE = {
+  errorMessage: "",
+  totalPrice: 0,
+  orderId: "",
+};
+
 class UserBasket extends React.Component {
-  state = {
-    errorMessage: "",
-    totalPrice:0
-  };
+  state = INIT_STATE;
 
   addOrder = (e) => {
     e.preventDefault();
-    
-    console.log(e)
     if (this.props.basket.length !== 0) {
       const products = [...this.props.basket];
 
@@ -21,20 +21,19 @@ class UserBasket extends React.Component {
 
       createOrder({ items })
         .then((createdOrder) => {
-            console.log(createdOrder)
+          this.props.history.push(`/orders/${createdOrder._id}`);
           this.props.initBasket();
-          console.log("basket after init", this.props.basket)
+          this.setState(INIT_STATE);
         })
         .catch((error) => {
-            if(error.response){
-                this.setState({ errorMessage: error.response.data.message });
-            }
+          if (error.response) {
+            this.setState({ errorMessage: error.response.data.message });
+          }
         });
     }
   };
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     return (

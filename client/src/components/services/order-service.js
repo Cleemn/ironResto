@@ -15,3 +15,8 @@ function createOrder(items) {
   return service.post("/orders", items).then((response) => response.data);
 }
 export { createOrder };
+
+function getSingleOrder(orderId) {
+  return service.get(`/orders/${orderId}`).then((response) => response.data);
+}
+export { getSingleOrder };

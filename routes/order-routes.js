@@ -23,20 +23,6 @@ orderRoutes.post("/orders", (req, res, next) => {
 
   Promise.all(promises)
     .then((products) => {
-      // for (product of products) {
-
-      //   let newItemsArray = items.map((item) => {
-
-      //     if (product._id.toString() === item.product_id) {
-      //       console.log("inside if item", item)
-      //       console.log("inside if product", product)
-      //       return {...items, price:product.price};
-      //     }
-      //     console.log(newItemsArray)
-      //   });
-      // }
-      // console.log(newItemsArray)
-
       let newItems = items.map((i) => {
         let p = products.filter((p) => i.product_id === p._id.toString())[0];
         return { ...i, price: p.price };
@@ -96,19 +82,29 @@ orderRoutes.get("/orders/:id", (req, res, next) => {
   }
 
   if (!req.session.user) {
+    console.log("!req.session.user", req.session.user)
     res.status(403).json({ message: "Not autorised." });
     return;
   }
 
-  Order.findById(orderId)
+  let filter = {_id:orderId}
+  console.log("user type", req.session.user.type)
+  if(req.session.user.type === "user"){
+    console.log("inside if")
+    filter.user_id = req.session.user._id
+  }
+  console.log("filter", filter)
+
+  Order.find(filter)
     .then((selectedOrder) => {
-      if (
-        req.session.user.type === "user" &&
-        !(selectedOrder.user_id === req.session.user._id.toString())
-      ) {
-        res.status(403).json({ message: "Not autorised." });
-        return;
-      }
+      
+      // if (
+      //   req.session.user.type === "user" &&
+      //   (selectedOrder.user_id.toString() === req.session.user._id)
+      // ) {
+      //   res.status(403).json({ message: "Not autorised." });
+      //   return;
+      // }
 
       res.status(200).json(selectedOrder);
     })

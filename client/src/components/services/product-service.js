@@ -7,9 +7,7 @@ const service = axios.create({
 export default service;
 
 function productById(productId) {
-    return service.get(`/products/${productId}`)
-        .then((response) => response.data)
-        .catch(err => console.log(err));
+    return service.get(`/products/${productId}`).then((response) => response.data);
   }
   export { productById };
 

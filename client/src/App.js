@@ -8,6 +8,7 @@ import Login from "./components/auth/Login";
 import ProfileRestaurant from "./components/profilePage/ProfileRestaurant";
 import ProfileUser from "./components/profilePage/ProfileUser";
 import UserBasket from "./components/orders/UserBasket";
+import UserOrderDetails from "./components/orders/UserOrderDetails"
 import { Route, Switch } from "react-router-dom";
 
 import { loggedin } from "./components/auth/auth-service";
@@ -52,7 +53,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log("basket", this.state.basket);
     return (
       <div className="App">
         <Route
@@ -120,6 +120,7 @@ class App extends React.Component {
                     />
                   )}
                 />
+                <Route exact path="/orders/:id" component={UserOrderDetails} />
               </Switch>
             </>
           )}

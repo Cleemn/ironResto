@@ -17,23 +17,38 @@ orderRoutes.post("/orders", (req, res, next) => {
 
   let promises = [];
   for (item of items) {
-    const promise = Product.findById(item.id);
+    const promise = Product.findById(item.product_id);
     promises.push(promise);
   }
 
   Promise.all(promises)
     .then((products) => {
-      for (product of products) {
-        items.map((item) => {
-          if (product._id == item.id) {
-            item.price = product.price;
-          }
-        });
-      }
+      // for (product of products) {
 
-      let totalPrice = items.reduce((acc, item) => {
-        return acc + item.price * item.quantity;
+      //   let newItemsArray = items.map((item) => {
+
+      //     if (product._id.toString() === item.product_id) {
+      //       console.log("inside if item", item)
+      //       console.log("inside if product", product)
+      //       return {...items, price:product.price};
+      //     }
+      //     console.log(newItemsArray)
+      //   });
+      // }
+      // console.log(newItemsArray)
+
+      let newItems = items.map((i) => {
+        let p = products.filter((p) => i.product_id === p._id.toString())[0];
+        return { ...i, price: p.price };
+      });
+
+      console.log(newItems);
+
+      let totalPrice = newItems.reduce((acc, item) => {
+        return acc + Number(item.price) * Number(item.quantity);
       }, 0);
+      
+      console.log("totalPrice from server", totalPrice);
 
       newOrder = {
         user_id: req.session.user,
@@ -58,16 +73,15 @@ orderRoutes.get("/orders", (req, res, next) => {
     return;
   }
 
-  const o = {}
+  const o = {};
 
   if (req.session.user.type === "user") {
     o.user_id = req.session.user._id;
   }
 
-  Order.find(o).populate('items.product_id') // faut on mettre une filtre de la journée ? {time:Date.now}
+  Order.find(o)
+    .populate("items.product_id") // faut on mettre une filtre de la journée ? {time:Date.now}
     .then((allOrders) => {
-
-        console.log(allOrders)
       res.status(200).json(allOrders);
     })
     .catch((err) => res.status(500).json({ message: err.message }));

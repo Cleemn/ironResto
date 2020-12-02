@@ -11,7 +11,7 @@ function orders() {
 }
 export { orders };
 
-function createOrder(user_id, items, total_price, date) {
-  return service.post("/orders", {user_id, items, total_price, date}).then((response) => response.data);
+function createOrder(items) {
+  return service.post("/orders", items).then((response) => response.data);
 }
 export { createOrder };

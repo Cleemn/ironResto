@@ -69,7 +69,12 @@ class ProfileUser extends React.Component {
                 const price = `${order.total_price}€`;
                 return (
                   <li {...{ className: "accordion-list__item", key }}>
-                    <AccordionItem orderId={order._id} date={date} price={price} items={order.items} {...this.props}
+                    <AccordionItem
+                      orderId={order._id}
+                      date={date}
+                      price={price}
+                      items={order.items}
+                      {...this.props}
                     />
                   </li>
                 );
@@ -96,14 +101,22 @@ class AccordionItem extends React.Component {
       <div
         {...{
           className: `accordion-item, ${opened && "accordion-item--opened"}`,
-          onClick: () => {
-            this.props.history.push(`/orders/${this.props.orderId}`)
-          },
         }}
       >
-        <div {...{ className: "accordion-item__line" }}>
-          <h3 {...{ className: "accordion-item__title" }}>{this.props.date}</h3>
-          <h4 {...{ className: "accordion-item__price" }}>Total: {this.props.price}</h4>
+        <div
+          {...{
+            className: "accordion-item__line",
+          }}
+        >
+          <h3 {...{ 
+            className: "accordion-item__title", 
+            onClick: () => {
+            this.props.history.push(`/orders/${this.props.orderId}`)
+          },
+            }}>{this.props.date}</h3>
+          <h4 {...{ className: "accordion-item__price" }}>
+            Total: {this.props.price}
+          </h4>
 
           <span
             {...{

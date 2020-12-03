@@ -1,5 +1,6 @@
 import React from "react";
 import { createOrder } from "../services/order-service";
+import { Link } from "react-router-dom";
 
 const INIT_STATE = {
   errorMessage: "",
@@ -38,22 +39,30 @@ class UserBasket extends React.Component {
   render() {
     return (
       <div className="user-order">
-        <div className="restaurant-details">
-          <h2>Adresse du restaurant</h2>
-        </div>
-        <h2>Ma commande</h2>
-        {this.props.basket.map((product) => {
-          return <ProductCart product={{ ...product }} />;
-        })}
-        <h4>Prix total</h4>
-        <p>A payer sur place</p>
-
-        {this.state.errorMessage ? (
-          <div className="message">
-            <p>{this.state.errorMessage}</p>
-          </div>
+        {this.props.basket.length === 0 ? (
+          <EmptyBasket />
         ) : (
-          <button onClick={(e) => this.addOrder(e)}>Valider la commande</button>
+          <div className="basket-details">
+            <div className="restaurant-details">
+              <h2>Adresse du restaurant</h2>
+            </div>
+            <h2>Ma commande</h2>
+            {this.props.basket.map((product) => {
+              return <ProductCart product={{ ...product }} />;
+            })}
+            <h4>Prix total</h4>
+            <p>A payer sur place</p>
+
+            {this.state.errorMessage ? (
+              <div className="message">
+                <p>{this.state.errorMessage}</p>
+              </div>
+            ) : (
+              <button onClick={(e) => this.addOrder(e)}>
+                Valider la commande
+              </button>
+            )}
+          </div>
         )}
       </div>
     );
@@ -66,6 +75,27 @@ class ProductCart extends React.Component {
     return (
       <div className="product-cart">
         <p>{this.props.product.name}</p>
+      </div>
+    );
+  }
+}
+
+class EmptyBasket extends React.Component {
+  state = {};
+  render() {
+    return (
+      <div className="product-cart">
+        <p>Votre panier est vide</p>
+        <img src=""></img>
+        <Link to="/">
+          <button>Avez-vous faim ?</button>
+        </Link>
+        <Link to="/signup">
+          <button>Signup</button>
+        </Link>
+        <Link to="/login">
+          <button>Login</button>
+        </Link>
       </div>
     );
   }

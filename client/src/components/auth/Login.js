@@ -42,32 +42,29 @@ class Login extends React.Component {
 
   render() {
     return(
-      <div className="auth">
-        <img src="logo.png" alt=""/>
+      <div className="auth container">
         <form onSubmit={this.handleFormSubmit}>
-          <h3>Login</h3>
-
           <div className="form-group">
-              <label>Email address</label>
+              <label>Adresse email</label>
               <input type="email" className="form-control" placeholder="Enter email" name="email" id="email" value={this.state.email} onChange={e => this.handleChange(e)} />
           </div>
 
           <div className="form-group">
-              <label>Username</label>
+              <label>Pseudo</label>
               <input type="text" className="form-control" placeholder="Enter username" name="username" id="username" value={this.state.username} onChange={e => this.handleChange(e)} />
           </div>
 
           <div className="form-group">
-              <label>Password</label>
+              <label>Mot de passe</label>
               <input type="password" className="form-control" placeholder="Enter password" name="password" id="password" value={this.state.password} onChange={e => this.handleChange(e)} />
           </div>
 
-          <button type="submit" className="btn btn-orange btn-block">Submit</button>
+          <button type="submit" className="btn btn-orange btn-block">Je me connecte</button>
           <div className="forgot-password text-right">
             <p>
-              Don't have an account ? 
+              Vous n'avez pas encore de compte ?
               <Link to="/signup">
-                Signup
+                Créer un compte
               </Link>
             </p>
           </div>

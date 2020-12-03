@@ -2,7 +2,7 @@ import "./App.scss";
 import React from "react";
 import HomePage from "./components/HomePage";
 import ProductDetails from "./components/products/ProductDetails";
-import Navbar from "./components/Navbar";
+import AppNavbar from "./components/Navbar";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import ProfileRestaurant from "./components/profilePage/ProfileRestaurant";
@@ -71,7 +71,7 @@ class App extends React.Component {
         <Route
           render={(props) => (
             <>
-              <Navbar
+              <AppNavbar
                 userInSession={this.state.loggedInUser}
                 updateUser={this.updateLoggedInUser}
                 basket={this.state.basket}
@@ -99,7 +99,6 @@ class App extends React.Component {
                     <Signup updateUser={this.updateLoggedInUser} {...props} />
                   )}
                 />
-                <Route exact path="/products/:id" component={ProductDetails} />
                 <Route
                   exact
                   path="/profile/user"
@@ -134,6 +133,9 @@ class App extends React.Component {
                   )}
                 />
                 <Route exact path="/orders/:id" component={UserOrderDetails} />
+                <Fade bottom>
+                  <Route exact path="/products/:id" component={ProductDetails}/>
+                </Fade>
               </Switch>
             </>
           )}

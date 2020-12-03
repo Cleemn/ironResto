@@ -89,7 +89,7 @@ orderRoutes.get("/orders/:id", (req, res, next) => {
   }
 
   let filter = {_id:orderId}
-  console.log("user type", req.session.user.type)
+
   if(req.session.user.type === "user"){
     console.log("inside if")
     filter.user_id = req.session.user._id
@@ -97,16 +97,9 @@ orderRoutes.get("/orders/:id", (req, res, next) => {
   console.log("filter", filter)
 
   Order.find(filter)
-    .then((selectedOrder) => {
-      
-      // if (
-      //   req.session.user.type === "user" &&
-      //   (selectedOrder.user_id.toString() === req.session.user._id)
-      // ) {
-      //   res.status(403).json({ message: "Not autorised." });
-      //   return;
-      // }
-
+  .populate("items.product_id")
+  .then((selectedOrder) => {
+      console.log(selectedOrder)
       res.status(200).json(selectedOrder);
     })
     .catch((err) => res.status(500).json({ message: err.message }));

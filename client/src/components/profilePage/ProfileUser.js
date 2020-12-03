@@ -65,7 +65,7 @@ class ProfileUser extends React.Component {
             <div {...{ className: "wrapper" }}>
               <ul {...{ className: "accordion-list" }}>
                 {this.state.orders.map((order, key) => {
-                  const { dayWeek, day, month, year } = this.convertDate(
+                  const { dayWeek, day, month } = this.convertDate(
                     order.date
                   );
                   const date = `${dayWeek} ${day} ${month}`;

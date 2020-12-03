@@ -30,12 +30,9 @@ class AppNavbar extends React.Component {
                 </Link>
               </li>
               <li className="nav-item">
-                <img src="logo.png" alt="" />
-              </li>
-              <li className="nav-item">
                 Welcome, {this.props.userInSession.username}
               </li>
-              <li className="nav-item">
+              <li className="nav-item" onClick={(e)=>{alert("coucou")}}>
                 <button
                   onClick={(e) => {
                     logout()

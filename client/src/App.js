@@ -7,8 +7,8 @@ import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import ProfileRestaurant from "./components/profilePage/ProfileRestaurant";
 import ProfileUser from "./components/profilePage/ProfileUser";
-import UserBasket from "./components/orders/UserBasket";
-import UserOrderDetails from "./components/orders/UserOrderDetails"
+import Basket from "./components/orders/Basket";
+import UserOrderDetails from "./components/orders/UserOrderDetails";
 import { Route, Switch } from "react-router-dom";
 
 import { loggedin } from "./components/auth/auth-service";
@@ -32,15 +32,28 @@ class App extends React.Component {
     }
   }
 
-  updateBasket = (item) => {
-    this.setState({
-      basket: [...this.state.basket, item],
-    });
+  basketContains = (itemId) => {
+    let isContains = false;
+
+    for (let i = 0; i < this.state.basket.length; i++) {
+      if (this.state.basket[i]._id === itemId) {
+        isContains = true;
+      }
+    }
+    return isContains;
   };
 
-  initBasket = () => {
-    this.setState({ basket: [] });
-  }
+  addToBasket = (item) => {
+    if (!this.basketContains(item._id)) {
+      this.setState({
+        basket: [...this.state.basket, item],
+      });
+    }
+  };
+
+  updateBasket = (basket) => {
+    this.setState({ basket });
+  };
 
   componentDidMount() {
     this.fetchUser();
@@ -69,7 +82,7 @@ class App extends React.Component {
                   exact
                   path="/"
                   render={(props) => (
-                    <HomePage updateBasket={this.updateBasket} {...props} />
+                    <HomePage updateBasket={this.addToBasket} {...props} />
                   )}
                 />
                 <Route
@@ -111,11 +124,11 @@ class App extends React.Component {
                   exact
                   path="/user/order"
                   render={(props) => (
-                    <UserBasket
+                    <Basket
                       userInSession={this.state.loggedInUser}
-                      updateBasket={this.updateBasket}
                       basket={this.state.basket}
-                      initBasket={this.initBasket}
+                      addToBasket={this.addToBasket}
+                      updateBasket={this.updateBasket}
                       {...props}
                     />
                   )}

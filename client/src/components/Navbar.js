@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { logout } from "./auth/auth-service";
-class Navbar extends React.Component {
+// import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
+
+class AppNavbar extends React.Component {
   state = {
     redirect: false,
   };
@@ -11,12 +13,22 @@ class Navbar extends React.Component {
   };
 
   render() {
-    console.log(this.props.basket.length);
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="collapse navbar-collapse">
           {this.props.userInSession ? (
             <ul className="navbar-nav mr-auto">
+              <li className="nav-item basket-icon">
+                <Link className="nav-link basket-icon" to="/user/order">
+                  <img src="shopping-basket-white-black.svg" alt=""></img>
+                  <span>{this.props.basket.length}</span>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/">
+                  Homepage
+                </Link>
+              </li>
               <li className="nav-item">
                 <img src="logo.png" alt="" />
               </li>
@@ -37,15 +49,16 @@ class Navbar extends React.Component {
                   Logout
                 </button>
               </li>
-              <li className="nav-item basket-icon">
-                <Link className="nav-link basket-icon" to="/user/order">
-                  <img src="shopping-basket-white-black.svg" alt=""></img>
-                  <span>{this.props.basket.length}</span>
-                </Link>
-              </li>
             </ul>
           ) : (
             <ul className="navbar-nav mr-auto">
+              <li className="nav-item basket-icon">
+                <Link className="nav-link basket-icon" to="/user/order">
+                  <img src="shopping-basket-white-black.svg" alt=""></img>
+                  <span>{this.props.basket.length}</span>{" "}
+                </Link>
+              </li>
+
               <li className="nav-item">
                 <Link className="nav-link" to="/">
                   Homepage
@@ -61,12 +74,6 @@ class Navbar extends React.Component {
                   Login
                 </Link>
               </li>
-              <li className="nav-item basket-icon">
-                <Link className="nav-link basket-icon" to="/user/order">
-                  <img src="shopping-basket-white-black.svg" alt=""></img>
-                  <span>{this.props.basket.length}</span>{" "}
-                </Link>
-              </li>
             </ul>
           )}
         </div>
@@ -75,4 +82,4 @@ class Navbar extends React.Component {
   }
 }
 
-export default Navbar;
+export default AppNavbar;

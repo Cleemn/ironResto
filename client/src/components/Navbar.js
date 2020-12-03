@@ -37,9 +37,10 @@ class Navbar extends React.Component {
                   Logout
                 </button>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/user/order">
-                  {this.props.basket.length}
+              <li className="nav-item basket-icon">
+                <Link className="nav-link basket-icon" to="/user/order">
+                  <img src="shopping-basket-white-black.svg" alt=""></img>
+                  <span>{this.props.basket.length}</span>
                 </Link>
               </li>
             </ul>
@@ -60,14 +61,10 @@ class Navbar extends React.Component {
                   Login
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/products">
-                  Produits
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/user/order">
-                  {this.props.basket.length}
+              <li className="nav-item basket-icon">
+                <Link className="nav-link basket-icon" to="/user/order">
+                  <img src="shopping-basket-white-black.svg" alt=""></img>
+                  <span>{this.props.basket.length}</span>{" "}
                 </Link>
               </li>
             </ul>

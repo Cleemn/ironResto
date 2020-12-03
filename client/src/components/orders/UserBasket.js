@@ -85,8 +85,8 @@ class EmptyBasket extends React.Component {
   render() {
     return (
       <div className="product-cart">
+        <img src="../shopping-basket-color.svg"></img>
         <p>Votre panier est vide</p>
-        <img src=""></img>
         <Link to="/">
           <button>Avez-vous faim ?</button>
         </Link>

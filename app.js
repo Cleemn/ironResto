@@ -43,6 +43,7 @@ app.use(
     secret: 'some secret goes here',
     resave: true,
     saveUninitialized: true,
+    // cookie:{maxAge:6000}
   })
 );
 
@@ -77,7 +78,7 @@ app.use((err, req, res, next) => {
   res.json({message: err.message});
 });
 
-app.use('/', require('./routes/order-routes'));
+app.use('/api', require('./routes/order-routes'));
 
 app.use((req, res, next) => {
   // If no routes match, send them the React HTML.

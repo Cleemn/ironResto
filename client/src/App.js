@@ -1,57 +1,143 @@
-import './App.scss';
-import React from 'react';
-import HomePage from './components/HomePage';
-import ProductDetails from './components/products/ProductDetails';
-import Navbar from './components/Navbar';
-import Signup from './components/auth/Signup';
-import Login from './components/auth/Login';
-// import ProductList from './components/products/ProductList';
-import { Route, Switch } from 'react-router-dom';
+import "./App.scss";
+import React from "react";
+import HomePage from "./components/HomePage";
+import ProductDetails from "./components/products/ProductDetails";
+import Navbar from "./components/Navbar";
+import Signup from "./components/auth/Signup";
+import Login from "./components/auth/Login";
+import ProfileRestaurant from "./components/profilePage/ProfileRestaurant";
+import ProfileUser from "./components/profilePage/ProfileUser";
+import Basket from "./components/orders/Basket";
+import UserOrderDetails from "./components/orders/UserOrderDetails";
+import { Route, Switch } from "react-router-dom";
 
-import { loggedin } from './components/auth/auth-service';
-import Fade from 'react-reveal/Fade';
+import { loggedin } from "./components/auth/auth-service";
+import Fade from "react-reveal/Fade";
 
 class App extends React.Component {
-  state = { loggedInUser: null }
- 
-  // HERE
+  state = {
+    loggedInUser: null,
+    basket: [],
+  };
+
   fetchUser() {
-    if (this.state.loggedInUser === null){
+    if (this.state.loggedInUser === null) {
       loggedin()
-        .then(response => {
-          this.setState({loggedInUser: response})
+        .then((response) => {
+          this.setState({ loggedInUser: response });
         })
-        .catch(err => {
-          this.setState({loggedInUser: false}) 
-        })
+        .catch((err) => {
+          this.setState({ loggedInUser: false });
+        });
     }
   }
- 
-  // HERE
+
+  basketContains = (itemId) => {
+    let isContains = false;
+
+    for (let i = 0; i < this.state.basket.length; i++) {
+      if (this.state.basket[i]._id === itemId) {
+        isContains = true;
+      }
+    }
+    return isContains;
+  };
+
+  addToBasket = (item) => {
+    if (!this.basketContains(item._id)) {
+      this.setState({
+        basket: [...this.state.basket, item],
+      });
+    }
+  };
+
+  updateBasket = (basket) => {
+    this.setState({ basket });
+  };
+
   componentDidMount() {
-    console.log("process.env => ", process.env)
     this.fetchUser();
   }
- 
+
   updateLoggedInUser = (userObj) => {
     this.setState({
-      loggedInUser: userObj
-    })
-  }
-  
+      loggedInUser: userObj,
+    });
+  };
+
   render() {
     return (
       <div className="App">
-          <Navbar userInSession={this.state.loggedInUser} updateUser={this.updateLoggedInUser} />
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route exact path='/login' render={() => <Login updateUser={this.updateLoggedInUser}/>}/>
-            {/* <Route exact path="/login" component={Login} /> */}
-            <Route exact path='/signup' render={() => <Signup updateUser={this.updateLoggedInUser}/>}/>
-            <Fade bottom>
-              <Route exact path="/products/:id" component={ProductDetails}/>
-            </Fade>
-          </Switch>
+        <Route
+          render={(props) => (
+            <>
+              <Navbar
+                userInSession={this.state.loggedInUser}
+                updateUser={this.updateLoggedInUser}
+                basket={this.state.basket}
+                {...props}
+              />
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={(props) => (
+                    <HomePage updateBasket={this.addToBasket} {...props} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/login"
+                  render={(props) => (
+                    <Login updateUser={this.updateLoggedInUser} {...props} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/signup"
+                  render={(props) => (
+                    <Signup updateUser={this.updateLoggedInUser} {...props} />
+                  )}
+                />
+                <Route exact path="/products/:id" component={ProductDetails} />
+                <Route
+                  exact
+                  path="/profile/user"
+                  render={(props) => (
+                    <ProfileUser
+                      userInSession={this.state.loggedInUser}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/profile/restaurant"
+                  render={(props) => (
+                    <ProfileRestaurant
+                      userInSession={this.state.loggedInUser}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/user/order"
+                  render={(props) => (
+                    <Basket
+                      userInSession={this.state.loggedInUser}
+                      basket={this.state.basket}
+                      addToBasket={this.addToBasket}
+                      updateBasket={this.updateBasket}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route exact path="/orders/:id" component={UserOrderDetails} />
+              </Switch>
+            </>
+          )}
+        />
       </div>
     );
   }

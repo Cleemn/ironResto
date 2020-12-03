@@ -17,23 +17,24 @@ orderRoutes.post("/orders", (req, res, next) => {
 
   let promises = [];
   for (item of items) {
-    const promise = Product.findById(item.id);
+    const promise = Product.findById(item.product_id);
     promises.push(promise);
   }
 
   Promise.all(promises)
     .then((products) => {
-      for (product of products) {
-        items.map((item) => {
-          if (product._id.toString() === item.id.toString()) {
-            item.price = product.price;
-          }
-        });
-      }
+      let newItems = items.map((i) => {
+        let p = products.filter((p) => i.product_id === p._id.toString())[0];
+        return { ...i, price: p.price };
+      });
 
-      let totalPrice = items.reduce((acc, item) => {
-        return acc + item.price * item.quantity;
+      console.log(newItems);
+
+      let totalPrice = newItems.reduce((acc, item) => {
+        return acc + Number(item.price) * Number(item.quantity);
       }, 0);
+      
+      console.log("totalPrice from server", totalPrice);
 
       newOrder = {
         user_id: req.session.user,
@@ -58,16 +59,16 @@ orderRoutes.get("/orders", (req, res, next) => {
     return;
   }
 
-  Order.find() // faut on mettre une filtre de la journée ? {time:Date.now}
-    .then((allOrders) => {
-      let orders = allOrders;
+  const o = {};
 
-      if (req.session.user.type === "user") {
-        orders = allOrders.filter((order) => {
-          return order.user_id === req.session._id.toString();
-        });
-      }
-      res.status(200).json(orders);
+  if (req.session.user.type === "user") {
+    o.user_id = req.session.user._id;
+  }
+
+  Order.find(o)
+    .populate("items.product_id") // faut on mettre une filtre de la journée ? {time:Date.now}
+    .then((allOrders) => {
+      res.status(200).json(allOrders);
     })
     .catch((err) => res.status(500).json({ message: err.message }));
 });
@@ -81,19 +82,29 @@ orderRoutes.get("/orders/:id", (req, res, next) => {
   }
 
   if (!req.session.user) {
+    console.log("!req.session.user", req.session.user)
     res.status(403).json({ message: "Not autorised." });
     return;
   }
 
-  Order.findById(orderId)
+  let filter = {_id:orderId}
+  console.log("user type", req.session.user.type)
+  if(req.session.user.type === "user"){
+    console.log("inside if")
+    filter.user_id = req.session.user._id
+  }
+  console.log("filter", filter)
+
+  Order.find(filter)
     .then((selectedOrder) => {
-      if (
-        req.session.user.type === "user" &&
-        !(selectedOrder.user_id === req.session.user._id.toString())
-      ) {
-        res.status(403).json({ message: "Not autorised." });
-        return;
-      }
+      
+      // if (
+      //   req.session.user.type === "user" &&
+      //   (selectedOrder.user_id.toString() === req.session.user._id)
+      // ) {
+      //   res.status(403).json({ message: "Not autorised." });
+      //   return;
+      // }
 
       res.status(200).json(selectedOrder);
     })

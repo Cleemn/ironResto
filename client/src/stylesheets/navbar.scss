@@ -1,0 +1,27 @@
+.nav-item {
+    font-size: 1.5em;
+    .basket-icon {
+        position: relative;
+
+        img {
+            max-height: 2em;
+            max-height: auto;
+        }
+
+        span {
+            font-size: .75em;
+            position: absolute;
+            top: 2em;
+            left: 2em;
+            background-color: #FA8334;
+            color: #ffffff;
+            padding-left: .45em;
+            padding-right: .45em;
+            border-radius: 50%;
+            text-align: center;
+            font-weight: 900;
+        }
+    }
+
+
+}

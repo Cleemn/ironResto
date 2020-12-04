@@ -28,13 +28,9 @@ orderRoutes.post("/orders", (req, res, next) => {
         return { ...i, price: p.price };
       });
 
-      console.log(newItems);
-
       let totalPrice = newItems.reduce((acc, item) => {
         return acc + Number(item.price) * Number(item.quantity);
       }, 0);
-      
-      console.log("totalPrice from server", totalPrice);
 
       newOrder = {
         user_id: req.session.user,
@@ -83,7 +79,6 @@ orderRoutes.get("/orders/:id", (req, res, next) => {
   }
 
   if (!req.session.user) {
-    console.log("!req.session.user", req.session.user)
     res.status(403).json({ message: "Not autorised." });
     return;
   }
@@ -91,15 +86,12 @@ orderRoutes.get("/orders/:id", (req, res, next) => {
   let filter = {_id:orderId}
 
   if(req.session.user.type === "user"){
-    console.log("inside if")
     filter.user_id = req.session.user._id
   }
-  console.log("filter", filter)
 
   Order.find(filter)
   .populate("items.product_id")
   .then((selectedOrder) => {
-      console.log(selectedOrder)
       res.status(200).json(selectedOrder);
     })
     .catch((err) => res.status(500).json({ message: err.message }));

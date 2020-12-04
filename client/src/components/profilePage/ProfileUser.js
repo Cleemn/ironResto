@@ -1,6 +1,6 @@
 import React from "react";
 import { orders } from "../services/order-service";
-// import { Link } from "react-router-dom";
+import StyledContentLoader from 'styled-content-loader';
 
 const frenchDays = [
   "Dimanche",
@@ -28,7 +28,7 @@ const frenchMonths = [
 ];
 class ProfileUser extends React.Component {
   state = {
-    orders: [],
+    orders: []
   };
 
   convertDate(date) {
@@ -47,15 +47,19 @@ class ProfileUser extends React.Component {
   }
 
   render() {
-
     return (
       <>
         <div className="user-info">
           <h1>
-            Petit <br /> Nicolas
+            {this.props.userInSession ? (
+              this.props.userInSession.username
+            ) : (
+              <StyledContentLoader>
+              </StyledContentLoader>
+            )}
           </h1>
           <img
-            src="https://icon-library.net/icon/default-user-icon-29.html"
+            src="https://icon-library.net/images/default-user-icon/default-user-icon-29.jpg"
             alt=""
           ></img>
         </div>

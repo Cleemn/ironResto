@@ -13,9 +13,15 @@ class AppNavbar extends React.Component {
     this.props.history.push("/login");
   };
 
+  closeNavbar = () => {
+    const nav = document.querySelector('.navbar-collapse');
+    nav.classList.remove('show');
+  }
+
   render() {
+
     return (
-        <Navbar expand="lg" sticky="top" bg="white" collapseOnSelect>
+        <Navbar expand="lg" sticky="top" bg="white">
           <Navbar.Brand as={Link} to="/">
             <img 
             className="d-inline-block align-top logo"
@@ -31,9 +37,9 @@ class AppNavbar extends React.Component {
                 <em>Bonjour, {this.props.userInSession.username} !</em>
               </Nav.Link>
               
-              <Nav.Link as={NavLink} to="/">La carte</Nav.Link>
-              <Nav.Link as={NavLink} to="/profile/user">Mes commandes</Nav.Link>
-              <Nav.Link as={NavLink} to="/profile/user">Modifier mon profil</Nav.Link>
+              <Nav.Link as={NavLink} to="/" onClick={this.closeNavbar}>La carte</Nav.Link>
+              <Nav.Link as={NavLink} to="/profile/user" onClick={this.closeNavbar}>Mes commandes</Nav.Link>
+              <Nav.Link as={NavLink} to="/edit" onClick={this.closeNavbar}>Modifier mon profil</Nav.Link>
               <Button
                   onClick={(e) => {
                     logout()
@@ -49,9 +55,9 @@ class AppNavbar extends React.Component {
             </Nav>
               ) : (
             <Nav className="mr-auto">
-              <Nav.Link as={NavLink} to="/">La carte</Nav.Link>
-              <Nav.Link as={NavLink} to="/login">Se connecter</Nav.Link>
-              <Nav.Link as={NavLink} to="/signup">Créer un compte</Nav.Link>
+              <Nav.Link as={NavLink} to="/" onClick={this.closeNavbar}>La carte</Nav.Link>
+              <Nav.Link as={NavLink} to="/login" onClick={this.closeNavbar}>Se connecter</Nav.Link>
+              <Nav.Link as={NavLink} to="/signup" onClick={this.closeNavbar}>Créer un compte</Nav.Link>
             </Nav>
               )}
           </Navbar.Collapse>

@@ -9,6 +9,7 @@ import ProfileRestaurant from "./components/profilePage/ProfileRestaurant";
 import ProfileUser from "./components/profilePage/ProfileUser";
 import Basket from "./components/orders/Basket";
 import UserOrderDetails from "./components/orders/UserOrderDetails";
+import EditUser from "./components/profilePage/EditUser";
 import { Route, Switch } from "react-router-dom";
 
 import { loggedin } from "./components/auth/auth-service";
@@ -17,7 +18,7 @@ import Fade from "react-reveal/Fade";
 class App extends React.Component {
   state = {
     loggedInUser: null,
-    basket: [],
+    basket: []
   };
 
   fetchUser() {
@@ -105,6 +106,18 @@ class App extends React.Component {
                   render={(props) => (
                     <ProfileUser
                       userInSession={this.state.loggedInUser}
+                      updateUser={this.updateLoggedInUser}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/edit"
+                  render={(props) => (
+                    <EditUser
+                      userInSession={this.state.loggedInUser}
+                      updateUser={this.updateLoggedInUser}
                       {...props}
                     />
                   )}

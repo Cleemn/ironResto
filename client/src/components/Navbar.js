@@ -2,6 +2,7 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { logout } from "./auth/auth-service";
 import { Navbar, Nav, Button } from "react-bootstrap";
+import Flip from "react-reveal/Flip";
 
 
 class AppNavbar extends React.Component {
@@ -22,13 +23,22 @@ class AppNavbar extends React.Component {
 
     return (
         <Navbar expand="lg" sticky="top" bg="white">
-          <Navbar.Brand as={Link} to="/">
-            <img 
-            className="d-inline-block align-top logo"
-            src="/logo.png"
-            alt="logo"
-            />
-          </Navbar.Brand>
+          {this.props.basket.length === 0 ? (
+            <Navbar.Brand as={Link} to="/" className="nav-item">
+                <img 
+                className="d-inline-block align-top logo"
+                src="/logo.png"
+                alt="logo"
+                />
+            </Navbar.Brand>
+            ) : (
+              <Flip right>
+                <Navbar.Brand as={Link} to="/user/order" className="nav-item">
+                  <img src="shopping-basket-white-black.png" alt="" className="d-inline-block align-top logo"/>
+                  <span>{this.props.basket.length}</span>
+                </Navbar.Brand>
+              </Flip>
+            )}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             {this.props.userInSession ? (
@@ -62,55 +72,6 @@ class AppNavbar extends React.Component {
               )}
           </Navbar.Collapse>
         </Navbar>
-      // <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      //   <div className="collapse navbar-collapse">
-      //     {this.props.userInSession ? (
-      //       <ul className="navbar-nav mr-auto">
-      //         <li className="nav-item basket-icon">
-                // <Link className="nav-link basket-icon" to="/user/order">
-                //   <img src="shopping-basket-white-black.svg" alt=""></img>
-                //   <span>{this.props.basket.length}</span>
-                // </Link>
-      //         </li>
-      //         <li className="nav-item">
-      //           <Link className="nav-link" to="/">
-      //             Homepage
-      //           </Link>
-      //         </li>
-      //         <li className="nav-item">
-      //           Welcome, {this.props.userInSession.username}
-      //         </li>
-      //         <li className="nav-item" onClick={(e)=>{alert("coucou")}}>
-      //         </li>
-      //       </ul>
-      //     ) : (
-      //       <ul className="navbar-nav mr-auto">
-      //         <li className="nav-item basket-icon">
-      //           <Link className="nav-link basket-icon" to="/user/order">
-      //             <img src="shopping-basket-white-black.svg" alt=""></img>
-      //             <span>{this.props.basket.length}</span>{" "}
-      //           </Link>
-      //         </li>
-
-      //         <li className="nav-item">
-      //           <Link className="nav-link" to="/">
-      //             Homepage
-      //           </Link>
-      //         </li>
-      //         <li className="nav-item">
-      //           <Link className="nav-link" to="/signup">
-      //             Signup
-      //           </Link>
-      //         </li>
-      //         <li className="nav-item">
-      //           <Link className="nav-link" to="/login">
-      //             Login
-      //           </Link>
-      //         </li>
-      //       </ul>
-      //     )}
-      //   </div>
-      // </nav>
     );
   }
 }

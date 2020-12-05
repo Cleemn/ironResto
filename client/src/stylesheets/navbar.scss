@@ -1,27 +1,33 @@
-.nav-item {
-    font-size: 1.5em;
-    .basket-icon {
-        position: relative;
+.logo {
+		width: 40px;
+}
 
-        img {
-            max-height: 2em;
-            max-height: auto;
-        }
+.navbar-toggler {
+    border: none !important;
 
-        span {
-            font-size: .75em;
-            position: absolute;
-            top: 2em;
-            left: 2em;
-            background-color: #FA8334;
-            color: #ffffff;
-            padding-left: .45em;
-            padding-right: .45em;
-            border-radius: 50%;
-            text-align: center;
-            font-weight: 900;
-        }
+    &:focus {
+        outline: none;
     }
+}
 
+.nav-link {
+    margin: 0 auto;
+}
 
+.nav-item {
+	position: relative;
+
+	span {
+    font-size: 0.55em;
+    position: absolute;
+    top: 4px;
+    left: 30px;
+		background-color: #FA8334;
+		color: #ffffff;
+		padding-left: .45em;
+		padding-right: .45em;
+		border-radius: 50%;
+		text-align: center;
+		font-weight: 900;
+	}
 }

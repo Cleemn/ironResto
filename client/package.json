@@ -17,6 +17,9 @@
     "react-reveal": "^1.2.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
+    "react-step-progress-bar": "^1.0.3",
+    "styled-components": "^5.2.1",
+    "styled-content-loader": "^1.1.3",
     "swiper": "^6.3.5",
     "web-vitals": "^0.2.4"
   },

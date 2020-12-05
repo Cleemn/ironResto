@@ -1,6 +1,8 @@
 import React from "react";
 import getSingleOrder from "../services/order-service";
 import axios from "axios";
+import "react-step-progress-bar/styles.css";
+import { ProgressBar } from "react-step-progress-bar";
 // import { Link } from "react-router-dom";
 
 const frenchDays = [
@@ -38,7 +40,8 @@ class UserOrderDetails extends React.Component {
     photo: "",
     dayWeek:"", 
     day: "",
-    month:""
+    month:"",
+    progress: 0
   };
 
   convertDate(date) {
@@ -48,6 +51,20 @@ class UserOrderDetails extends React.Component {
     let month = frenchMonths[orderDate.getMonth()];
     let year = orderDate.getFullYear();
     this.setState({ dayWeek, day, month, year });
+  }
+
+  convertStatus(status) {
+    if (status === 'en_attente') {
+      this.setState({progress: 20})
+    } else if (status === 'acceptee') {
+      this.setState({progress: 40})
+    } else if (status === 'en_cours') {
+      this.setState({progress: 60})
+    } else if (status === 'commande_prete') {
+      this.setState({progress: 80})
+    } else {
+      this.setState({progress: 100})
+    }
   }
 
   getSingleOrder = () => {
@@ -62,7 +79,8 @@ class UserOrderDetails extends React.Component {
         if (order) {
           const { items, name, total_price, status, date } = order;
           this.setState({ items, name, total_price, status });
-          this.convertDate(date)
+          this.convertDate(date);
+          this.convertStatus(status);
         }
       })
       .catch((error) => {
@@ -77,50 +95,50 @@ class UserOrderDetails extends React.Component {
   }
 
   render() {
-    console.log("this.state", this.state);
+    const date = `${this.state.dayWeek} ${this.state.day} ${this.state.month}`;
+    const price = `${this.state.total_price}€`;
     return (
-      <div className="order-details">
-        <h2>Ma commande</h2>
-        <div className="order-cart">
-
-          <h3>{`
-                ${this.state.dayWeek} 
-                ${this.state.day} 
-                ${this.state.month}
-          `}</h3>
-          <h4>{this.state.total_price} €</h4>
-          
-          {this.state.items.map((item, i) => {
-            const product = item.product_id;
-            return (
-              <div key={i} className="product-details">
-                <h2></h2>
-                <img src={`${product.photo}`} alt=""></img>
-                <p>{item.quantity}</p>
-                <p>{product.name}</p>
-                <p className="price">{product.price}€</p>
-              </div>
-            );
-          })}
-        </div>
-        <p>{this.state.total_price}€</p>
+      <div className="all-orders container">
+        <div className="ongoing-orders">
+          <h6>Ma commande en cours</h6>
+          <div className="accordion-item--opened">
+            <div className="accordion-item__line container">
+              <h6 className="accordion-item__title">{date}</h6>
+              <h6 className="accordion-item__price">{price}</h6>
+            </div>
+            <div className="accordion-item__line container">
+              <p>{this.state.items.length} items</p>
+            </div>
+            <div className="accordion-item__content container">
+              {this.state.items.map((item, i) => {
+                const product = item.product_id;
+                return (
+                  <div key={i} className="accordion-item__product">
+                    <img src={`${product.photo}`} alt=""></img>
+                    <p>{item.quantity}</p>
+                    <p>{product.name}</p>
+                    <p className="price">{product.price}€</p>
+                  </div>
+                );
+              })}
+            </div>
+            
+          </div>
           <div className="status">
-            <ul className="progress-bar">
-              <li className="active">En Attente</li>
-              <li className="">Acceptée</li>
-              <li className="">En preparation</li>
-              <li className="">Prêt</li>
-              <li className="">Récupérée</li>
-            </ul>
+            <ProgressBar
+              percent={this.state.progress}
+              filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"
+            />
           </div>
 
-        <div className="map"></div>
+          <div className="map"></div>
 
-        {this.state.errorMessage && (
-          <div className="message">
-            <p>{this.state.errorMessage}</p>
-          </div>
-        )}
+          {this.state.errorMessage && (
+            <div className="message">
+              <p>{this.state.errorMessage}</p>
+            </div>
+          )}
+        </div>
       </div>
     );
   }

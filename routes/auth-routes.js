@@ -69,22 +69,22 @@ authRoutes.post("/logout", (req, res, next) => {
 });
 
 authRoutes.put("/edit", (req, res, next) => {
-  // const { username, email, password, phone } = req.body;
+  const { username, email, password, phone } = req.body;
+  const id = req.session.user._id
 
   if (!req.session.user) {
     res.status(401).json({message: "You need to be logged in!"});
     return;
   }
 
-  User.findByIdAndUpdate(req.session.user._id, req.body)
-  .then(() => {
-    res
-      .status(200)
-      .json({
-        message: `User with ${req.session.user._id} is updated successfully.`,
-      });
+  User.findByIdAndUpdate(id, { username, email, password, phone }, {new: true})
+  .then(user => {
+    req.session.user = user
+    res.status(200).json(user);
   })
-  .catch((error) => res.status(500).json({message:error.message}));
+  .catch(err => {
+    res.status(500).json(err);
+  });
 });
 
 module.exports = authRoutes;

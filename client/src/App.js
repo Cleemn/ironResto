@@ -13,6 +13,7 @@ import EditUser from "./components/profilePage/EditUser";
 import { Route, Switch } from "react-router-dom";
 
 import { loggedin } from "./components/auth/auth-service";
+import Fade from "react-reveal/Fade";
 
 class App extends React.Component {
   state = {

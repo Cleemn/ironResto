@@ -48,11 +48,10 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <div className="auth">
-        <img src="logo.png" alt="" />
+      <div className="auth container">
         <form onSubmit={this.handleFormSubmit}>
           <div className="form-group">
-            <label>Email address</label>
+            <label>Adresse email</label>
             <input
               type="email"
               className="form-control"
@@ -65,7 +64,7 @@ class Signup extends React.Component {
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label>Mot de passe</label>
             <input
               type="password"
               name="password"
@@ -78,7 +77,7 @@ class Signup extends React.Component {
           </div>
 
           <div className="form-group">
-            <label>Username</label>
+            <label>Pseudo</label>
             <input
               type="text"
               className="form-control"
@@ -91,7 +90,7 @@ class Signup extends React.Component {
           </div>
 
           <div className="form-group">
-            <label>Phone</label>
+            <label>Numéro de téléphone</label>
             <input
               type="tel"
               className="form-control"
@@ -103,11 +102,12 @@ class Signup extends React.Component {
             />
           </div>
           <button type="submit" className="btn btn-orange btn-block">
-            Sign Up
+            Je créé mon compte
           </button>
           <div className="forgot-password text-right">
             <p>
-              Already registered ?<Link to="/login">Login</Link>
+              J'ai déjà un compte !<Link to="/login">Se connecter
+              </Link>
             </p>
           </div>
 

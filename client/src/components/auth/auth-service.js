@@ -17,7 +17,7 @@ function login(username, password, email) {
 export {login}
 
 function edit(username, email, password, phone) {
-  return service.post('/edit', {username, email, password, phone}).then(response => response.data)
+  return service.put('/edit', {username, email, password, phone}).then(response => response.data)
 }
 export {edit}
 

@@ -69,7 +69,7 @@ authRoutes.post("/logout", (req, res, next) => {
 });
 
 authRoutes.put("/edit", (req, res, next) => {
-  const { username, email, password, phone, type } = req.body;
+  const { username, email, password, phone } = req.body;
   const id = req.session.user._id
 
   if (!req.session.user) {
@@ -77,7 +77,7 @@ authRoutes.put("/edit", (req, res, next) => {
     return;
   }
 
-  User.findByIdAndUpdate(id, { username, email, password, phone, type }, {new: true})
+  User.findByIdAndUpdate(id, { username, email, password, phone }, {new: true})
   .then(user => {
     req.session.user = user
     res.status(200).json(user);

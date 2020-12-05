@@ -27,7 +27,7 @@ class AccordionItem extends React.Component {
           },
             }}>{this.props.date}</h6>
           <h6 {...{ className: "accordion-item__price" }}>
-            Total: {this.props.price}
+            {this.props.price}
           </h6>
         </div>
         <div

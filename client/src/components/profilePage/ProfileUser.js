@@ -36,12 +36,16 @@ class ProfileUser extends React.Component {
   };
 
   convertDate(date) {
-    let orderDate = new Date(Date(date));
+    let orderDate = new Date(date);
     let dayWeek = frenchDays[orderDate.getDay()];
     let day = orderDate.getDate();
     let month = frenchMonths[orderDate.getMonth()];
     let year = orderDate.getFullYear();
-    return { dayWeek, day, month, year };
+    let hour = orderDate.getHours();
+    let min = orderDate.getMinutes();
+    min < 10 ? min = '0' + min : min = min;
+    hour < 10 ? hour = '0' + hour : hour = hour;
+    return { dayWeek, day, month, year, hour, min };
   }
 
   capitalizeFirstLetter(string) {
@@ -87,51 +91,59 @@ class ProfileUser extends React.Component {
         <div className="all-orders">
           <div className="ongoing-orders">
             <h6>Mes commandes en cours</h6>
-            <div {...{ className: "wrapper" }}>
-              <ul {...{ className: "accordion-list" }}>
-                {this.state.onGoingOrders.map((order, key) => {
-                  const { dayWeek, day, month } = this.convertDate(order.date);
-                  const date = `${dayWeek} ${day} ${month}`;
-                  const price = `${order.total_price}€`;
-                  return (
-                    <li {...{ className: "accordion-list__item", key }}>
-                      <AccordionItem
-                        orderId={order._id}
-                        date={date}
-                        price={price}
-                        items={order.items}
-                        status={order.status}
-                        {...this.props}
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            {this.state.onGoingOrders.length === 0 ? (
+              <p>Vous n'avez pas de commande en cours.</p>
+            ) : (
+              <div {...{ className: "wrapper" }}>
+                <ul {...{ className: "accordion-list" }}>
+                  {this.state.onGoingOrders.map((order, key) => {
+                    const { dayWeek, day, month, hour, min } = this.convertDate(order.date);
+                    const date = `${dayWeek} ${day} ${month} à ${hour}h${min}`;
+                    const price = `${order.total_price}€`;
+                    return (
+                      <li {...{ className: "accordion-list__item", key }}>
+                        <AccordionItem
+                          orderId={order._id}
+                          date={date}
+                          price={price}
+                          items={order.items}
+                          status={order.status}
+                          {...this.props}
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
           </div>
           <div className="previous-orders">
           <h6>Mes commandes passées</h6>
-            <div {...{ className: "wrapper" }}>
-              <ul {...{ className: "accordion-list" }}>
-                {this.state.prevOrders.map((order, key) => {
-                  const { dayWeek, day, month } = this.convertDate(order.date);
-                  const date = `${dayWeek} ${day} ${month}`;
-                  const price = `${order.total_price}€`;
-                  return (
-                    <li {...{ className: "accordion-list__item", key }}>
-                      <AccordionItem
-                        orderId={order._id}
-                        date={date}
-                        price={price}
-                        items={order.items}
-                        status={order.status}
-                        {...this.props}
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            {this.state.prevOrders.length === 0 ? (
+              <p>Vous n'avez pas encore de commande terminée.</p>
+            ) : (
+              <div {...{ className: "wrapper" }}>
+                <ul {...{ className: "accordion-list" }}>
+                  {this.state.prevOrders.map((order, key) => {
+                    const { dayWeek, day, month, hour, min } = this.convertDate(order.date);
+                    const date = `${dayWeek} ${day} ${month} à ${hour}h${min}`;
+                    const price = `${order.total_price}€`;
+                    return (
+                      <li {...{ className: "accordion-list__item", key }}>
+                        <AccordionItem
+                          orderId={order._id}
+                          date={date}
+                          price={price}
+                          items={order.items}
+                          status={order.status}
+                          {...this.props}
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>

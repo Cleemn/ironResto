@@ -42,7 +42,9 @@ class UserOrderDetails extends React.Component {
     day: "",
     month:"",
     progress: 0,
-    time: ""
+    time: "",
+    min: "",
+    hour: ""
   };
 
   convertDate(date) {
@@ -51,7 +53,11 @@ class UserOrderDetails extends React.Component {
     let day = orderDate.getDate();
     let month = frenchMonths[orderDate.getMonth()];
     let year = orderDate.getFullYear();
-    this.setState({ dayWeek, day, month, year });
+    let hour = orderDate.getHours();
+    let min = orderDate.getMinutes();
+    min < 10 ? min = '0' + min : min = min;
+    hour < 10 ? hour = '0' + hour : hour = hour;
+    this.setState({ dayWeek, day, month, year, min, hour });
   }
 
   convertStatus(status) {
@@ -96,7 +102,7 @@ class UserOrderDetails extends React.Component {
   }
 
   render() {
-    const date = `${this.state.dayWeek} ${this.state.day} ${this.state.month}`;
+    const date = `${this.state.dayWeek} ${this.state.day} ${this.state.month} à ${this.state.hour}h${this.state.min}`;
     const price = `${this.state.total_price}€`;
     return (
       <div id="order-details" className="all-orders container mt-3">

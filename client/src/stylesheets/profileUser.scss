@@ -31,8 +31,8 @@ $cLightGray: rgba(#000, 0.1);
     margin: 0 ;
     padding: 0;
     max-width: 250em;
-    border-radius: 0.5em;
     overflow: hidden;
+    border-radius: 0.5em;
 
     &__article{
         background-color: #F6F5F4;
@@ -40,7 +40,7 @@ $cLightGray: rgba(#000, 0.1);
 
     &__item {
         &+& {
-            margin-top: 2em;
+            margin-top: 1em;
             background-color: #F6F5F4;
         }
     }

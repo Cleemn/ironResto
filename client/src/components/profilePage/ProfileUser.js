@@ -47,7 +47,6 @@ class ProfileUser extends React.Component {
   }
 
   render() {
-
     return (
       <>
         <div className="user-info">
@@ -60,25 +59,29 @@ class ProfileUser extends React.Component {
           ></img>
         </div>
 
-          <div className="profile-orders">
+        <div className="profile-orders">
           <h2>Mes commandes</h2>
-            <div {...{ className: "wrapper" }}>
-              <ul {...{ className: "accordion-list" }}>
-                {this.state.orders.map((order, key) => {
-                  const { dayWeek, day, month } = this.convertDate(
-                    order.date
-                  );
-                  const date = `${dayWeek} ${day} ${month}`;
-                  const price = `${order.total_price}€`;
-                  return (
-                    <li {...{ className: "accordion-list__item", key }}>
-                      <AccordionItem {...{ date, price, items: order.items }} />
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+          <div {...{ className: "wrapper" }}>
+            <ul {...{ className: "accordion-list" }}>
+              {this.state.orders.map((order, key) => {
+                const { dayWeek, day, month } = this.convertDate(order.date);
+                const date = `${dayWeek} ${day} ${month}`;
+                const price = `${order.total_price}€`;
+                return (
+                  <li {...{ className: "accordion-list__item", key }}>
+                    <AccordionItem
+                      orderId={order._id}
+                      date={date}
+                      price={price}
+                      items={order.items}
+                      {...this.props}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
           </div>
+        </div>
       </>
     );
   }
@@ -91,7 +94,6 @@ class AccordionItem extends React.Component {
 
   render() {
     const {
-      props: { items, date, price },
       state: { opened },
     } = this;
 
@@ -99,29 +101,39 @@ class AccordionItem extends React.Component {
       <div
         {...{
           className: `accordion-item, ${opened && "accordion-item--opened"}`,
-          onClick: () => {
-            this.setState({ opened: !opened });
-          },
         }}
       >
-        <div {...{ className: "accordion-item__line" }}>
-          <h3 {...{ className: "accordion-item__title" }}>
-            {date} 
-          </h3>
-          <h4 {...{ className: "accordion-item__price" }}>Total: {price}</h4>
+        <div
+          {...{
+            className: "accordion-item__line",
+          }}
+        >
+          <h3 {...{ 
+            className: "accordion-item__title", 
+            onClick: () => {
+            this.props.history.push(`/orders/${this.props.orderId}`)
+          },
+            }}>{this.props.date}</h3>
+          <h4 {...{ className: "accordion-item__price" }}>
+            Total: {this.props.price}
+          </h4>
 
-          <span {...{ className: "accordion-item__icon" }} />
+          <span
+            {...{
+              className: "accordion-item__icon",
+              onClick: () => {
+                this.setState({ opened: !opened });
+              },
+            }}
+          />
         </div>
         <div {...{ className: "accordion-item__inner" }}>
           <div {...{ className: "accordion-item__content" }}>
-            {items.map((item, i) => {
-              const product = item.product_id
+            {this.props.items.map((item, i) => {
+              const product = item.product_id;
               return (
                 <div key={i} {...{ className: "accordion-item__product" }}>
-                  <img
-                    src={`${product.photo}`}
-                    alt=""
-                  ></img>
+                  <img src={`${product.photo}`} alt=""></img>
                   <p>{item.quantity}</p>
                   <p>{product.name}</p>
                   <p className="price">{product.price}€</p>

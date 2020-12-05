@@ -79,4 +79,14 @@ class ProductDetails extends Component {
   }
 }
 
+class Item extends React.Component {
+  state = {};
+
+  render(){
+    return (<div className="item-cart">
+      <p>Item cart</p>
+    </div>)
+  }
+}
+
 export default ProductDetails;

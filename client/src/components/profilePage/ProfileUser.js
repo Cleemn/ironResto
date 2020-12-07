@@ -32,7 +32,8 @@ class ProfileUser extends React.Component {
   };
 
   convertDate(date) {
-    let orderDate = new Date(Date(date));
+
+    let orderDate = new Date(date);
     let dayWeek = frenchDays[orderDate.getDay()];
     let day = orderDate.getDate();
     let month = frenchMonths[orderDate.getMonth()];

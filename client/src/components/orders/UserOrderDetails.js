@@ -1,6 +1,7 @@
 import React from "react";
-import getSingleOrder from "../services/order-service";
+// import getSingleOrder from "../services/order-service";
 import axios from "axios";
+import socketIOClient from "socket.io-client";
 // import { Link } from "react-router-dom";
 
 const frenchDays = [
@@ -31,14 +32,15 @@ const frenchMonths = [
 class UserOrderDetails extends React.Component {
   state = {
     errorMessage: "",
+    _id: "",
     items: [],
     name: "",
     total_price: 0,
     status: "",
     photo: "",
-    dayWeek:"", 
+    dayWeek: "",
     day: "",
-    month:""
+    month: "",
   };
 
   convertDate(date) {
@@ -50,19 +52,35 @@ class UserOrderDetails extends React.Component {
     this.setState({ dayWeek, day, month, year });
   }
 
+  componentDidMount() {
+    this.getSingleOrder().then(() => {
+      this.props.socket.emit("getOrderData", this.state._id);
+      this.props.socket.on("get_order", (updatedOrder) => {
+        console.log("upda",updatedOrder)
+      });
+    });
+  }
+
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState._id !== "" && this.state._id) {
+      // console.log("componentDidUpdate", this.state)
+    }
+  }
+
   getSingleOrder = () => {
     const { params } = this.props.match;
 
-    axios
+    return axios
       .get(`http://localhost:5000/api/orders/${params.id}`, {
         withCredentials: true,
       })
       .then((response) => {
         const order = response.data[0];
         if (order) {
-          const { items, name, total_price, status, date } = order;
-          this.setState({ items, name, total_price, status });
-          this.convertDate(date)
+          const { _id, items, name, total_price, status, date } = order;
+          this.setState({ _id, items, name, total_price, status });
+          this.convertDate(date);
         }
       })
       .catch((error) => {
@@ -72,24 +90,19 @@ class UserOrderDetails extends React.Component {
       });
   };
 
-  componentDidMount() {
-    this.getSingleOrder();
-  }
 
   render() {
-    console.log("this.state", this.state);
     return (
       <div className="order-details">
         <h2>Ma commande</h2>
         <div className="order-cart">
-
           <h3>{`
                 ${this.state.dayWeek} 
                 ${this.state.day} 
                 ${this.state.month}
           `}</h3>
           <h4>{this.state.total_price} €</h4>
-          
+
           {this.state.items.map((item, i) => {
             const product = item.product_id;
             return (
@@ -104,15 +117,16 @@ class UserOrderDetails extends React.Component {
           })}
         </div>
         <p>{this.state.total_price}€</p>
-          <div className="status">
-            <ul className="progress-bar">
-              <li className="active">En Attente</li>
-              <li className="">Acceptée</li>
-              <li className="">En preparation</li>
-              <li className="">Prêt</li>
-              <li className="">Récupérée</li>
-            </ul>
-          </div>
+        <p>{this.state.status}</p>
+        {/* <div className="status">
+          <ul className="progress-bar">
+            <li className="active">En Attente</li>
+            <li className="">Acceptée</li>
+            <li className="">En preparation</li>
+            <li className="">Prêt</li>
+            <li className="">Récupérée</li>
+          </ul>
+        </div> */}
 
         <div className="map"></div>
 

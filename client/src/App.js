@@ -11,6 +11,9 @@ import Basket from "./components/orders/Basket";
 import UserOrderDetails from "./components/orders/UserOrderDetails";
 import EditUser from "./components/profilePage/EditUser";
 import { Route, Switch } from "react-router-dom";
+import Fade from "react-reveal/Fade";
+import io from "socket.io-client";
+import EditOrder from "./components/orders/EditOrder"
 
 import { loggedin } from "./components/auth/auth-service";
 
@@ -19,6 +22,8 @@ class App extends React.Component {
     loggedInUser: null,
     basket: []
   };
+
+  socket = io('http://localhost:5000')
 
   fetchUser() {
     if (this.state.loggedInUser === null) {
@@ -144,7 +149,8 @@ class App extends React.Component {
                     />
                   )}
                 />
-                <Route exact path="/orders/:id" component={UserOrderDetails} />
+                <Route exact path="/orders/:id" render={(props)=> (<UserOrderDetails socket={this.socket} {...props}/>)} />
+                {/* <Route exact path="/orders/edit/:id" render={(props)=> (<EditOrder socket={this.socket} {...props}/>)} /> */}
                 <Fade bottom>
                   <Route exact path="/products/:id" component={ProductDetails}/>
                 </Fade>

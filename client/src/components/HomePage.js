@@ -92,21 +92,21 @@ class HomePage extends React.Component {
             </p>
           </div>
         </div>
-        <div className="buttons">
-          <button onClick={this.getAllProducts} className="m-3 p-2">
-            🍽&nbsp;La&nbsp;carte
+        <div className="buttons container">
+          <button onClick={this.getAllProducts} className="my-3 mx-2">
+            🍽&nbsp;&nbsp;La&nbsp;carte
           </button>
-          <button onClick={this.sortByType} id="entree" className="m-3 p-2">
-            🥗&nbsp;Entrées
+          <button onClick={this.sortByType} id="entree" className="my-3 mx-2">
+            🥗&nbsp;&nbsp;Entrées
           </button>
-          <button onClick={this.sortByType} id="plat" className="m-3 p-2">
-            🍝&nbsp;Plats
+          <button onClick={this.sortByType} id="plat" className="my-3 mx-2">
+            🍝&nbsp;&nbsp;Plats
           </button>
-          <button onClick={this.sortByType} id="dessert" className="m-3 p-2">
-            🍰&nbsp;Desserts
+          <button onClick={this.sortByType} id="dessert" className="my-3 mx-2">
+            🍰&nbsp;&nbsp;Desserts
           </button>
-          <button onClick={this.sortByType} id="boisson" className="m-3 p-2">
-            🍹&nbsp;Boissons
+          <button onClick={this.sortByType} id="boisson" className="my-3 mx-2">
+            🍹&nbsp;&nbsp;Boissons
           </button>
         </div>
 

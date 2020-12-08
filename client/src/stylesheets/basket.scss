@@ -62,8 +62,7 @@
     margin-top: 5em;
     
     img{
-        max-width: 50em;
-        min-width: 10em;
+        max-width: 50%;
         max-height: auto;
         min-height: auto;
         margin-bottom: 5em;
@@ -75,9 +74,10 @@
     }
 
     .buttons{
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
+        .btn {
+            margin-bottom: 12px;
+            margin-top: 12px;
+        }
     }
     
         

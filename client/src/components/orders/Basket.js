@@ -1,6 +1,7 @@
 import React from "react";
 import { createOrder } from "../services/order-service";
 import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 const INIT_STATE = {
   errorMessage: "",
@@ -32,6 +33,7 @@ class Basket extends React.Component {
           }
         });
     }
+    localStorage.clear();
   };
 
   IncreaseQuantity = () => {
@@ -68,6 +70,9 @@ class Basket extends React.Component {
   componentDidMount() {
     this.totalPrice();
     this.removeProduct();
+    let localCart = localStorage.getItem("basket");
+    localCart = JSON.parse(localCart);
+    console.log(localCart);
   }
 
   render() {
@@ -125,42 +130,24 @@ class Basket extends React.Component {
 class ProductCart extends React.Component {
   render() {
     return (
-      <div className="product-cart">
-        <span className="cart-header">
-          <img src={`${this.props.product.photo}`} alt=""></img>
-          <p>{this.props.product.name}</p>
-          <p>{this.props.product.price}€</p>
-        </span>
-        <span className="cart-footer">
-          <img
-            src="../dustbin.svg"
-            alt=""
-            onClick={(e) => {
-              console.log("clicked", this.props.product);
-              this.props.removeProduct(e, this.props.product._id);
-            }}
-          ></img>
-          <div className="d-flex justify-content-evenly">
-            <button
-              style={{ border: "none" }}
-              className="pr-2 remove"
-              onClick={this.props.DecreaseQuantity}
-            >
-              -
-            </button>
-            <button style={{ border: "none" }} className="pr-2 quantity">
-              {this.props.product.quantity}
-            </button>
-            <button
-              style={{ border: "none" }}
-              className="pr-2 add"
-              onClick={this.props.IncreaseQuantity}
-            >
-              +
-            </button>
+      <div id="order-details" className="all-orders container mt-3">
+        <div className="ongoing-orders">
+          <h6>Je commande :</h6>
+          <div className="accordion-item--opened accordion-list">
+            <div className="accordion-item__line container">
+            </div>
+            <div className="accordion-item__content container">
+              <div className="accordion-item__product">
+                <img src={`${this.props.product.photo}`}  alt=""></img>
+                <p>{this.props.product.quantity}</p>
+                <p>{this.props.product.name}</p>
+                <p className="price">{this.props.product.price}€</p>
+              </div>
+            </div>
           </div>
-        </span>
+        </div>
       </div>
+
     );
   }
 }
@@ -171,20 +158,12 @@ class EmptyBasket extends React.Component {
     return (
       <div className="product-cart empty-basket">
         <img src="../shopping-basket-color.svg" alt=""></img>
-        <h2>Votre panier est vide</h2>
-        <span className="buttons">
-          <Link to="/">
-            <button className="btn btn-orange btn-block">
-              Avez-vous faim ?
-            </button>
-          </Link>
-          <Link to="/signup">
-            <button className="btn btn-orange btn-block">Signup</button>
-          </Link>
-          <Link to="/login">
-            <button className="btn btn-orange btn-block">Login</button>
-          </Link>
-        </span>
+        <h5>Votre panier est vide</h5>
+        <div className="buttons">
+          <Button href="/">
+            Regarder la carte
+          </Button>
+        </div>
       </div>
     );
   }

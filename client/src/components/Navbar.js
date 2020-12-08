@@ -22,7 +22,7 @@ class AppNavbar extends React.Component {
   render() {
     return (
         <Navbar expand="lg" sticky="top" bg="white">
-          {this.props.basket.length === 0 ? (
+          {localStorage.length === 0 ? (
             <Navbar.Brand as={Link} to="/" className="nav-item">
                 <img 
                 className="d-inline-block align-top logo"
@@ -34,7 +34,7 @@ class AppNavbar extends React.Component {
               <Flip right>
                 <Navbar.Brand as={Link} to="/user/order" className="nav-item">
                   <img src="/shopping-basket-white-black.png" alt="" className="d-inline-block align-top logo"/>
-                  <span>{this.props.quantity}</span>
+                  <span>{this.state.setQuantity}</span>
                 </Navbar.Brand>
               </Flip>
             )}

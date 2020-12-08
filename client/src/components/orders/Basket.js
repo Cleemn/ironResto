@@ -57,9 +57,6 @@ class Basket extends React.Component {
   }
 
   removeProduct = (event, productId) => {
-    console.log("inside removeProduct func");
-    console.log();
-    console.log(this.props.basket);
     if (this.props.basket) {
       let basket = this.props.basket.filter((product) => {
         return product._id !== productId;

@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import { productById } from "../services/product-service";
+
 class ProductDetails extends Component {
   state = {
     clicks: 1
   }
 
-  // 👨‍🏫
   componentDidMount(){
     this.getSingleProduct();
   }
 
-  // 👨‍🏫
   getSingleProduct = () => {
       const { params } = this.props.match;
       axios.get(`${process.env.REACT_APP_API_URL}/products/${params.id}`)
@@ -34,6 +34,13 @@ class ProductDetails extends Component {
       this.setState({ clicks: this.state.clicks - 1 });
     }
   }
+
+  addToBasket = () => {
+    productById(this.state._id)
+    .then(product => {
+      this.props.updateBasket({ ...product, quantity: this.state.clicks })
+    });
+  };
 
   render(){
     return(
@@ -66,27 +73,24 @@ class ProductDetails extends Component {
                   <p>{this.state.description}</p>
                 </div>
               </div>
-              <button type="submit" className="btn btn-orange btn-block">Ajouter au panier</button>
+              <button type="submit" className="btn btn-orange btn-block" onClick={() => this.addToBasket()}>Ajouter au panier</button>
             </div>
           </div>
         </div>
       </div>
-      <style type="text/css">
-        {`.navbar {display: none}`}
-      </style>
     </div>
     )
   }
 }
 
-class Item extends React.Component {
-  state = {};
+// class Item extends React.Component {
+//   state = {};
 
-  render(){
-    return (<div className="item-cart">
-      <p>Item cart</p>
-    </div>)
-  }
-}
+//   render(){
+//     return (<div className="item-cart">
+//       <p>Item cart</p>
+//     </div>)
+//   }
+// }
 
 export default ProductDetails;

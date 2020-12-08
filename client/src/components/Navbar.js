@@ -7,7 +7,7 @@ import Flip from "react-reveal/Flip";
 
 class AppNavbar extends React.Component {
   state = {
-    redirect: false,
+    redirect: false
   };
 
   logoutHandler = (e) => {
@@ -20,7 +20,6 @@ class AppNavbar extends React.Component {
   }
 
   render() {
-
     return (
         <Navbar expand="lg" sticky="top" bg="white">
           {this.props.basket.length === 0 ? (
@@ -34,7 +33,7 @@ class AppNavbar extends React.Component {
             ) : (
               <Flip right>
                 <Navbar.Brand as={Link} to="/user/order" className="nav-item">
-                  <img src="shopping-basket-white-black.png" alt="" className="d-inline-block align-top logo"/>
+                  <img src="/shopping-basket-white-black.png" alt="" className="d-inline-block align-top logo"/>
                   <span>{this.props.basket.length}</span>
                 </Navbar.Brand>
               </Flip>

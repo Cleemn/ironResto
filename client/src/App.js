@@ -18,7 +18,8 @@ import Fade from "react-reveal/Fade";
 class App extends React.Component {
   state = {
     loggedInUser: null,
-    basket: []
+    basket: [],
+    quantity: 0
   };
 
   fetchUser() {
@@ -48,6 +49,7 @@ class App extends React.Component {
     if (!this.basketContains(item._id)) {
       this.setState({
         basket: [...this.state.basket, item],
+        quantity: this.state.quantity += item.quantity
       });
     }
   };
@@ -76,6 +78,7 @@ class App extends React.Component {
                 userInSession={this.state.loggedInUser}
                 updateUser={this.updateLoggedInUser}
                 basket={this.state.basket}
+                quantity={this.state.quantity}
                 {...props}
               />
               <Switch>

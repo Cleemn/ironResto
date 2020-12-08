@@ -32,7 +32,7 @@ class HomePage extends React.Component {
     if (product_id) {
       productById(product_id)
         .then(product => {
-          this.props.updateBasket({ ...product, quantity: 1 })
+          this.props.updateBasket({ ...product, quantity: 1 });
         });
     }
   };

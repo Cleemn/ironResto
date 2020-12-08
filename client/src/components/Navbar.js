@@ -34,7 +34,7 @@ class AppNavbar extends React.Component {
               <Flip right>
                 <Navbar.Brand as={Link} to="/user/order" className="nav-item">
                   <img src="/shopping-basket-white-black.png" alt="" className="d-inline-block align-top logo"/>
-                  <span>{this.state.setQuantity}</span>
+                  <span>{this.props.quantity}</span>
                 </Navbar.Brand>
               </Flip>
             )}

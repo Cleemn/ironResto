@@ -167,7 +167,7 @@ $cLightGray: rgba(#000, 0.1);
     }
 }
 
-#order-details {
+#order-details, #basket {
     h6 {
         text-align: center;
         margin-bottom: 24px;
@@ -176,6 +176,7 @@ $cLightGray: rgba(#000, 0.1);
 
     .accordion-item--opened {
         margin-bottom: 24px;
+        width: 100%;
 
         h6 {
             text-align: left;

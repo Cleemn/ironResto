@@ -47,7 +47,7 @@ class Basket extends React.Component {
   };
 
   totalPrice() {
-    let basket = [...this.props.basket];
+    let basket = [...JSON.parse(localStorage.basket)];
 
     let totalPrice = 0;
 
@@ -70,9 +70,10 @@ class Basket extends React.Component {
   componentDidMount() {
     this.totalPrice();
     this.removeProduct();
-    let localCart = localStorage.getItem("basket");
-    localCart = JSON.parse(localCart);
-    console.log(localCart);
+  }
+
+  clearBasket() {
+    localStorage.clear();
   }
 
   render() {
@@ -83,18 +84,18 @@ class Basket extends React.Component {
         ) : (
           <div className="basket-details">
             <div className="restaurant-details">
-              <h2>Adresse du restaurant</h2>
+              <h6>Adresse du restaurant</h6>
             </div>
-            <h2>Ma commande</h2>
             <ul className="product-list">
               <li className="product-list-content">
-                {this.props.basket.map((product) => {
+                {this.props.basket.map((product, i) => {
                   return (
                     <ProductCart
                       product={{ ...product }}
                       IncreaseQuantity={this.IncreaseQuantity}
                       DecreaseQuantity={this.DecreaseQuantity}
                       removeProduct={this.removeProduct}
+                      key={i}
                     />
                   );
                 })}
@@ -130,7 +131,7 @@ class Basket extends React.Component {
 class ProductCart extends React.Component {
   render() {
     return (
-      <div id="order-details" className="all-orders container mt-3">
+      <div id="basket" className="all-orders container mt-3">
         <div className="ongoing-orders">
           <h6>Je commande :</h6>
           <div className="accordion-item--opened accordion-list">

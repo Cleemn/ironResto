@@ -55,18 +55,18 @@ class App extends React.Component {
       });
       let stringCart = JSON.stringify(this.state.basket);
       localStorage.setItem('basket', stringCart);
-      let carteQuantity = JSON.stringify(this.state.quantity);
-      localStorage.setItem('quantity', carteQuantity);
-      this.setState({setBasket: JSON.parse(localStorage.basket), setQuantity: localStorage.quantity});
-      console.log(this.state.setQuantity)
+      localStorage.setItem('quantity', this.state.quantity);
     }
   };
-
+  
   updateBasket = (basket) => {
     this.setState({ basket });
   };
-
+  
   componentDidMount() {
+    if (localStorage.length !== 0) {
+      this.setState({basket: JSON.parse(localStorage.basket), quantity: localStorage.quantity});
+    }
     this.fetchUser();
   }
 
@@ -77,7 +77,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(this.state.setQuantity)
     return (
       <div className="App">
         <Route
@@ -87,7 +86,7 @@ class App extends React.Component {
                 userInSession={this.state.loggedInUser}
                 updateUser={this.updateLoggedInUser}
                 basket={this.state.basket}
-                setQuantity={this.state.setQuantity}
+                quantity={this.state.quantity}
                 {...props}
               />
               <Switch>

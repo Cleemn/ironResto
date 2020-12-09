@@ -14,8 +14,8 @@ class Basket extends React.Component {
 
   addOrder = (e) => {
     e.preventDefault();
-    if (this.props.basket.length !== 0) {
-      const products = [...this.props.basket];
+    if (JSON.parse(localStorage.basket).length !== 0) {
+      const products = [...JSON.parse(localStorage.basket)];
 
       let items = products.map((product) => {
         return { product_id: product._id, quantity: product.quantity };
@@ -25,7 +25,9 @@ class Basket extends React.Component {
         .then((createdOrder) => {
           this.props.history.push(`/orders/${createdOrder._id}`);
           this.props.updateBasket([]);
+          this.props.updateQuantity(0);
           this.setState(INIT_STATE);
+          localStorage.clear();
         })
         .catch((error) => {
           if (error.response) {
@@ -33,7 +35,6 @@ class Basket extends React.Component {
           }
         });
     }
-    localStorage.clear();
   };
 
   IncreaseQuantity = () => {
@@ -47,20 +48,22 @@ class Basket extends React.Component {
   };
 
   totalPrice() {
-    let basket = [...JSON.parse(localStorage.basket)];
-
-    let totalPrice = 0;
-
-    totalPrice = basket.reduce((acc, product) => {
-      return acc + product.quantity * product.price;
-    }, 0);
-
-    this.setState({ totalPrice });
+    if (localStorage.basket) {
+      let basket = [...JSON.parse(localStorage.basket)];
+  
+      let totalPrice = 0;
+  
+      totalPrice = basket.reduce((acc, product) => {
+        return acc + product.quantity * product.price;
+      }, 0);
+  
+      this.setState({ totalPrice });
+    }
   }
 
   removeProduct = (event, productId) => {
-    if (this.props.basket) {
-      let basket = this.props.basket.filter((product) => {
+    if (localStorage.basket) {
+      let basket = JSON.parse(localStorage.basket).filter((product) => {
         return product._id !== productId;
       });
       this.props.updateBasket(basket);
@@ -72,23 +75,21 @@ class Basket extends React.Component {
     this.removeProduct();
   }
 
-  clearBasket() {
-    localStorage.clear();
-  }
-
   render() {
     return (
       <div className="basket">
-        {this.props.basket.length === 0 ? (
+        {localStorage.length === 0 ? (
           <EmptyBasket />
         ) : (
           <div className="basket-details">
             <div className="restaurant-details">
               <h6>Adresse du restaurant</h6>
+              <p>📍 123 boulevard Saint-Germain
+              <br/>75006, Paris</p>
             </div>
             <ul className="product-list">
               <li className="product-list-content">
-                {this.props.basket.map((product, i) => {
+                {JSON.parse(localStorage.basket).map((product, i) => {
                   return (
                     <ProductCart
                       product={{ ...product }}

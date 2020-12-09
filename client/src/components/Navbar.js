@@ -22,22 +22,19 @@ class AppNavbar extends React.Component {
   render() {
     return (
         <Navbar expand="lg" sticky="top" bg="white">
-          {localStorage.length === 0 ? (
-            <Navbar.Brand as={Link} to="/" className="nav-item">
-                <img 
-                className="d-inline-block align-top logo"
-                src="/logo.png"
-                alt="logo"
-                />
+          <Flip right>
+            <Navbar.Brand as={Link} to="/user/order" className="nav-item">
+              <img src="/shopping-basket-white-black.png" alt="" className="d-inline-block align-top basket-icon"/>
+              <p>{this.props.quantity}</p>
             </Navbar.Brand>
-            ) : (
-              <Flip right>
-                <Navbar.Brand as={Link} to="/user/order" className="nav-item">
-                  <img src="/shopping-basket-white-black.png" alt="" className="d-inline-block align-top logo"/>
-                  <span>{this.props.quantity}</span>
-                </Navbar.Brand>
-              </Flip>
-            )}
+          </Flip>
+          <Navbar.Brand as={Link} to="/" className="nav-item">
+              <img 
+              className="d-inline-block align-top logo"
+              src="/logo.png"
+              alt="logo"
+              />
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             {this.props.userInSession ? (
@@ -55,6 +52,7 @@ class AppNavbar extends React.Component {
                       .then(() => {
                         this.props.updateUser(null);
                         this.props.history.push("/");
+                        localStorage.clear();
                       })
                       .catch((err) => console.log(err));
                   }}

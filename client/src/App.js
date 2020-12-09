@@ -19,10 +19,8 @@ class App extends React.Component {
   state = {
     loggedInUser: null,
     basket: [],
-    setBasket: null,
-    quantity: 0,
-    setQuantity: 0
-  };
+    quantity: 0
+  }
 
   fetchUser() {
     if (this.state.loggedInUser === null) {
@@ -48,23 +46,34 @@ class App extends React.Component {
   };
 
   addToBasket = (item) => {
+    let setQuantity = parseInt(this.state.quantity) + item.quantity;
     if (!this.basketContains(item._id)) {
       this.setState({
         basket: [...this.state.basket, item],
-        quantity: this.state.quantity += item.quantity
+        quantity: setQuantity
       });
-      let stringCart = JSON.stringify(this.state.basket);
-      localStorage.setItem('basket', stringCart);
-      localStorage.setItem('quantity', this.state.quantity);
+    } else {
+      const newItem = this.state.basket.findIndex((product) => {return product._id === item._id})
+      let newBasket = [...this.state.basket]
+      newBasket[newItem] = {...newBasket[newItem], quantity: newBasket[newItem].quantity += 1};
+      this.setState({basket: newBasket, quantity: setQuantity});
     }
+    let stringCart = JSON.stringify(this.state.basket);
+    localStorage.setItem('basket', stringCart);
+    localStorage.setItem('quantity', this.state.quantity);
+    this.setState({basket: JSON.parse(localStorage.basket), quantity: localStorage.quantity});
   };
   
   updateBasket = (basket) => {
     this.setState({ basket });
   };
+
+  updateQuantity = (quantity) => {
+    this.setState({ quantity });
+  };
   
   componentDidMount() {
-    if (localStorage.length !== 0) {
+    if (localStorage.length > 0) {
       this.setState({basket: JSON.parse(localStorage.basket), quantity: localStorage.quantity});
     }
     this.fetchUser();
@@ -150,8 +159,10 @@ class App extends React.Component {
                     <Basket
                       userInSession={this.state.loggedInUser}
                       basket={this.state.basket}
+                      quantity={this.state.quantity}
                       addToBasket={this.addToBasket}
                       updateBasket={this.updateBasket}
+                      updateQuantity={this.updateQuantity}
                       {...props}
                     />
                   )}
@@ -164,7 +175,6 @@ class App extends React.Component {
                   render={(props) => (
                     <ProductDetails
                     updateBasket={this.addToBasket}
-                    getQuantity= {this.getQuantity}
                       {...props} />
                   )}
                 />

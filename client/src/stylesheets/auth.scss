@@ -3,9 +3,19 @@
   
   form {
     padding: 12px 24px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    background-color: #F6F5F4;
+    background-color: #ffffff;
     margin-bottom: 24px;
+
+    input {
+      border: 0px solid #ced4da;
+      background-color: #F6F5F4;
+
+      &:focus {
+        outline: 0;
+        box-shadow: none;
+      }
+    }
   }
 }

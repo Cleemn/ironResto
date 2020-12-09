@@ -24,11 +24,12 @@ class AppNavbar extends React.Component {
     return (
         <Navbar expand="lg" sticky="top" bg="white">
           <Navbar.Brand as={Link} to="/user/order" className="nav-item">
-            <img src="/shopping-basket-white-black.png" alt="" className="align-center basket-icon"/>
             {this.props.basket.length > 0 ? (
-              <div></div>
+              <Flip right>
+                <img src="/basket-color.png" alt="" className="align-center basket-icon"/>
+              </Flip>
             ) : (
-              <></>
+              <img src="/basket-white.png" alt="" className="align-center basket-icon"/>
             )}
           </Navbar.Brand>
           <Navbar.Brand as={Link} to="/" className="nav-item">

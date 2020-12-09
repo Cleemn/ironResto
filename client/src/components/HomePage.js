@@ -123,7 +123,7 @@ class HomePage extends React.Component {
                     <img src={product.photo} alt="" />
                   </Link>
                   <div className="infos">
-                    <h6 className="mt-2">{product.name}</h6>
+                    <h6 className="mt-3">{product.name}</h6>
                   </div>
                   <div className="d-flex align-items-end justify-content-between">
                       <p className="mb-0">{product.price}€</p>

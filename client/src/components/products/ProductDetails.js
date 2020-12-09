@@ -48,10 +48,6 @@ class ProductDetails extends Component {
     return(
     <div>
       <div id="product-detail">
-        <div className="header p-2">
-          <Link to={'/'}><img src="../white-arrow.png" alt=""/></Link>
-          <img src="../menu.png" alt=""/>
-        </div>
         <div className="product-card">
           <img className="product-image" src={this.state.photo} alt=""/>
           <div className="product-description">
@@ -61,9 +57,9 @@ class ProductDetails extends Component {
                 <div className="d-flex justify-content-between">
                   <h5>{this.state.name}</h5>
                   <div className="d-flex justify-content-evenly">
-                    <button style={{border: 'none'}} className="pr-2 remove" onClick={this.DecreaseItem}>-</button>
-                    <div className="px-2 quantity">{ this.state.clicks }</div>
-                    <button style={{border: 'none'}} className="pr-2 add" onClick={this.IncrementItem}>+</button>
+                    <button style={{border: 'none'}} className="remove" onClick={this.DecreaseItem}>-</button>
+                    <div className="px-2 pt-1 quantity">{ this.state.clicks }</div>
+                    <button style={{border: 'none'}} className="add" onClick={this.IncrementItem}>+</button>
                   </div>
                 </div>
                 <h6>{this.state.price} €</h6>
@@ -80,9 +76,6 @@ class ProductDetails extends Component {
           </div>
         </div>
       </div>
-      <style type="text/css">
-        {`.navbar {display: none}`}
-      </style>
     </div>
     )
   }

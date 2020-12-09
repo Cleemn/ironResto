@@ -112,7 +112,7 @@ class Basket extends React.Component {
               </div>
             ) : (
               <button
-                className="btn btn-orange btn-block"
+                className="btn btn-orange"
                 onClick={(e) => {
                   this.props.userInSession
                     ? this.addOrder(e)
@@ -154,25 +154,11 @@ class ProductCart extends React.Component {
                   }}
                   className="basket-img"
                 ></img>
-                <div className="d-flex justify-content-evenly">
-                  <button
-                    style={{ border: "none" }}
-                    className="pr-2 remove"
-                    onClick={this.props.DecreaseQuantity}
-                  >
-                    -
-                  </button>
-                  <button style={{ border: "none" }} className="pr-2 quantity">
-                    {this.props.product.quantity}
-                  </button>
-                  <button
-                    style={{ border: "none" }}
-                    className="pr-2 add"
-                    onClick={this.props.IncreaseQuantity}
-                  >
-                    +
-                  </button>
-                </div>
+                  <div className="d-flex justify-content-evenly">
+                    <button style={{border: 'none'}} className="remove" onClick={this.DecreaseItem}>-</button>
+                    <div className="px-2 pt-1 quantity">1</div>
+                    <button style={{border: 'none'}} className="add" onClick={this.IncrementItem}>+</button>
+                  </div>
               </div>
             </div>
           </div>
@@ -191,9 +177,9 @@ class EmptyBasket extends React.Component {
         <h5 className="text-center">Votre panier semble bien vide 😢</h5>
         <p className="text-center">On dirait que vous n'avez pas encore trouvé votre bonheur...</p>
         <div className="buttons">
-          <button href="/" className="btn btn-orange btn-block">
+          <Button href="/" className="btn btn-orange btn-block">
             Découvrir la carte
-          </button>
+          </Button>
         </div>
       </div>
     );

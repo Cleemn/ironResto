@@ -25,7 +25,7 @@ class AppNavbar extends React.Component {
           <Flip right>
             <Navbar.Brand as={Link} to="/user/order" className="nav-item">
               <img src="/shopping-basket-white-black.png" alt="" className="d-inline-block align-top basket-icon"/>
-              <p>{this.props.quantity}</p>
+              <p>{this.props.basket.length}</p>
             </Navbar.Brand>
           </Flip>
           <Navbar.Brand as={Link} to="/" className="nav-item">

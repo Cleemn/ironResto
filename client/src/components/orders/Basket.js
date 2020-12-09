@@ -25,9 +25,7 @@ class Basket extends React.Component {
         .then((createdOrder) => {
           this.props.history.push(`/orders/${createdOrder._id}`);
           this.props.updateBasket([]);
-          this.props.updateQuantity(0);
           this.setState(INIT_STATE);
-          localStorage.clear();
         })
         .catch((error) => {
           if (error.response) {
@@ -35,6 +33,7 @@ class Basket extends React.Component {
           }
         });
     }
+    this.props.clearBasket();
   };
 
   IncreaseQuantity = () => {
@@ -62,8 +61,8 @@ class Basket extends React.Component {
   }
 
   removeProduct = (event, productId) => {
-    if (localStorage.basket) {
-      let basket = JSON.parse(localStorage.basket).filter((product) => {
+    if (this.props.basket) {
+      let basket = this.props.basket.filter((product) => {
         return product._id !== productId;
       });
       this.props.updateBasket(basket);
@@ -144,6 +143,34 @@ class ProductCart extends React.Component {
                 <p>{this.props.product.quantity}</p>
                 <p>{this.props.product.name}</p>
                 <p className="price">{this.props.product.price}€</p>
+              </div>
+              <div className="accordion-item__product">
+                <img
+                  src="../dustbin.svg"
+                  alt=""
+                  onClick={(e) => {
+                    this.props.removeProduct(e, this.props.product._id);
+                  }}
+                ></img>
+                <div className="d-flex justify-content-evenly">
+                  <button
+                    style={{ border: "none" }}
+                    className="pr-2 remove"
+                    onClick={this.props.DecreaseQuantity}
+                  >
+                    -
+                  </button>
+                  <button style={{ border: "none" }} className="pr-2 quantity">
+                    {this.props.product.quantity}
+                  </button>
+                  <button
+                    style={{ border: "none" }}
+                    className="pr-2 add"
+                    onClick={this.props.IncreaseQuantity}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
           </div>

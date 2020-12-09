@@ -18,8 +18,7 @@ import Fade from "react-reveal/Fade";
 class App extends React.Component {
   state = {
     loggedInUser: null,
-    basket: [],
-    quantity: 0
+    basket: []
   }
 
   fetchUser() {
@@ -46,35 +45,31 @@ class App extends React.Component {
   };
 
   addToBasket = (item) => {
-    let setQuantity = parseInt(this.state.quantity) + item.quantity;
     if (!this.basketContains(item._id)) {
       this.setState({
-        basket: [...this.state.basket, item],
-        quantity: setQuantity
+        basket: [...this.state.basket, item]
       });
     } else {
       const newItem = this.state.basket.findIndex((product) => {return product._id === item._id})
       let newBasket = [...this.state.basket]
-      newBasket[newItem] = {...newBasket[newItem], quantity: newBasket[newItem].quantity += 1};
-      this.setState({basket: newBasket, quantity: setQuantity});
+      newBasket[newItem] = {...newBasket[newItem]};
+      this.setState({basket: newBasket});
     }
     let stringCart = JSON.stringify(this.state.basket);
     localStorage.setItem('basket', stringCart);
-    localStorage.setItem('quantity', this.state.quantity);
-    this.setState({basket: JSON.parse(localStorage.basket), quantity: localStorage.quantity});
+    this.setState({basket: JSON.parse(localStorage.basket)});
   };
   
   updateBasket = (basket) => {
-    this.setState({ basket });
-  };
-
-  updateQuantity = (quantity) => {
-    this.setState({ quantity });
+    let stringCart = JSON.stringify(basket);
+    localStorage.setItem('basket', stringCart);
+    this.setState({basket: JSON.parse(localStorage.basket)});
+    console.log(localStorage.basket.length);
   };
   
   componentDidMount() {
     if (localStorage.length > 0) {
-      this.setState({basket: JSON.parse(localStorage.basket), quantity: localStorage.quantity});
+      this.setState({basket: JSON.parse(localStorage.basket)});
     }
     this.fetchUser();
   }
@@ -95,7 +90,6 @@ class App extends React.Component {
                 userInSession={this.state.loggedInUser}
                 updateUser={this.updateLoggedInUser}
                 basket={this.state.basket}
-                quantity={this.state.quantity}
                 {...props}
               />
               <Switch>
@@ -159,7 +153,6 @@ class App extends React.Component {
                     <Basket
                       userInSession={this.state.loggedInUser}
                       basket={this.state.basket}
-                      quantity={this.state.quantity}
                       addToBasket={this.addToBasket}
                       updateBasket={this.updateBasket}
                       updateQuantity={this.updateQuantity}

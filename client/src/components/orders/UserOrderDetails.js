@@ -51,22 +51,15 @@ class UserOrderDetails extends React.Component {
 
   componentDidMount() {
     this.props.socket.connect();
-    console.log("connected", this.props.socket)
-    this.props.socket.on("order:update", (order) => {
-      console.log("order updated", order)
-      alert('order has just updated from server:', order)
-    });
-
+    const { params } = this.props.match;
+    
+    // get new status from order:update:orderId topic
+    this.props.socket.on(`order:update:${params.id}`, (newStatus) => {
+      this.setState({status:newStatus})   
+    })
+    
+    
     this.getSingleOrder()
-    .then(() => {
-      // get updated order status with this.socket.on
-    });
-    // this.props.socket.connect();
-    // console.log(this.props.socket)
-    // this.props.socket.on("order:update", (order) => {
-    //   console.log(order)
-    //   alert('order has just updated from server:', order)
-    // });
   }
 
   componentWillUnmount() {

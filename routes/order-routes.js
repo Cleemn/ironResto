@@ -134,7 +134,8 @@ orderRoutes.put("/orders/:id", (req, res, next) => {
       //     return;
       //   }
       // }
-      req.io.to(orderId).emit('order:update', updatedOrder)
+      // req.io.to(orderId).emit('order:update', updatedOrder)
+      req.io.emit(`order:update:${orderId}`, newStatus)
       res.status(200).json(updatedOrder);
     })
     .catch((err) => res.status(500).json({ message: err.message }));

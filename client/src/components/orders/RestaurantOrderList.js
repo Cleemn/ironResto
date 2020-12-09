@@ -10,9 +10,13 @@ class RestaurantOrderList extends Component {
   componentDidMount() {
     this.getDailyOrders();
     this.props.socket.connect();
-    this.props.socket.on("order:update", (order) => {
-      this.updateOrder(order);
-    });
+    this.props.socket.on("add:order", newOrder => {
+      const orders = [...this.state.orders];
+      const sortedNewOrders = [...orders, newOrder].sort(
+        (o1, o2) => new Date(o2.date) - new Date(o1.date)
+      );
+      this.setState({ orders: sortedNewOrders });
+    })
   }
 
   updateOrder = (newOrder) => {
@@ -32,7 +36,12 @@ class RestaurantOrderList extends Component {
         `http://localhost:5000/api/orders/${orderId}`,
         { status: newStatus },
         { withCredentials: true }
-      )
+      ).then(resp => {
+          this.updateOrder(resp.data);
+          // emit new status from client by order:update topic
+          // this.props.socket.emit("order:update", orderId, newStatus);
+      })
+      
   };
 
   componentWillUnmount() {
@@ -63,7 +72,6 @@ class RestaurantOrderList extends Component {
                 className="status accepte"
                 onClick={(e) => {
                   this.updateOrderStatus(order._id, "acceptee");
-                  this.props.socket.emit("order:subscribe", order._id);
                 }}
               >
                 Accepté
@@ -72,7 +80,6 @@ class RestaurantOrderList extends Component {
                 className="status preparation"
                 onClick={(e) => {
                   this.updateOrderStatus(order._id, "en_cours");
-                  this.props.socket.emit("order:subscribe", order._id);
                 }}
               >
                 En préparation
@@ -81,7 +88,6 @@ class RestaurantOrderList extends Component {
                 className="status prete"
                 onClick={(e) => {
                   this.updateOrderStatus(order._id, "commande_prete");
-                  this.props.socket.emit("order:subscribe", order._id);
                 }}
               >
                 Prete
@@ -90,7 +96,6 @@ class RestaurantOrderList extends Component {
                 className="status recupere"
                 onClick={(e) => {
                   this.updateOrderStatus(order._id, "commande_recuperee");
-                  this.props.socket.emit("order:subscribe", order._id);
                 }}
               >
                 Recuperée

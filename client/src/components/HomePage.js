@@ -118,19 +118,24 @@ class HomePage extends React.Component {
           >
             {this.state.listOfProducts.map((product) => {
               return (
-                <SwiperSlide className="swiper-card" key={product._id}>
+                <SwiperSlide className="swiper-card container" key={product._id}>
                   <Link to={`/products/${product._id}`}>
                     <img src={product.photo} alt="" />
                   </Link>
-                  <h5>{product.name}</h5>
-                  <p>{product.price}€</p>
-                  <button
-                    type="submit"
-                    className="btn btn-orange btn-block"
-                    onClick={(e) => this.addToBasket(e, product._id)}
-                  >
-                    Ajouter au panier
-                  </button>
+                  <div className="infos">
+                    <h6 className="mt-2">{product.name}</h6>
+                  </div>
+                  <div className="d-flex align-items-end justify-content-between">
+                      <p className="mb-0">{product.price}€</p>
+                      <button
+                        type="submit"
+                        className="btn btn-orange"
+                        onClick={(e) => this.addToBasket(e, product._id)}
+                        style={{height: 'fit-content'}}
+                      >
+                        Ajouter
+                      </button>
+                  </div>
                 </SwiperSlide>
               );
             })}
@@ -143,7 +148,7 @@ class HomePage extends React.Component {
                   <Link to={`/products/${product._id}`}>
                     <img src={product.photo} alt="" />
                   </Link>
-                  <h5>{product.name}</h5>
+                  <h6>{product.name}</h6>
                   <p>{product.price}€</p>
                   <button
                     type="submit"

@@ -1,6 +1,6 @@
 import React from "react";
 import { createOrder } from "../services/order-service";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 const INIT_STATE = {
   errorMessage: "",
@@ -57,9 +57,6 @@ class Basket extends React.Component {
   }
 
   removeProduct = (event, productId) => {
-    console.log("inside removeProduct func");
-    console.log();
-    console.log(this.props.basket);
     if (this.props.basket) {
       let basket = this.props.basket.filter((product) => {
         return product._id !== productId;
@@ -73,6 +70,10 @@ class Basket extends React.Component {
     this.removeProduct();
   }
 
+  openMap() {
+    this.setState({show: true});
+  }
+
   render() {
     return (
       <div className="basket">
@@ -80,19 +81,22 @@ class Basket extends React.Component {
           <EmptyBasket />
         ) : (
           <div className="basket-details">
-            <div className="restaurant-details">
-              <h2>Adresse du restaurant</h2>
+            <div className="restaurant-details container mt-4">
+                <h6>Adresse du restaurant</h6>
+                <p>123 boulevard Saint-Germain
+                <br/>75006, Paris</p>
+                <span>📍</span>
             </div>
-            <h2>Ma commande</h2>
             <ul className="product-list">
               <li className="product-list-content">
-                {this.props.basket.map((product) => {
+                {this.props.basket.map((product, i) => {
                   return (
                     <ProductCart
                       product={{ ...product }}
                       IncreaseQuantity={this.IncreaseQuantity}
                       DecreaseQuantity={this.DecreaseQuantity}
                       removeProduct={this.removeProduct}
+                      key={i}
                     />
                   );
                 })}
@@ -128,41 +132,51 @@ class Basket extends React.Component {
 class ProductCart extends React.Component {
   render() {
     return (
-      <div className="product-cart">
-        <span className="cart-header">
-          <img src={`${this.props.product.photo}`} alt=""></img>
-          <p>{this.props.product.name}</p>
-          <p>{this.props.product.price}€</p>
-        </span>
-        <span className="cart-footer">
-          <img
-            src="../dustbin.svg"
-            alt=""
-            onClick={(e) => {
-              console.log("clicked", this.props.product);
-              this.props.removeProduct(e, this.props.product._id);
-            }}
-          ></img>
-          <div className="d-flex justify-content-evenly">
-            <button
-              style={{ border: "none" }}
-              className="pr-2 remove"
-              onClick={this.props.DecreaseQuantity}
-            >
-              -
-            </button>
-            <button style={{ border: "none" }} className="pr-2 quantity">
-              {this.props.product.quantity}
-            </button>
-            <button
-              style={{ border: "none" }}
-              className="pr-2 add"
-              onClick={this.props.IncreaseQuantity}
-            >
-              +
-            </button>
+      <div id="basket" className="all-orders container mt-3">
+        <div className="ongoing-orders">
+          <h6>Je commande :</h6>
+          <div className="accordion-item--opened accordion-list">
+            <div className="accordion-item__line container">
+            </div>
+            <div className="accordion-item__content container">
+              <div className="accordion-item__product">
+                <img src={`${this.props.product.photo}`}  alt=""></img>
+                <p>{this.props.product.quantity}</p>
+                <p>{this.props.product.name}</p>
+                <p className="price">{this.props.product.price}€</p>
+              </div>
+              <div className="accordion-item__product d-flex justify-content-between align-items-center">
+                <img
+                  src="../dustbin.svg"
+                  alt=""
+                  onClick={(e) => {
+                    this.props.removeProduct(e, this.props.product._id);
+                  }}
+                  className="basket-img"
+                ></img>
+                <div className="d-flex justify-content-evenly">
+                  <button
+                    style={{ border: "none" }}
+                    className="pr-2 remove"
+                    onClick={this.props.DecreaseQuantity}
+                  >
+                    -
+                  </button>
+                  <button style={{ border: "none" }} className="pr-2 quantity">
+                    {this.props.product.quantity}
+                  </button>
+                  <button
+                    style={{ border: "none" }}
+                    className="pr-2 add"
+                    onClick={this.props.IncreaseQuantity}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </span>
+        </div>
       </div>
     );
   }
@@ -172,22 +186,15 @@ class EmptyBasket extends React.Component {
   state = {};
   render() {
     return (
-      <div className="product-cart empty-basket">
+      <div className="product-cart empty-basket container">
         <img src="../shopping-basket-color.svg" alt=""></img>
-        <h2>Votre panier est vide</h2>
-        <span className="buttons">
-          <Link to="/">
-            <button className="btn btn-orange btn-block">
-              Avez-vous faim ?
-            </button>
-          </Link>
-          <Link to="/signup">
-            <button className="btn btn-orange btn-block">Signup</button>
-          </Link>
-          <Link to="/login">
-            <button className="btn btn-orange btn-block">Login</button>
-          </Link>
-        </span>
+        <h5 className="text-center">Votre panier semble bien vide 😢</h5>
+        <p className="text-center">On dirait que vous n'avez pas encore trouvé votre bonheur...</p>
+        <div className="buttons">
+          <button href="/" className="btn btn-orange btn-block">
+            Découvrir la carte
+          </button>
+        </div>
       </div>
     );
   }

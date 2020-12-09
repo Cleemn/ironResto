@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import { productById } from "../services/product-service";
+
 class ProductDetails extends Component {
   state = {
     clicks: 1
@@ -35,6 +37,13 @@ class ProductDetails extends Component {
     }
   }
 
+  addToBasket = () => {
+    productById(this.state._id)
+    .then(product => {
+      this.props.updateBasket({ ...product, quantity: this.state.clicks })
+    });
+  };
+
   render(){
     return(
     <div>
@@ -53,7 +62,7 @@ class ProductDetails extends Component {
                   <h5>{this.state.name}</h5>
                   <div className="d-flex justify-content-evenly">
                     <button style={{border: 'none'}} className="pr-2 remove" onClick={this.DecreaseItem}>-</button>
-                    <button style={{border: 'none'}} className="pr-2 quantity">{ this.state.clicks }</button>
+                    <div className="px-2 quantity">{ this.state.clicks }</div>
                     <button style={{border: 'none'}} className="pr-2 add" onClick={this.IncrementItem}>+</button>
                   </div>
                 </div>
@@ -66,7 +75,7 @@ class ProductDetails extends Component {
                   <p>{this.state.description}</p>
                 </div>
               </div>
-              <button type="submit" className="btn btn-orange btn-block">Ajouter au panier</button>
+              <button type="submit" className="btn btn-orange btn-block" onClick={() => this.addToBasket()}>Ajouter au panier</button>
             </div>
           </div>
         </div>
@@ -76,16 +85,6 @@ class ProductDetails extends Component {
       </style>
     </div>
     )
-  }
-}
-
-class Item extends React.Component {
-  state = {};
-
-  render(){
-    return (<div className="item-cart">
-      <p>Item cart</p>
-    </div>)
   }
 }
 

@@ -1,19 +1,31 @@
 .basket {
-    // display: table;
-    // width: 80%;
-
     .basket-details {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
 
+        .restaurant-details {
+            width: 100%;
+            position: relative;
+
+            span {
+                position: absolute;
+                top: 22px;
+                right: 24px;
+                font-size: 24px;
+            }
+        }
+
         .product-list {
             margin-bottom:2em;
             padding: 0;
             list-style: none;
-            max-width: 90%;
+            width: 100%;
 
+            .basket-img {
+                width: 24px;
+            }
         }
     }
 
@@ -48,38 +60,39 @@
                 
             }
         }
-
-       
     }
 
     .empty-basket{
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2em;
-    margin-top: 5em;
-    
-    img{
-        max-width: 50em;
-        min-width: 10em;
-        max-height: auto;
-        min-height: auto;
-        margin-bottom: 5em;
-        object-fit: cover;
-        background-color: #F6F5F4;
-        padding:2em;
-        text-align: center;
-        border-radius: 80%;
-    }
-
-    .buttons{
+        background-color: white;
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        align-items: stretch;
-    }
-    
+        align-items: center;
+        margin-top: 3em;
         
-}
+        img {
+            max-width: 70%;
+            margin-bottom: 3em;
+            object-fit: cover;
+            background-color: #f9a57259;
+            padding:2em;
+            text-align: center;
+            border-radius: 80%;
+        }
+
+        .buttons {
+            .btn {
+                border: solid 2px #f9a57259 !important;
+                background: #FFF;
+                border-radius: 24px;
+                font-size: 14px;
+                padding: 0.7rem !important;
+                box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }  
+    }
 }

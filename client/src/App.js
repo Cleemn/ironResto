@@ -147,7 +147,15 @@ class App extends React.Component {
                 />
                 <Route exact path="/orders/:id" component={UserOrderDetails} />
                 <Fade bottom>
-                  <Route exact path="/products/:id" component={ProductDetails}/>
+                  <Route
+                    exact
+                    path="/products/:id"
+                    render={(props) => (
+                      <ProductDetails
+                      updateBasket={this.addToBasket}
+                        {...props} />
+                    )}
+                  />
                 </Fade>
               </Switch>
             </>

@@ -1,8 +1,5 @@
 import React from "react";
-// import getSingleOrder from "../services/order-service";
 import axios from "axios";
-import socketIOClient from "socket.io-client";
-// import { Link } from "react-router-dom";
 
 const frenchDays = [
   "Dimanche",
@@ -53,14 +50,28 @@ class UserOrderDetails extends React.Component {
   }
 
   componentDidMount() {
-    this.getSingleOrder().then(() => {
-      this.props.socket.emit("getOrderData", this.state._id);
-      this.props.socket.on("get_order", (updatedOrder) => {
-        console.log("upda",updatedOrder)
-      });
+    this.props.socket.connect();
+    console.log("connected", this.props.socket)
+    this.props.socket.on("order:update", (order) => {
+      console.log("order updated", order)
+      alert('order has just updated from server:', order)
     });
+
+    this.getSingleOrder()
+    .then(() => {
+      // get updated order status with this.socket.on
+    });
+    // this.props.socket.connect();
+    // console.log(this.props.socket)
+    // this.props.socket.on("order:update", (order) => {
+    //   console.log(order)
+    //   alert('order has just updated from server:', order)
+    // });
   }
 
+  componentWillUnmount() {
+    this.props.socket.disconnect();
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState._id !== "" && this.state._id) {
@@ -70,7 +81,6 @@ class UserOrderDetails extends React.Component {
 
   getSingleOrder = () => {
     const { params } = this.props.match;
-
     return axios
       .get(`http://localhost:5000/api/orders/${params.id}`, {
         withCredentials: true,
@@ -89,7 +99,6 @@ class UserOrderDetails extends React.Component {
         }
       });
   };
-
 
   render() {
     return (

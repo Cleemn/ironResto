@@ -27,7 +27,7 @@ class App extends React.Component {
     basket: []
   };
 
-  socket = io('http://localhost:5000')
+  socket = io('http://localhost:5000/', {autoConnect: false,})
 
   fetchUser() {
     if (this.state.loggedInUser === null) {
@@ -155,7 +155,7 @@ class App extends React.Component {
                 />
                 <Route exact path="/orders/:id" render={(props)=> (<UserOrderDetails socket={this.socket} {...props}/>)} />
                 <Route exact path="/products/new" component={AddProduct}/>
-                <Route exact path="/restaurant/orders/" component={RestaurantOrderList}/>        
+                <Route exact path="/restaurant/orders/" render={(props)=> (<RestaurantOrderList socket={this.socket} {...props}/>)}/>        
 
                 {/* <Route exact path="/orders/edit/:id" render={(props)=> (<EditOrder socket={this.socket} {...props}/>)} /> */}
                 <Fade bottom>

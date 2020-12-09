@@ -34,7 +34,6 @@ class ProfileRestaurant extends Component {
 
   componentDidMount() {
     this.getDailyOrders().then(() => {
-      console.log("orders", this.state.orders);
       this.orderDataByStatus();
       this.drawChart();
     });

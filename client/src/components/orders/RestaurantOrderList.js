@@ -9,6 +9,34 @@ class RestaurantOrderList extends Component {
 
   componentDidMount() {
     this.getDailyOrders();
+    this.props.socket.connect();
+    this.props.socket.on("order:update", (order) => {
+      this.updateOrder(order);
+    });
+  }
+
+  updateOrder = (newOrder) => {
+    const orders = [...this.state.orders];
+    const nonUpdatedOrders = orders.filter((order) => {
+      return order._id !== newOrder._id;
+    });
+    const sortedNewOrders = [...nonUpdatedOrders, newOrder].sort(
+      (o1, o2) => new Date(o2.date) - new Date(o1.date)
+    );
+    this.setState({ orders: sortedNewOrders });
+  };
+
+  updateOrderStatus = (orderId, newStatus) => {
+    axios
+      .put(
+        `http://localhost:5000/api/orders/${orderId}`,
+        { status: newStatus },
+        { withCredentials: true }
+      )
+  };
+
+  componentWillUnmount() {
+    this.props.socket.disconnect();
   }
 
   getDailyOrders = () => {
@@ -27,24 +55,49 @@ class RestaurantOrderList extends Component {
       <div className="add-product">
         Restaurant Order List Page
         {this.state.orders.map((order) => {
-          return <OrderCart order={order}></OrderCart>;
+          return (
+            <div className="order-cart">
+              <h4>Date : {order.date}</h4>
+              <h3>Status : {order.status}</h3>
+              <div
+                className="status accepte"
+                onClick={(e) => {
+                  this.updateOrderStatus(order._id, "acceptee");
+                  this.props.socket.emit("order:subscribe", order._id);
+                }}
+              >
+                Accepté
+              </div>
+              <div
+                className="status preparation"
+                onClick={(e) => {
+                  this.updateOrderStatus(order._id, "en_cours");
+                  this.props.socket.emit("order:subscribe", order._id);
+                }}
+              >
+                En préparation
+              </div>
+              <div
+                className="status prete"
+                onClick={(e) => {
+                  this.updateOrderStatus(order._id, "commande_prete");
+                  this.props.socket.emit("order:subscribe", order._id);
+                }}
+              >
+                Prete
+              </div>
+              <div
+                className="status recupere"
+                onClick={(e) => {
+                  this.updateOrderStatus(order._id, "commande_recuperee");
+                  this.props.socket.emit("order:subscribe", order._id);
+                }}
+              >
+                Recuperée
+              </div>
+            </div>
+          );
         })}
-      </div>
-    );
-  }
-}
-
-class OrderCart extends Component {
-  state = {};
-
-  render() {
-    return (
-      <div className="order-cart">
-        <h4>{this.props.order.date}</h4>
-        <div className="status accepte">Accepté</div>
-        <div className="status preparation">En préparation</div>
-        <div className="status prete">Prete</div>
-        <div className="status recupere">Recuperée</div>
       </div>
     );
   }

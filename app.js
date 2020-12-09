@@ -31,24 +31,47 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(cors({
+const corsOptions = {
   credentials: true,
-  origin: [process.env.CORS]
-}));
+  origin: ['http://localhost:3000']
+}
 
+app.use(cors(corsOptions));
+
+const server = require('http').createServer(app);
+const io = require("socket.io")(server, {
+  cors: corsOptions
+});
 
 // Session
-app.use(
-  session({
-    secret: 'some secret goes here',
-    resave: true,
-    saveUninitialized: true,
-    // cookie:{maxAge:6000}
+const sessionMiddleware = session({
+  secret: 'some secret goes here',
+  resave: true,
+  saveUninitialized: true,
+})
+
+app.use(sessionMiddleware);
+
+// Init Socket Io
+app.use((req, res, next) => {
+  req.io = io
+  next()
+})
+
+io.on("connection", (socket) => {
+  console.log('client connected', socket.id)
+
+
+  socket.on('order:subscribe', (orderId) => {
+    console.log('client has subscribed to order #:', orderId)
+    
+    // join a room: this allow us to `io.to(orderId).emit()` -> see: https://socket.io/docs/v3/rooms/#Sample-use-cases
+    socket.join(`${orderId}`)
   })
-);
+});
+
 
 // Express View engine setup
-
 app.use(require('node-sass-middleware')({
   src:  path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
@@ -61,7 +84,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
-
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
@@ -69,7 +91,7 @@ const index = require('./routes/index');
 app.use('/', index);
 app.use('/api', require('./routes/auth-routes'));
 app.use('/api', require('./routes/product-routes'));
-
+app.use('/api', require('./routes/order-routes'));
 
 app.use((err, req, res, next) => {
   // always log the error
@@ -78,11 +100,9 @@ app.use((err, req, res, next) => {
   res.json({message: err.message});
 });
 
-app.use('/api', require('./routes/order-routes'));
-
 app.use((req, res, next) => {
   // If no routes match, send them the React HTML.
   res.sendFile(__dirname + "/public/index.html");
 });
 
-module.exports = app;
+module.exports = {app, server};

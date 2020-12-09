@@ -4,6 +4,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin-bottom: 48px;
 
         .restaurant-details {
             width: 100%;
@@ -31,7 +32,7 @@
 
     .product-cart {
         list-style: none;
-        background-color: #F6F5F4;
+        background-color: rgba(251, 168, 119, 0.28);
         border-radius: 0.5em;
         padding:2em 2em .75em 2em;
         margin-bottom:2em;

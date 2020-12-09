@@ -70,10 +70,6 @@ class Basket extends React.Component {
     this.removeProduct();
   }
 
-  openMap() {
-    this.setState({show: true});
-  }
-
   render() {
     return (
       <div className="basket">
@@ -87,6 +83,7 @@ class Basket extends React.Component {
                 <br/>75006, Paris</p>
                 <span>📍</span>
             </div>
+            <h6 className="restaurant-details container mt-4">Ma commande :</h6>
             <ul className="product-list">
               <li className="product-list-content">
                 {this.props.basket.map((product, i) => {
@@ -103,7 +100,7 @@ class Basket extends React.Component {
               </li>
             </ul>
 
-            <h4>Prix total: {this.state.totalPrice}€</h4>
+            <h5>Prix total : {this.state.totalPrice}€</h5>
             <p>A payer sur place</p>
 
             {this.state.errorMessage ? (
@@ -134,7 +131,6 @@ class ProductCart extends React.Component {
     return (
       <div id="basket" className="all-orders container mt-3">
         <div className="ongoing-orders">
-          <h6>Je commande :</h6>
           <div className="accordion-item--opened accordion-list">
             <div className="accordion-item__line container">
             </div>
@@ -156,7 +152,7 @@ class ProductCart extends React.Component {
                 ></img>
                   <div className="d-flex justify-content-evenly">
                     <button style={{border: 'none'}} className="remove" onClick={this.DecreaseItem}>-</button>
-                    <div className="px-2 pt-1 quantity">1</div>
+                    <div className="px-3 quantity">1</div>
                     <button style={{border: 'none'}} className="add" onClick={this.IncrementItem}>+</button>
                   </div>
               </div>
@@ -177,7 +173,7 @@ class EmptyBasket extends React.Component {
         <h5 className="text-center">Votre panier semble bien vide 😢</h5>
         <p className="text-center">On dirait que vous n'avez pas encore trouvé votre bonheur...</p>
         <div className="buttons">
-          <Button href="/" className="btn btn-orange btn-block">
+          <Button href="/" className="btn btn-orange">
             Découvrir la carte
           </Button>
         </div>

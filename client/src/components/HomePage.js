@@ -152,7 +152,7 @@ class HomePage extends React.Component {
                   <p>{product.price}€</p>
                   <button
                     type="submit"
-                    className="btn btn-orange btn-block"
+                    className="btn btn-orange"
                     onClick={(e) => this.addToBasket(e, product._id)}
                   >
                     Ajouter au panier

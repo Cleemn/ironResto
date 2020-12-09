@@ -59,8 +59,11 @@ class AppNavbar extends React.Component {
                       })
                       .catch((err) => console.log(err));
                   }}
+
+                  style={{width: "fit-content"}}
+                  className="mx-auto my-3"
                 >
-                  Logout
+                  Se déconnecter
                 </Button>
             </Nav>
               ) : (

@@ -71,7 +71,7 @@ class ProductDetails extends Component {
                   <p>{this.state.description}</p>
                 </div>
               </div>
-              <button type="submit" className="btn btn-orange btn-block" onClick={() => this.addToBasket()}>Ajouter au panier</button>
+              <button type="submit" className="btn btn-orange" onClick={() => this.addToBasket()}>Ajouter au panier</button>
             </div>
           </div>
         </div>

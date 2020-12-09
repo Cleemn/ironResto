@@ -41,7 +41,7 @@ class EditUser extends React.Component {
 
   render() {
     return (
-      <div className="auth container">
+      <div className="auth container text-center">
         {this.props.userInSession ? (
           <div>
                 <form onSubmit={this.handleFormSubmit}>
@@ -50,7 +50,6 @@ class EditUser extends React.Component {
                     <input
                       type="email"
                       className="form-control"
-                      placeholder="Entrez votre email"
                       name="email"
                       id="email"
                       value={this.state.email}
@@ -63,7 +62,6 @@ class EditUser extends React.Component {
                     <input
                       type="password"
                       name="password"
-                      placeholder="Entrez votre mot de passe"
                       id="password"
                       value={this.state.password}
                       onChange={(e) => this.handleChange(e)}
@@ -76,7 +74,6 @@ class EditUser extends React.Component {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Entrez votre username"
                       name="username"
                       id="username"
                       value={this.state.username}
@@ -89,14 +86,13 @@ class EditUser extends React.Component {
                     <input
                       type="tel"
                       className="form-control"
-                      placeholder="Entrez votre téléphone"
                       name="phone"
                       id="phone"
                       value={this.state.phone}
                       onChange={(e) => this.handleChange(e)}
                     />
                   </div>
-                  <button type="submit" className="btn btn-orange btn-block">Enregistrer les modifications</button>
+                  <button type="submit" className="btn btn-orange my-3">Enregistrer les modifications</button>
 
                   {this.state.errorMessage && (
                     <div className="message">

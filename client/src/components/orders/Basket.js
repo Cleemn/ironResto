@@ -152,7 +152,7 @@ class ProductCart extends React.Component {
                 ></img>
                   <div className="d-flex justify-content-evenly">
                     <button style={{border: 'none'}} className="remove" onClick={this.DecreaseItem}>-</button>
-                    <div className="px-3 quantity">1</div>
+                    <div className="px-3 py-1 quantity">1</div>
                     <button style={{border: 'none'}} className="add" onClick={this.IncrementItem}>+</button>
                   </div>
               </div>

@@ -13,8 +13,7 @@ SwiperCore.use([Navigation, Pagination]);
 class HomePage extends React.Component {
   state = {
     listOfProducts: [],
-    search: "",
-    isMobile: window.innerWidth < 768,
+    search: ""
   };
 
   getAllProducts = () => {
@@ -67,7 +66,6 @@ class HomePage extends React.Component {
   };
 
   render() {
-    const isMobile = this.state.isMobile;
 
     return (
       <div id="home">
@@ -110,17 +108,28 @@ class HomePage extends React.Component {
           </button>
         </div>
 
-        {isMobile ? (
+ 
           <Swiper
             spaceBetween={32}
             slidesPerView={1.3}
             pagination={{ clickable: true }}
+            breakpoints={{
+              768: {
+                slidesPerView: 4.8 || 'auto'
+              },
+              1440: {
+                slidesPerView: 5.4 || 'auto'
+              },
+              1920: {
+                slidesPerView: 7.3 || 'auto'
+              }
+            }}
           >
             {this.state.listOfProducts.map((product) => {
               return (
                 <SwiperSlide className="swiper-card container" key={product._id}>
                   <Link to={`/products/${product._id}`}>
-                    <img src={product.photo} alt="" />
+                    <img src={product.photo} alt="" className="m-auto"/>
                   </Link>
                   <div className="infos">
                     <h6 className="mt-3">{product.name}</h6>
@@ -140,28 +149,6 @@ class HomePage extends React.Component {
               );
             })}
           </Swiper>
-        ) : (
-          <div className="products">
-            {this.state.listOfProducts.map((product) => {
-              return (
-                <div className="card" key={product._id}>
-                  <Link to={`/products/${product._id}`}>
-                    <img src={product.photo} alt="" />
-                  </Link>
-                  <h6>{product.name}</h6>
-                  <p>{product.price}€</p>
-                  <button
-                    type="submit"
-                    className="btn btn-orange"
-                    onClick={(e) => this.addToBasket(e, product._id)}
-                  >
-                    Ajouter au panier
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        )}
       </div>
     );
   }

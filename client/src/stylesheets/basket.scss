@@ -32,7 +32,7 @@
 
     .product-cart {
         list-style: none;
-        background-color: rgba(251, 168, 119, 0.28);
+        background-color: #FFE7D9;
         border-radius: 0.5em;
         padding:2em 2em .75em 2em;
         margin-bottom:2em;
@@ -79,6 +79,10 @@
             padding:2em;
             text-align: center;
             border-radius: 80%;
+
+            @include breakpoint(mobile, min) {
+                max-width: 28%;
+            }
         }
 
         .buttons {

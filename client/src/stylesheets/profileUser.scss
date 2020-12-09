@@ -35,13 +35,13 @@ $cLightGray: rgba(#000, 0.1);
     border-radius: 0.5em;
 
     &__article{
-        background-color: rgba(251, 168, 119, 0.28);
+        background-color: #FFE7D9;
     }
 
     &__item {
         &+& {
             margin-top: 1em;
-            background-color: rgba(251, 168, 119, 0.28);
+            background-color: #FFE7D9;
         }
     }
 }
@@ -82,7 +82,7 @@ $cLightGray: rgba(#000, 0.1);
         padding-bottom: 14px;
         justify-content: space-between;
         align-items: center;
-        background-color: rgba(251, 168, 119, 0.28);
+        background-color: #FFE7D9;
         z-index: 2;
         position: relative;
 
@@ -133,7 +133,7 @@ $cLightGray: rgba(#000, 0.1);
         transition-duration: 0.1s;
         transition-property: opacity, transform;
         transition-delay: 0.5s;
-        background-color: rgba(251, 168, 119, 0.28);
+        background-color: #FFE7D9;
         padding-bottom: 14px;
     }
 

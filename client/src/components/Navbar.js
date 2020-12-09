@@ -42,7 +42,7 @@ class AppNavbar extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             {this.props.userInSession ? (
-            <Nav className="mr-auto">
+            <Nav className="ml-auto align-items-center">
               <Nav.Link eventKey="disabled" disabled>
                 <em>Bonjour, {this.props.userInSession.username} !</em>
               </Nav.Link>
@@ -67,7 +67,7 @@ class AppNavbar extends React.Component {
                 </Button>
             </Nav>
               ) : (
-            <Nav className="mr-auto">
+            <Nav className="ml-auto align-items-center">
               <Nav.Link as={NavLink} to="/" onClick={this.closeNavbar}>La carte</Nav.Link>
               <Nav.Link as={NavLink} to="/login" onClick={this.closeNavbar}>Se connecter</Nav.Link>
               <Nav.Link as={NavLink} to="/signup" onClick={this.closeNavbar}>Créer un compte</Nav.Link>

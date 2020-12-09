@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   state = { 
-    username: '',
     password: '',
     email: '',
     errorMessage:''
@@ -13,13 +12,12 @@ class Login extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const username = this.state.username;
     const password = this.state.password;
     const email = this.state.email;
 
-    login(username, password, email)
+    login(password, email)
       .then(response => {
-        this.setState({username: "", password: "", email: ""});
+        this.setState({password: "", email: ""});
         this.props.updateUser(response)        
         if(response.type === "user"){
 
@@ -47,11 +45,6 @@ class Login extends React.Component {
           <div className="form-group">
               <label>Adresse email</label>
               <input type="email" className="form-control" name="email" id="email" value={this.state.email} onChange={e => this.handleChange(e)} />
-          </div>
-
-          <div className="form-group">
-              <label>Pseudo</label>
-              <input type="text" className="form-control" name="username" id="username" value={this.state.username} onChange={e => this.handleChange(e)} />
           </div>
 
           <div className="form-group">

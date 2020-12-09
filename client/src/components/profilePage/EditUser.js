@@ -5,7 +5,8 @@ import StyledContentLoader from 'styled-content-loader';
 
 class EditUser extends React.Component {
   state = {
-    username: this.props.userInSession.username,
+    firstName: this.props.userInSession.firstName,
+    lastName: this.props.userInSession.lastName,
     email: this.props.userInSession.email,
     password: this.props.userInSession.password,
     phone: this.props.userInSession.phone,
@@ -14,14 +15,15 @@ class EditUser extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const username = this.state.username;
+    const firstName = this.state.firstName;
+    const lastName = this.state.lastName;
     const email = this.state.email;
     const password = this.state.password;
     const phone = this.state.phone;
 
     console.log("before update user in session", this.props.userInSession)
     
-    edit(username, email, password, phone)
+    edit(firstName, lastName, email, password, phone)
       .then((response) => {
         console.log("response", response);
 
@@ -46,6 +48,30 @@ class EditUser extends React.Component {
           <div>
                 <form onSubmit={this.handleFormSubmit}>
                   <div className="form-group">
+                    <label>Prénom</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="firstName"
+                      id="firstName"
+                      value={this.state.firstName}
+                      onChange={(e) => this.handleChange(e)}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Nom de famille</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="lastName"
+                      id="lastName"
+                      value={this.state.lastName}
+                      onChange={(e) => this.handleChange(e)}
+                    />
+                  </div>
+
+                  <div className="form-group">
                     <label>Adresse email</label>
                     <input
                       type="email"
@@ -66,18 +92,6 @@ class EditUser extends React.Component {
                       value={this.state.password}
                       onChange={(e) => this.handleChange(e)}
                       className="form-control"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Pseudo</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="username"
-                      id="username"
-                      value={this.state.username}
-                      onChange={(e) => this.handleChange(e)}
                     />
                   </div>
 

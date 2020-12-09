@@ -1,12 +1,14 @@
 .auth {
-  margin: 40px auto;
+  margin: 12px auto;
   
   form {
+    max-width: 400px;
     padding: 12px 24px;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     background-color: #ffffff;
     margin-bottom: 24px;
+    margin: 0 auto;
 
     input {
       border: 0px solid #ced4da;

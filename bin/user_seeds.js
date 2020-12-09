@@ -17,23 +17,26 @@ const salt = bcryptjs.genSaltSync(10);
  
 const dataUser = [
   {
-    username: "Mrs Brown",
-    email: "mrsbrown@yahoo.com",
+    firstName: "Pamela",
+    lastName: "Anderson",
+    email: "pamela.anderson@yahoo.com",
     passwordHash: bcryptjs.hashSync("testpassword", salt),
     phone: "0612345678",
     type: "user"
   },
   {
-    username: "Eddy Malou",
-    email: "eddy@yahoo.com",
+    firstName: "Eddy",
+    lastName: "Malou",
+    email: "eddy.malou@yahoo.com",
     passwordHash: bcryptjs.hashSync("testpassword", salt),
     phone: "0612345678",
     type: "user"
 
   },
   {
-    username: "Petit Nicolas",
-    email: "petitnicolas@yahoo.com",
+    firstName: "Bradley",
+    lastName: "Cooper",
+    email: "bradleycooper@yahoo.com",
     passwordHash: bcryptjs.hashSync("testpassword", salt),
     phone: "0612345678",
     type: "user"

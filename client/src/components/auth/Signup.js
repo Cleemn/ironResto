@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 class Signup extends React.Component {
   state = {
-    username: "",
+    firstName: "",
+    lastName: "",
     password: "",
     email: "",
     phone: "",
@@ -14,16 +15,18 @@ class Signup extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const username = this.state.username;
+    const firstName = this.state.firstName;
+    const lastName = this.state.lastName;
     const password = this.state.password;
     const phone = this.state.phone;
     const email = this.state.email;
     const type = this.state.type;
 
-    signup(username, password, email, phone, type)
+    signup(firstName, lastName, password, email, phone, type)
       .then((response) => {
         this.setState({
-          username: "",
+          firstName: "",
+          lastName: "",
           password: "",
           phone: "",
           email: "",
@@ -51,6 +54,42 @@ class Signup extends React.Component {
       <div className="auth container text-center">
         <form onSubmit={this.handleFormSubmit}>
           <div className="form-group">
+            <label>Prénom</label>
+            <input
+              type="text"
+              className="form-control"
+              name="firstName"
+              id="firstName"
+              value={this.state.firstName}
+              onChange={(e) => this.handleChange(e)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Nom de famille</label>
+            <input
+              type="text"
+              className="form-control"
+              name="lastName"
+              id="lastName"
+              value={this.state.lastName}
+              onChange={(e) => this.handleChange(e)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Numéro de téléphone</label>
+            <input
+              type="tel"
+              className="form-control"
+              name="phone"
+              id="phone"
+              value={this.state.phone}
+              onChange={(e) => this.handleChange(e)}
+            />
+          </div>
+
+          <div className="form-group">
             <label>Adresse email</label>
             <input
               type="email"
@@ -74,29 +113,6 @@ class Signup extends React.Component {
             />
           </div>
 
-          <div className="form-group">
-            <label>Pseudo</label>
-            <input
-              type="text"
-              className="form-control"
-              name="username"
-              id="username"
-              value={this.state.username}
-              onChange={(e) => this.handleChange(e)}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Numéro de téléphone</label>
-            <input
-              type="tel"
-              className="form-control"
-              name="phone"
-              id="phone"
-              value={this.state.phone}
-              onChange={(e) => this.handleChange(e)}
-            />
-          </div>
           <button type="submit" className="btn btn-orange">
             Je créé mon compte
           </button>

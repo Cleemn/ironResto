@@ -44,7 +44,7 @@ class AppNavbar extends React.Component {
             {this.props.userInSession ? (
             <Nav className="ml-auto align-items-center">
               <Nav.Link eventKey="disabled" disabled>
-                <em>Bonjour, {this.props.userInSession.username} !</em>
+                <em>Bonjour, {this.props.userInSession.firstName} !</em>
               </Nav.Link>
               
               <Nav.Link as={NavLink} to="/" onClick={this.closeNavbar}>La carte</Nav.Link>

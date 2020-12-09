@@ -75,16 +75,18 @@ class ProfileUser extends React.Component {
     return (
       <div className="container">
         <div className="user-info">
-          <h2>
             {this.props.userInSession ? (
-              this.capitalizeFirstLetter(this.props.userInSession.username)
+            <h2>
+              {this.capitalizeFirstLetter(this.props.userInSession.firstName)}
+              <br/>
+              {this.capitalizeFirstLetter(this.props.userInSession.lastName)}
+            </h2>
             ) : (
               <StyledContentLoader>
               </StyledContentLoader>
             )}
-          </h2>
           <img
-            src="https://icon-library.net/images/default-user-icon/default-user-icon-29.jpg"
+            src="/avatar.jpeg"
             alt=""
           ></img>
         </div>

@@ -28,6 +28,7 @@ $breakpoints: (
 @import "./stylesheets/profileUser.scss";
 @import "./stylesheets/basket.scss";
 @import "./stylesheets/orderDetails.scss";
+@import "./stylesheets/restaurant.scss";
 
 .App-link {
   color: #61dafb;
@@ -42,4 +43,4 @@ $breakpoints: (
   }
 }
 
-$orange: #F98335
+$orange: #F98335;

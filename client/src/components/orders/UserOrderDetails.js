@@ -151,8 +151,7 @@ class UserOrderDetails extends React.Component {
                   </div>
                 );
               })}
-            </div>
-            
+            </div> 
           </div>
           <div className="status">
             <p>{this.state.time}</p>

@@ -1,0 +1,22 @@
+.profile-restaurant {
+    .user-info {
+        margin: 32px auto 0 auto;
+    }
+
+    a {
+        text-decoration: none;
+        color: #818180 !important;
+
+        p {
+            font-weight: 500;
+        }
+    }
+
+    .accordion-item--opened .accordion-item__icon {
+        transform: rotate(270deg) !important;
+    }
+
+    #pie {
+        height: 330px;
+      }
+}

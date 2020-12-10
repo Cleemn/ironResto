@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 class Signup extends React.Component {
   state = {
-    username: "",
+    firstName: "",
+    lastName: "",
     password: "",
     email: "",
     phone: "",
@@ -14,16 +15,18 @@ class Signup extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const username = this.state.username;
+    const firstName = this.state.firstName;
+    const lastName = this.state.lastName;
     const password = this.state.password;
     const phone = this.state.phone;
     const email = this.state.email;
     const type = this.state.type;
 
-    signup(username, password, email, phone, type)
+    signup(firstName, lastName, password, email, phone, type)
       .then((response) => {
         this.setState({
-          username: "",
+          firstName: "",
+          lastName: "",
           password: "",
           phone: "",
           email: "",
@@ -48,14 +51,49 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <div className="auth container">
+      <div className="auth container text-center">
         <form onSubmit={this.handleFormSubmit}>
+          <div className="form-group">
+            <label>Prénom</label>
+            <input
+              type="text"
+              className="form-control"
+              name="firstName"
+              id="firstName"
+              value={this.state.firstName}
+              onChange={(e) => this.handleChange(e)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Nom de famille</label>
+            <input
+              type="text"
+              className="form-control"
+              name="lastName"
+              id="lastName"
+              value={this.state.lastName}
+              onChange={(e) => this.handleChange(e)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Numéro de téléphone</label>
+            <input
+              type="tel"
+              className="form-control"
+              name="phone"
+              id="phone"
+              value={this.state.phone}
+              onChange={(e) => this.handleChange(e)}
+            />
+          </div>
+
           <div className="form-group">
             <label>Adresse email</label>
             <input
               type="email"
               className="form-control"
-              placeholder="Entrez votre email"
               name="email"
               id="email"
               value={this.state.email}
@@ -68,7 +106,6 @@ class Signup extends React.Component {
             <input
               type="password"
               name="password"
-              placeholder="Entrez votre mot de passe"
               id="password"
               value={this.state.password}
               onChange={(e) => this.handleChange(e)}
@@ -76,39 +113,16 @@ class Signup extends React.Component {
             />
           </div>
 
-          <div className="form-group">
-            <label>Pseudo</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Entrez votre username"
-              name="username"
-              id="username"
-              value={this.state.username}
-              onChange={(e) => this.handleChange(e)}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Numéro de téléphone</label>
-            <input
-              type="tel"
-              className="form-control"
-              placeholder="Entrez votre téléphone"
-              name="phone"
-              id="phone"
-              value={this.state.phone}
-              onChange={(e) => this.handleChange(e)}
-            />
-          </div>
-          <button type="submit" className="btn btn-orange btn-block">
+          <button type="submit" className="btn btn-orange">
             Je créé mon compte
           </button>
           <div className="forgot-password text-right">
-            <p>
-              J'ai déjà un compte !<Link to="/login">Se connecter
+            <small>
+              J'ai déjà un compte !
+              <Link to="/login">
+                <br/>Se connecter
               </Link>
-            </p>
+            </small>
           </div>
 
           {this.state.errorMessage && (

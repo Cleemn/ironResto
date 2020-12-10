@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar } from "react-step-progress-bar";
-// import { Link } from "react-router-dom";
 
 const frenchDays = [
   "Dimanche",
@@ -44,7 +43,8 @@ class UserOrderDetails extends React.Component {
     progress: 0,
     time: "",
     min: "",
-    hour: ""
+    hour: "",
+    bg: ''
   };
 
   convertDate(date) {
@@ -62,15 +62,15 @@ class UserOrderDetails extends React.Component {
 
   convertStatus(status) {
     if (status === 'en_attente') {
-      this.setState({progress: 0, time: "Votre commande n'a pas encore été acceptée par le restaurant."});
+      this.setState({progress: 0, time: "Votre commande n'a pas encore été acceptée par le restaurant.", bg: '#F9BFC0'});
     } else if (status === 'acceptee') {
-      this.setState({progress: 25, time: "Votre commande a été acceptée, elle sera prête dans 30 minutes environ."});
+      this.setState({progress: 25, time: "Votre commande a été acceptée, elle sera prête dans 30 minutes environ.", bg: '#F6D6AD'});
     } else if (status === 'en_cours') {
-      this.setState({progress: 50, time: "Votre commande est en cours de préparation, elle sera prête dans 20 minutes environ."});
+      this.setState({progress: 50, time: "Votre commande est en cours de préparation, elle sera prête dans 20 minutes environ.", bg: '#F9FCC2'});
     } else if (status === 'commande_prete') {
-      this.setState({progress: 75, time: "Votre commande est prête, vous pouvez venir la récupérer au restaurant."});
+      this.setState({progress: 75, time: "Votre commande est prête, vous pouvez venir la récupérer au restaurant.", bg: '#DDF3F4'});
     } else {
-      this.setState({progress: 100, time: "Cette commande a été récupérée au restaurant et est maintenant terminée."});
+      this.setState({progress: 100, time: "Cette commande a été récupérée au restaurant et est maintenant terminée.", bg: '#CBF6C8'});
     }
   }
 
@@ -126,16 +126,21 @@ class UserOrderDetails extends React.Component {
     return (
       <div id="order-details" className="all-orders container mt-3">
         <div className="ongoing-orders">
-          <h6>Ma commande en cours</h6>
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <a href="/profile/user">
+              <img src="/arrow-black-left.png" alt="" style={{width: '32px', height: '32px'}}></img>
+            </a>
+            <h6>Ma commande en cours</h6>
+          </div>
           <div className="accordion-item--opened accordion-list">
-            <div className="accordion-item__line container">
+            <div className="accordion-item__line container" style={{backgroundColor: this.state.bg}}>
               <h6 className="accordion-item__title">{date}</h6>
               <h6 className="accordion-item__price">{price}</h6>
             </div>
-            <div className="accordion-item__line container">
-              <p>{this.state.items.length} items</p>
+            <div className="accordion-item__line container" style={{backgroundColor: this.state.bg}}>
+              {this.state.items.length === 1 ? (<p>{this.state.items.length} item</p>) : (<p>{this.state.items.length} items</p>)} 
             </div>
-            <div className="accordion-item__content container">
+            <div className="accordion-item__content container" style={{backgroundColor: this.state.bg}}>
               {this.state.items.map((item, i) => {
                 const product = item.product_id;
                 return (

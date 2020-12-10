@@ -1,5 +1,9 @@
 .logo {
-		width: 40px;
+	width: 40px;
+}
+
+.basket-icon {
+	width: 40px;
 }
 
 .navbar-toggler {
@@ -17,17 +21,15 @@
 .nav-item {
 	position: relative;
 
-	span {
-    font-size: 0.55em;
-    position: absolute;
-    top: 4px;
-    left: 30px;
+	div {
+		position: absolute;
+		top: 10px;
+		left: 27px;
 		background-color: #FA8334;
 		color: #ffffff;
-		padding-left: .45em;
-		padding-right: .45em;
 		border-radius: 50%;
-		text-align: center;
-		font-weight: 900;
+		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+		width: 12px;
+		height: 12px;
 	}
 }

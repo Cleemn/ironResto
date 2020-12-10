@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   state = { 
-    username: '',
     password: '',
     email: '',
     errorMessage:''
@@ -13,13 +12,12 @@ class Login extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const username = this.state.username;
     const password = this.state.password;
     const email = this.state.email;
 
-    login(username, password, email)
+    login(password, email)
       .then(response => {
-        this.setState({username: "", password: "", email: ""});
+        this.setState({password: "", email: ""});
         this.props.updateUser(response)        
         if(response.type === "user"){
 
@@ -42,31 +40,26 @@ class Login extends React.Component {
 
   render() {
     return(
-      <div className="auth container">
+      <div className="auth container text-center">
         <form onSubmit={this.handleFormSubmit}>
           <div className="form-group">
               <label>Adresse email</label>
-              <input type="email" className="form-control" placeholder="Enter email" name="email" id="email" value={this.state.email} onChange={e => this.handleChange(e)} />
-          </div>
-
-          <div className="form-group">
-              <label>Pseudo</label>
-              <input type="text" className="form-control" placeholder="Enter username" name="username" id="username" value={this.state.username} onChange={e => this.handleChange(e)} />
+              <input type="email" className="form-control" name="email" id="email" value={this.state.email} onChange={e => this.handleChange(e)} />
           </div>
 
           <div className="form-group">
               <label>Mot de passe</label>
-              <input type="password" className="form-control" placeholder="Enter password" name="password" id="password" value={this.state.password} onChange={e => this.handleChange(e)} />
+              <input type="password" className="form-control" name="password" id="password" value={this.state.password} onChange={e => this.handleChange(e)} />
           </div>
 
-          <button type="submit" className="btn btn-orange btn-block">Je me connecte</button>
+          <button type="submit" className="btn btn-orange">Je me connecte</button>
           <div className="forgot-password text-right">
-            <p>
+            <small>
               Vous n'avez pas encore de compte ?
               <Link to="/signup">
-                Créer un compte
+                <br/>Créer un compte
               </Link>
-            </p>
+            </small>
           </div>
           { this.state.errorMessage && (
             <div className="message">

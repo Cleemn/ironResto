@@ -58,7 +58,7 @@ Promise.all([users, products])
         total_price: 30,
         date: new Date(),
         time: now,
-        status: 'en_attente'
+        status: 'commande_recuperee'
       },
       { 
         user_id: user_list[1]._id,

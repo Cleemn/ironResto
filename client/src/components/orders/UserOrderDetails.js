@@ -31,12 +31,13 @@ const frenchMonths = [
 class UserOrderDetails extends React.Component {
   state = {
     errorMessage: "",
+    _id: "",
     items: [],
     name: "",
     total_price: 0,
     status: "",
     photo: "",
-    dayWeek:"", 
+    dayWeek: "",
     day: "",
     month:"",
     progress: 0,
@@ -73,10 +74,33 @@ class UserOrderDetails extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.socket.connect();
+    const { params } = this.props.match;
+    
+    this.getSingleOrder()
+    // get new status from order:update:orderId topic
+    this.props.socket.on(`order:update:${params.id}`, (newStatus) => {
+      this.setState({status:newStatus})
+      this.convertStatus(this.state.status)
+    })
+    
+    
+  }
+
+  componentWillUnmount() {
+    this.props.socket.disconnect();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState._id !== "" && this.state._id) {
+      // console.log("componentDidUpdate", this.state)
+    }
+  }
+
   getSingleOrder = () => {
     const { params } = this.props.match;
-
-    axios
+    return axios
       .get(`http://localhost:5000/api/orders/${params.id}`, {
         withCredentials: true,
       })
@@ -95,10 +119,6 @@ class UserOrderDetails extends React.Component {
         }
       });
   };
-
-  componentDidMount() {
-    this.getSingleOrder();
-  }
 
   render() {
     const date = `${this.state.dayWeek} ${this.state.day} ${this.state.month} à ${this.state.hour}h${this.state.min}`;
@@ -142,7 +162,6 @@ class UserOrderDetails extends React.Component {
               filledBackground="linear-gradient(to right, #fcbf99, #FA8334)"
             />
           </div>
-
           <div className="map">
             <p>Le restaurant se situe ici :</p>
             <img src="/map.png" alt=""/>

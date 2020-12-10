@@ -42,6 +42,7 @@ orderRoutes.post("/orders", (req, res, next) => {
 
       Order.create(newOrder)
         .then((order) => {
+          req.io.emit(`add:order`, order)
           res.status(200).json(order);
         })
         .catch((err) => res.status(500).json({ message: err.message }));
@@ -50,12 +51,23 @@ orderRoutes.post("/orders", (req, res, next) => {
 });
 
 orderRoutes.get("/orders", (req, res, next) => {
+
+  const o = req.query && {}
+
+  if(req.query.date === "today"){
+    let today = new Date()
+    let start = new Date(today.getFullYear(),today.getMonth(),today.getDate(),1,0,0);
+
+    let end = new Date(today.getFullYear(),today.getMonth(),today.getDate()+1,0,59,59);
+
+    o.date = {$gte: start, $lt: end};
+  
+  }
+  
   if (!req.session.user) {
     res.status(403).json({ message: "Not autorised." });
     return;
   }
-
-  const o = {};
 
   if (req.session.user.type === "user") {
     o.user_id = req.session.user._id;
@@ -98,6 +110,7 @@ orderRoutes.get("/orders/:id", (req, res, next) => {
 });
 
 orderRoutes.put("/orders/:id", (req, res, next) => {
+
   const orderId = req.params.id;
   const newStatus = req.body.status;
 
@@ -122,10 +135,12 @@ orderRoutes.put("/orders/:id", (req, res, next) => {
           return;
         }
       }
-
+      // req.io.to(orderId).emit('order:update', updatedOrder)
+      req.io.emit(`order:update:${orderId}`, newStatus)
       res.status(200).json(updatedOrder);
     })
     .catch((err) => res.status(500).json({ message: err.message }));
 });
 
 module.exports = orderRoutes;
+

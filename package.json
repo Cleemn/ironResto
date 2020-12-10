@@ -20,6 +20,7 @@
     "mongoose": "^5.2.10",
     "morgan": "^1.9.0",
     "node-sass-middleware": "^0.11.0",
+    "react-step-progress-bar": "^1.0.3",
     "serve-favicon": "^2.5.0",
     "socket.io": "^3.0.3",
     "socket.io-client": "^3.0.3"

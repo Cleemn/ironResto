@@ -19,7 +19,7 @@ import AddProduct from "./components/products/AddProduct"
 import RestaurantOrderList from "./components/orders/RestaurantOrderList"
 
 import { loggedin } from "./components/auth/auth-service";
-import Fade from "react-reveal/Fade";
+
 
 class App extends React.Component {
   state = {

@@ -2,6 +2,7 @@ import React, { createRef, Component } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import * as d3 from "d3";
+import StyledContentLoader from 'styled-content-loader';
 
 const orderStatus = [
   "en_attente",
@@ -97,14 +98,27 @@ class ProfileRestaurant extends Component {
 
   render() {
     return (
-      <div className="profile-restaurant">
-        <p>ProfileRestaurant</p>
+      <div className="profile-restaurant container">
+          <div className="user-info">
+            <h2>
+              {this.props.userInSession ? (
+                this.props.userInSession.username
+              ) : (
+                <StyledContentLoader>
+                </StyledContentLoader>
+              )}
+            </h2>
+            <img
+              src="https://icon-library.net/images/default-user-icon/default-user-icon-29.jpg"
+              alt=""
+            ></img>
+          </div>
 
         <div className="daily-orders">
           <div className="chart">
             <svg ref={this.ref} />
           </div>
-          <h2>Aujourd'hui <br/><span>{this.state.orders.length}</span> <br/> commandes</h2>
+          <h5>Aujourd'hui<span> {this.state.orders.length}</span> commandes ont été passées.</h5>
         </div>
 
         <Link to="/restaurant/orders/">

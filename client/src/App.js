@@ -136,6 +136,7 @@ class App extends React.Component {
                   render={(props) => (
                     <ProfileRestaurant
                       userInSession={this.state.loggedInUser}
+                      updateUser={this.updateLoggedInUser}
                       {...props}
                     />
                   )}

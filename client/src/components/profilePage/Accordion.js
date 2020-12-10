@@ -2,27 +2,8 @@ import React from "react";
 
 class AccordionItem extends React.Component {
   state = {
-    opened: false,
-    bg: ''
+    opened: false
   };
-
-  getStatus(status) {
-    if (status === 'en_attente') {
-      this.setState({bg: '#F9BFC0'});
-    } else if (status === 'acceptee') {
-      this.setState({bg: '#F6D6AD'});
-    } else if (status === 'en_cours') {
-      this.setState({bg: '#F9FCC2'});
-    } else if (status === 'commande_prete') {
-      this.setState({bg: '#DDF3F4'});
-    } else {
-      this.setState({bg: '#CBF6C8'});
-    }
-  }
-
-  componentDidMount() {
-    this.getStatus(this.props.status);
-  }
 
   render() {
     const {
@@ -38,7 +19,6 @@ class AccordionItem extends React.Component {
           {...{
             className: "accordion-item__line container",
           }}
-          style={{backgroundColor: this.state.bg}}
         >
           <h6 {...{ 
             className: "accordion-item__title", 
@@ -54,7 +34,6 @@ class AccordionItem extends React.Component {
           {...{
             className: "accordion-item__line container",
           }}
-          style={{backgroundColor: this.state.bg}}
         >
           <div>
             {this.props.items.length === 1 ? (<p>{this.props.items.length} item</p>) : (<p>{this.props.items.length} items</p>)}

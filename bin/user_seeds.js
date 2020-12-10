@@ -41,6 +41,14 @@ const dataUser = [
     phone: "0612345678",
     type: "user"
   },
+  {
+    firstName: "Pierre",
+    lastName: "Hermé",
+    email: "pherme@gmail.com",
+    passwordHash: bcryptjs.hashSync("testpassword", salt),
+    phone: "0612345678",
+    type: "restaurant"
+  }
 ];
 
 

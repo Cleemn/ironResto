@@ -43,8 +43,7 @@ class UserOrderDetails extends React.Component {
     progress: 0,
     time: "",
     min: "",
-    hour: "",
-    bg: ''
+    hour: ""
   };
 
   convertDate(date) {
@@ -62,15 +61,15 @@ class UserOrderDetails extends React.Component {
 
   convertStatus(status) {
     if (status === 'en_attente') {
-      this.setState({progress: 0, time: "Votre commande n'a pas encore été acceptée par le restaurant.", bg: '#F9BFC0'});
+      this.setState({progress: 0, time: "Votre commande n'a pas encore été acceptée par le restaurant."});
     } else if (status === 'acceptee') {
-      this.setState({progress: 25, time: "Votre commande a été acceptée, elle sera prête dans 30 minutes environ.", bg: '#F6D6AD'});
+      this.setState({progress: 25, time: "Votre commande a été acceptée, elle sera prête dans 30 minutes environ."});
     } else if (status === 'en_cours') {
-      this.setState({progress: 50, time: "Votre commande est en cours de préparation, elle sera prête dans 20 minutes environ.", bg: '#F9FCC2'});
+      this.setState({progress: 50, time: "Votre commande est en cours de préparation, elle sera prête dans 20 minutes environ."});
     } else if (status === 'commande_prete') {
-      this.setState({progress: 75, time: "Votre commande est prête, vous pouvez venir la récupérer au restaurant.", bg: '#DDF3F4'});
+      this.setState({progress: 75, time: "Votre commande est prête, vous pouvez venir la récupérer au restaurant."});
     } else {
-      this.setState({progress: 100, time: "Cette commande a été récupérée au restaurant et est maintenant terminée.", bg: '#CBF6C8'});
+      this.setState({progress: 100, time: "Cette commande a été récupérée au restaurant et est maintenant terminée."});
     }
   }
 
@@ -133,14 +132,14 @@ class UserOrderDetails extends React.Component {
             <h6>Ma commande en cours</h6>
           </div>
           <div className="accordion-item--opened accordion-list">
-            <div className="accordion-item__line container" style={{backgroundColor: this.state.bg}}>
+            <div className="accordion-item__line container">
               <h6 className="accordion-item__title">{date}</h6>
               <h6 className="accordion-item__price">{price}</h6>
             </div>
-            <div className="accordion-item__line container" style={{backgroundColor: this.state.bg}}>
+            <div className="accordion-item__line container">
               {this.state.items.length === 1 ? (<p>{this.state.items.length} item</p>) : (<p>{this.state.items.length} items</p>)} 
             </div>
-            <div className="accordion-item__content container" style={{backgroundColor: this.state.bg}}>
+            <div className="accordion-item__content container">
               {this.state.items.map((item, i) => {
                 const product = item.product_id;
                 return (

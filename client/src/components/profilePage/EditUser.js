@@ -20,15 +20,11 @@ class EditUser extends React.Component {
     const email = this.state.email;
     const password = this.state.password;
     const phone = this.state.phone;
-
-    console.log("before update user in session", this.props.userInSession)
     
     edit(firstName, lastName, email, password, phone)
       .then((response) => {
-        console.log("response", response);
 
         this.props.updateUser(response);
-        console.log("user in session", this.props.userInSession)
         this.props.history.push("/profile/user");
       })
       .catch((error) => {

@@ -34,16 +34,6 @@ class Basket extends React.Component {
     }
   };
 
-  IncreaseQuantity = () => {
-    // this.setState({ clicks: this.state.clicks + 1 });
-  };
-
-  DecreaseQuantity = () => {
-    // if (this.state.clicks > 1) {
-    //   this.setState({ clicks: this.state.clicks - 1 });
-    // }
-  };
-
   totalPrice() {
     let basket = [...this.props.basket];
 
@@ -150,11 +140,6 @@ class ProductCart extends React.Component {
                   }}
                   className="basket-img"
                 ></img>
-                  <div className="d-flex justify-content-evenly">
-                    <button style={{border: 'none'}} className="remove" onClick={this.DecreaseItem}>-</button>
-                    <div className="px-3 py-1 quantity">1</div>
-                    <button style={{border: 'none'}} className="add" onClick={this.IncrementItem}>+</button>
-                  </div>
               </div>
             </div>
           </div>

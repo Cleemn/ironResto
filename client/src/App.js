@@ -17,7 +17,6 @@ import UserOrderDetails from "./components/orders/UserOrderDetails";
 import EditUser from "./components/profilePage/EditUser";
 import AddProduct from "./components/products/AddProduct"
 import RestaurantOrderList from "./components/orders/RestaurantOrderList"
-// import EditOrder from "./components/orders/EditOrder"
 
 import { loggedin } from "./components/auth/auth-service";
 
@@ -157,7 +156,6 @@ class App extends React.Component {
                 <Route exact path="/products/new" component={AddProduct}/>
                 <Route exact path="/restaurant/orders/" render={(props)=> (<RestaurantOrderList socket={this.socket} {...props}/>)}/>        
 
-                {/* <Route exact path="/orders/edit/:id" render={(props)=> (<EditOrder socket={this.socket} {...props}/>)} /> */}
                 <Fade bottom>
                   <Route exact path="/products/:id" component={ProductDetails}/>
                 </Fade>

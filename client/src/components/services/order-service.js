@@ -11,6 +11,10 @@ function orders() {
 }
 export { orders };
 
+function dailyOrders() {
+  return service.get("/orders?date=today").then((response) => response.data); }
+export { dailyOrders };
+
 function createOrder(items) {
   return service.post("/orders", items).then((response) => response.data);
 }

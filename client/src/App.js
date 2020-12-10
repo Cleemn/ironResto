@@ -1,5 +1,10 @@
 import "./App.scss";
+
 import React from "react";
+import { Route, Switch } from "react-router-dom";
+import Fade from "react-reveal/Fade";
+import io from "socket.io-client";
+
 import HomePage from "./components/HomePage";
 import ProductDetails from "./components/products/ProductDetails";
 import AppNavbar from "./components/Navbar";
@@ -10,16 +15,19 @@ import ProfileUser from "./components/profilePage/ProfileUser";
 import Basket from "./components/orders/Basket";
 import UserOrderDetails from "./components/orders/UserOrderDetails";
 import EditUser from "./components/profilePage/EditUser";
-import { Route, Switch } from "react-router-dom";
+import AddProduct from "./components/products/AddProduct"
+import RestaurantOrderList from "./components/orders/RestaurantOrderList"
 
 import { loggedin } from "./components/auth/auth-service";
-import Fade from "react-reveal/Fade";
+
 
 class App extends React.Component {
   state = {
     loggedInUser: null,
     basket: []
   };
+
+  socket = io('http://localhost:5000/', {autoConnect: false,})
 
   fetchUser() {
     if (this.state.loggedInUser === null) {
@@ -145,7 +153,10 @@ class App extends React.Component {
                     />
                   )}
                 />
-                <Route exact path="/orders/:id" component={UserOrderDetails} />
+                <Route exact path="/orders/:id" render={(props)=> (<UserOrderDetails socket={this.socket} {...props}/>)} />
+                <Route exact path="/products/new" component={AddProduct}/>
+                <Route exact path="/restaurant/orders/" render={(props)=> (<RestaurantOrderList socket={this.socket} {...props}/>)}/>        
+
                 <Fade bottom>
                   <Route exact path="/products/:id" component={ProductDetails}/>
                 </Fade>

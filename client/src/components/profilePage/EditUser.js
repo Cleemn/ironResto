@@ -5,19 +5,19 @@ import StyledContentLoader from 'styled-content-loader';
 
 class EditUser extends React.Component {
   state = {
-    username: this.props.userInSession.username,
-    email: this.props.userInSession.email,
-    password: this.props.userInSession.password,
-    phone: this.props.userInSession.phone,
+    username: "",
+    email: "",
+    password: "",
+    phone: "",
     errorMessage: ""
   };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const username = this.state.username;
-    const email = this.state.email;
-    const password = this.state.password;
-    const phone = this.state.phone;
+    const username = this.props.userInSession.username;
+    const email = this.props.userInSession.email;
+    const password = this.props.userInSession.password;
+    const phone = this.props.userInSession.phone;
 
     console.log("before update user in session", this.props.userInSession)
     

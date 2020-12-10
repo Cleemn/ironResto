@@ -61,20 +61,6 @@ app.use((req, res, next) => {
 io.on("connection", (socket) => {
   console.log('client connected', socket.id)
 
-
-  // socket.on('order:update', (orderId, newStatus) => {
-  //   console.log(`received order update '${orderId}' '${newStatus}'`)
-  //   socket.broadcast.emit(`order:update:${orderId}`, newStatus)
-    // join a room: this allow us to `io.to(orderId).emit()` -> see: https://socket.io/docs/v3/rooms/#Sample-use-cases
-    // socket.join(`${orderId}`)
-  // })
-
-  socket.on('add:order', (order) => {
-    socket.broadcast.emit(`add:order`, order)
-    // join a room: this allow us to `io.to(orderId).emit()` -> see: https://socket.io/docs/v3/rooms/#Sample-use-cases
-    // socket.join(`${orderId}`)
-  })
-
 });
 
 

@@ -42,6 +42,7 @@ orderRoutes.post("/orders", (req, res, next) => {
 
       Order.create(newOrder)
         .then((order) => {
+          req.io.emit(`add:order`, order)
           res.status(200).json(order);
         })
         .catch((err) => res.status(500).json({ message: err.message }));
@@ -125,15 +126,15 @@ orderRoutes.put("/orders/:id", (req, res, next) => {
 
   Order.findByIdAndUpdate(orderId, { status: newStatus }, { new: true })
     .then((updatedOrder) => {
-      // if (req.session.user.type === "user") {
-      //   if (!(updatedOrder.user_id === req.session.user._id.toString())) {
-      //     res.status(403).json({ message: "Not autorised." });
-      //     return;
-      //   } else if (newStatus !== "annule") {
-      //     res.status(401).json({ message: "Not autorised." });
-      //     return;
-      //   }
-      // }
+      if (req.session.user.type === "user") {
+        if (!(updatedOrder.user_id === req.session.user._id.toString())) {
+          res.status(403).json({ message: "Not autorised." });
+          return;
+        } else if (newStatus !== "annule") {
+          res.status(401).json({ message: "Not autorised." });
+          return;
+        }
+      }
       // req.io.to(orderId).emit('order:update', updatedOrder)
       req.io.emit(`order:update:${orderId}`, newStatus)
       res.status(200).json(updatedOrder);

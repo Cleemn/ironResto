@@ -10,12 +10,8 @@ class RestaurantOrderList extends Component {
   componentDidMount() {
     this.getDailyOrders();
     this.props.socket.connect();
-    this.props.socket.on("add:order", newOrder => {
-      const orders = [...this.state.orders];
-      const sortedNewOrders = [...orders, newOrder].sort(
-        (o1, o2) => new Date(o2.date) - new Date(o1.date)
-      );
-      this.setState({ orders: sortedNewOrders });
+    this.props.socket.on(`add:order`, (newOrder) => {
+      this.updateOrder(newOrder)
     })
   }
 
@@ -38,8 +34,6 @@ class RestaurantOrderList extends Component {
         { withCredentials: true }
       ).then(resp => {
           this.updateOrder(resp.data);
-          // emit new status from client by order:update topic
-          // this.props.socket.emit("order:update", orderId, newStatus);
       })
       
   };

@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar } from "react-step-progress-bar";
-// import { Link } from "react-router-dom";
 
 const frenchDays = [
   "Dimanche",
@@ -126,14 +125,19 @@ class UserOrderDetails extends React.Component {
     return (
       <div id="order-details" className="all-orders container mt-3">
         <div className="ongoing-orders">
-          <h6>Ma commande en cours</h6>
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <a href="/profile/user">
+              <img src="/arrow-black-left.png" alt="" style={{width: '32px', height: '32px'}}></img>
+            </a>
+            <h6>Ma commande en cours</h6>
+          </div>
           <div className="accordion-item--opened accordion-list">
             <div className="accordion-item__line container">
               <h6 className="accordion-item__title">{date}</h6>
               <h6 className="accordion-item__price">{price}</h6>
             </div>
             <div className="accordion-item__line container">
-              <p>{this.state.items.length} items</p>
+              {this.state.items.length === 1 ? (<p>{this.state.items.length} item</p>) : (<p>{this.state.items.length} items</p>)} 
             </div>
             <div className="accordion-item__content container">
               {this.state.items.map((item, i) => {

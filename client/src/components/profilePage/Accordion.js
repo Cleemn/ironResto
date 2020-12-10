@@ -2,7 +2,7 @@ import React from "react";
 
 class AccordionItem extends React.Component {
   state = {
-    opened: false,
+    opened: false
   };
 
   render() {
@@ -36,7 +36,7 @@ class AccordionItem extends React.Component {
           }}
         >
           <div>
-            <p>{this.props.items.length} items</p>
+            {this.props.items.length === 1 ? (<p>{this.props.items.length} item</p>) : (<p>{this.props.items.length} items</p>)}
           </div>
           <span
             {...{
@@ -47,8 +47,8 @@ class AccordionItem extends React.Component {
             }}
           />
         </div>
-        <div {...{ className: "accordion-item__inner" }}>
-          <div {...{ className: "accordion-item__content container" }}>
+        <div {...{ className: "accordion-item__inner" }} style={{backgroundColor: this.state.bg}}>
+          <div {...{ className: "accordion-item__content container" }} style={{backgroundColor: this.state.bg}}>
             {this.props.items.map((item, i) => {
               const product = item.product_id;
               return (

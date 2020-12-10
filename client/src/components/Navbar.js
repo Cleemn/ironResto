@@ -23,28 +23,28 @@ class AppNavbar extends React.Component {
 
     return (
         <Navbar expand="lg" sticky="top" bg="white">
-          {this.props.basket.length === 0 ? (
-            <Navbar.Brand as={Link} to="/" className="nav-item">
-                <img 
-                className="d-inline-block align-top logo"
-                src="/logo.png"
-                alt="logo"
-                />
-            </Navbar.Brand>
-            ) : (
+          <Navbar.Brand as={Link} to="/user/order" className="nav-item">
+            {this.props.basket.length > 0 ? (
               <Flip right>
-                <Navbar.Brand as={Link} to="/user/order" className="nav-item">
-                  <img src="shopping-basket-white-black.png" alt="" className="d-inline-block align-top logo"/>
-                  <span>{this.props.basket.length}</span>
-                </Navbar.Brand>
+                <img src="/basket-color.png" alt="" className="align-center basket-icon"/>
               </Flip>
+            ) : (
+              <img src="/basket-white.png" alt="" className="align-center basket-icon"/>
             )}
+          </Navbar.Brand>
+          <Navbar.Brand as={Link} to="/" className="nav-item">
+              <img 
+              className="d-inline-block align-top logo"
+              src="/logo.png"
+              alt="logo"
+              />
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             {this.props.userInSession ? (
-            <Nav className="mr-auto">
+            <Nav className="ml-auto align-items-center">
               <Nav.Link eventKey="disabled" disabled>
-                <em>Bonjour, {this.props.userInSession.username} !</em>
+                <em>Bonjour, {this.props.userInSession.firstName} !</em>
               </Nav.Link>
               
               <Nav.Link as={NavLink} to="/" onClick={this.closeNavbar}>La carte</Nav.Link>
@@ -63,12 +63,15 @@ class AppNavbar extends React.Component {
                       })
                       .catch((err) => console.log(err));
                   }}
+
+                  style={{width: "fit-content"}}
+                  className="mx-auto my-3"
                 >
-                  Logout
+                  Se déconnecter
                 </Button>
             </Nav>
               ) : (
-            <Nav className="mr-auto">
+            <Nav className="ml-auto align-items-center">
               <Nav.Link as={NavLink} to="/" onClick={this.closeNavbar}>La carte</Nav.Link>
               <Nav.Link as={NavLink} to="/login" onClick={this.closeNavbar}>Se connecter</Nav.Link>
               <Nav.Link as={NavLink} to="/signup" onClick={this.closeNavbar}>Créer un compte</Nav.Link>

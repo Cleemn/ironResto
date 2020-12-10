@@ -6,18 +6,18 @@ const service = axios.create({
 });
 export default service;
 
-function signup(username, password, email, phone, type) {
-  return service.post('/signup', {username, password, email, phone, type}).then(response => response.data)
+function signup(firstName, lastName, password, email, phone, type) {
+  return service.post('/signup', {firstName, lastName, password, email, phone, type}).then(response => response.data)
 }
 export {signup}
 
-function login(username, password, email) {
-  return service.post('/login', {username, password, email}).then(response => response.data)
+function login(password, email) {
+  return service.post('/login', {password, email}).then(response => response.data)
 }
 export {login}
 
-function edit(username, email, password, phone) {
-  return service.put('/edit', {username, email, password, phone}).then(response => response.data)
+function edit(firstName, lastName, email, password, phone) {
+  return service.put('/edit', {firstName, lastName, email, password, phone}).then(response => response.data)
 }
 export {edit}
 

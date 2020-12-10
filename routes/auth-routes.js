@@ -4,16 +4,16 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User.model");
 
 authRoutes.post("/signup", (req, res, next) => {
-  const { username, email, password, phone, type } = req.body;
+  const { firstName, lastName, email, password, phone, type } = req.body;
 
-  if (!username || !email || !password || !phone || !type) {
-    res.status(400).json({ message: "Provide all the informations" });
+  if (!firstName || !lastName || !email || !password || !phone || !type) {
+    res.status(400).json({ message: "Provide all the information" });
   }
 
   const salt = bcrypt.genSaltSync(10);
   const passwordHash = bcrypt.hashSync(password, salt);
 
-  User.create({ username, email, passwordHash, phone, type })
+  User.create({ firstName, lastName, email, passwordHash, phone, type })
     .then((userFromDB) => {
       req.session.user = userFromDB;
       res.status(200).json(userFromDB);
@@ -22,7 +22,7 @@ authRoutes.post("/signup", (req, res, next) => {
       if (error.code === 11000) {
         res.status(500).json({
           errorMessage:
-            "Username and email need to be unique. Either username or email is already used.",
+            "Email need to be unique. This email is already used.",
         });
       } else {
         res.status(400).json({ message: "Create user went wrong" });
@@ -31,14 +31,14 @@ authRoutes.post("/signup", (req, res, next) => {
 });
 
 authRoutes.post("/login", (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
 
-  User.findOne({ username, email })
+  User.findOne({ email })
     .then((user) => {
       if (!user) {
         res
           .status(400)
-          .json({ message: "User not found. Email or username invalid." });
+          .json({ message: "User not found. Email invalid." });
         return;
       }
 
@@ -69,7 +69,7 @@ authRoutes.post("/logout", (req, res, next) => {
 });
 
 authRoutes.put("/edit", (req, res, next) => {
-  const { username, email, password, phone } = req.body;
+  const { firstName, lastName, email, password, phone } = req.body;
   const id = req.session.user._id
 
   if (!req.session.user) {
@@ -77,7 +77,7 @@ authRoutes.put("/edit", (req, res, next) => {
     return;
   }
 
-  User.findByIdAndUpdate(id, { username, email, password, phone }, {new: true})
+  User.findByIdAndUpdate(id, { firstName, lastName, email, password, phone }, {new: true})
   .then(user => {
     req.session.user = user
     res.status(200).json(user);

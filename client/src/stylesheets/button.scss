@@ -3,4 +3,17 @@
   border-radius: 30px !important;
   border: none !important;
   color: white !important;
+  font-size: 12px !important;
+}
+
+.remove, .add {
+  border: none;
+  padding: 0 11px;
+  background-color: #fff;
+  font-weight: 300;
+  background-color: #FFE7D9;
+
+  &:focus {
+    outline: none;
+  }
 }

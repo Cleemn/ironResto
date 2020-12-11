@@ -27,7 +27,7 @@ class App extends React.Component {
     basket: []
   };
 
-  socket = io('http://localhost:5000/', {autoConnect: false,})
+  socket = io('http://localhost:5000/', {autoConnect: false,});
 
   fetchUser() {
     if (this.state.loggedInUser === null) {

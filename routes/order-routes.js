@@ -75,6 +75,7 @@ orderRoutes.get("/orders", (req, res, next) => {
 
   Order.find(o)
     .populate("items.product_id") // faut on mettre une filtre de la journée ? {time:Date.now}
+    .populate("items.user_id")
     .then((allOrders) => {
       const orders = allOrders.sort((o1, o2) => new Date(o2.date) -new Date(o1.date))
       res.status(200).json(orders);

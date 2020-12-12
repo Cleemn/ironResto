@@ -27,6 +27,10 @@ class App extends React.Component {
     basket: []
   };
 
+  componentDidMount() {
+    console.log('process.env', process.env)
+  }
+
   socket = io('http://localhost:5000/', {autoConnect: false,});
 
   fetchUser() {

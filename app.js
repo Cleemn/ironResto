@@ -73,15 +73,13 @@ app.use(require('node-sass-middleware')({
       
 
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
-const index = require('./routes/index');
-app.use('/', index);
+
 app.use('/api', require('./routes/auth-routes'));
 app.use('/api', require('./routes/product-routes'));
 app.use('/api', require('./routes/order-routes'));
@@ -101,11 +99,6 @@ app.use((err, req, res, next) => {
   console.error('ERROR', req.method, req.path, err);
 
   res.json({message: err.message});
-});
-
-app.use((req, res, next) => {
-  // If no routes match, send them the React HTML.
-  res.sendFile(__dirname + "/public/index.html");
 });
 
 module.exports = {app, server};

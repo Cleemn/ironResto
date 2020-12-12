@@ -3,6 +3,8 @@ import axios from "axios";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar } from "react-step-progress-bar";
 
+const baseURL = `${process.env.REACT_APP_APIURL || ""}`
+
 const frenchDays = [
   "Dimanche",
   "Lundi",
@@ -100,7 +102,7 @@ class UserOrderDetails extends React.Component {
   getSingleOrder = () => {
     const { params } = this.props.match;
     return axios
-      .get(`http://localhost:5000/api/orders/${params.id}`, {
+      .get(`${baseURL}/api/orders/${params.id}`, {
         withCredentials: true,
       })
       .then((response) => {

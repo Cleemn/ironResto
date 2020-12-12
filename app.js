@@ -86,6 +86,16 @@ app.use('/api', require('./routes/auth-routes'));
 app.use('/api', require('./routes/product-routes'));
 app.use('/api', require('./routes/order-routes'));
 
+// Serve static files from client/build folder
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// For any other routes: serve client/build/index.html SPA
+app.use((req, res, next) => {
+  res.sendFile(`${__dirname}/client/build/index.html`, err => {
+    if (err) next(err)
+  })
+});
+
 app.use((err, req, res, next) => {
   // always log the error
   console.error('ERROR', req.method, req.path, err);

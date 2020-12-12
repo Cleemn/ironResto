@@ -10,15 +10,17 @@ import { productById } from "./services/product-service";
 
 SwiperCore.use([Navigation, Pagination]);
 
+const baseURL = `${process.env.REACT_APP_APIURL || ""}`
+
 class HomePage extends React.Component {
   state = {
     listOfProducts: [],
-    search: ""
+    search: "",
   };
 
   getAllProducts = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/products`)
+      .get(`${baseURL}/api/products`)
       .then((responseFromApi) => {
         this.setState({
           listOfProducts: responseFromApi.data,
@@ -29,10 +31,9 @@ class HomePage extends React.Component {
 
   addToBasket = (e, product_id) => {
     if (product_id) {
-      productById(product_id)
-        .then(product => {
-          this.props.updateBasket({ ...product, quantity: 1 })
-        });
+      productById(product_id).then((product) => {
+        this.props.updateBasket({ ...product, quantity: 1 });
+      });
     }
   };
 
@@ -42,9 +43,12 @@ class HomePage extends React.Component {
   }
 
   sortByType = (e) => {
-    axios.get(`${process.env.REACT_APP_API_URL}/products`)
-      .then(responseFromApi => {
-        const sortProducts = responseFromApi.data.filter(product => product.type === e.target.id);
+    axios
+      .get(`${baseURL}/api/profile`)
+      .then((responseFromApi) => {
+        const sortProducts = responseFromApi.data.filter(
+          (product) => product.type === e.target.id
+        );
         this.setState({
           listOfProducts: sortProducts,
         });
@@ -53,11 +57,13 @@ class HomePage extends React.Component {
   };
 
   searchFilter = (e) => {
-
-    this.setState({search: e.target.value});
-    axios.get(`${process.env.REACT_APP_API_URL}/products`)
-      .then(responseFromApi => {
-        const sortProducts = responseFromApi.data.filter(product => product.name.toLowerCase().includes(this.state.search.toLowerCase()));
+    this.setState({ search: e.target.value });
+    axios
+      .get(`${baseURL}/api/profile`)
+      .then((responseFromApi) => {
+        const sortProducts = responseFromApi.data.filter((product) =>
+          product.name.toLowerCase().includes(this.state.search.toLowerCase())
+        );
         this.setState({
           listOfProducts: sortProducts,
         });
@@ -66,7 +72,6 @@ class HomePage extends React.Component {
   };
 
   render() {
-
     return (
       <div id="home">
         <div className="hero">
@@ -108,47 +113,46 @@ class HomePage extends React.Component {
           </button>
         </div>
 
- 
-          <Swiper
-            spaceBetween={32}
-            slidesPerView={1.3}
-            pagination={{ clickable: true }}
-            breakpoints={{
-              768: {
-                slidesPerView: 4.8 || 'auto'
-              },
-              1440: {
-                slidesPerView: 5.4 || 'auto'
-              },
-              1920: {
-                slidesPerView: 7.3 || 'auto'
-              }
-            }}
-          >
-            {this.state.listOfProducts.map((product) => {
-              return (
-                <SwiperSlide className="swiper-card container" key={product._id}>
-                  <Link to={`/products/${product._id}`}>
-                    <img src={product.photo} alt="" className="m-auto"/>
-                  </Link>
-                  <div className="infos">
-                    <h6 className="mt-3">{product.name}</h6>
-                  </div>
-                  <div className="d-flex align-items-end justify-content-between">
-                      <p className="mb-0">{product.price}€</p>
-                      <button
-                        type="submit"
-                        className="btn btn-orange"
-                        onClick={(e) => this.addToBasket(e, product._id)}
-                        style={{height: 'fit-content'}}
-                      >
-                        Ajouter
-                      </button>
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
+        <Swiper
+          spaceBetween={32}
+          slidesPerView={1.3}
+          pagination={{ clickable: true }}
+          breakpoints={{
+            768: {
+              slidesPerView: 4.8 || "auto",
+            },
+            1440: {
+              slidesPerView: 5.4 || "auto",
+            },
+            1920: {
+              slidesPerView: 7.3 || "auto",
+            },
+          }}
+        >
+          {this.state.listOfProducts.map((product) => {
+            return (
+              <SwiperSlide className="swiper-card container" key={product._id}>
+                <Link to={`/products/${product._id}`}>
+                  <img src={product.photo} alt="" className="m-auto" />
+                </Link>
+                <div className="infos">
+                  <h6 className="mt-3">{product.name}</h6>
+                </div>
+                <div className="d-flex align-items-end justify-content-between">
+                  <p className="mb-0">{product.price}€</p>
+                  <button
+                    type="submit"
+                    className="btn btn-orange"
+                    onClick={(e) => this.addToBasket(e, product._id)}
+                    style={{ height: "fit-content" }}
+                  >
+                    Ajouter
+                  </button>
+                </div>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
       </div>
     );
   }

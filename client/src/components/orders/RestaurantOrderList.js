@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+
+const baseURL = `${process.env.REACT_APP_APIURL || ""}`
 class RestaurantOrderList extends Component {
   state = {
     orders: [],
@@ -29,7 +31,7 @@ class RestaurantOrderList extends Component {
   updateOrderStatus = (orderId, newStatus) => {
     axios
       .put(
-        `http://localhost:5000/api/orders/${orderId}`,
+        `${baseURL}/api/orders/${orderId}`,
         { status: newStatus },
         { withCredentials: true }
       ).then(resp => {
@@ -44,7 +46,7 @@ class RestaurantOrderList extends Component {
 
   getDailyOrders = () => {
     return axios
-      .get("http://localhost:5000/api/orders?date=today", {
+      .get(`${baseURL}/api/orders?date=today`, {
         withCredentials: true,
       })
       .then((response) => {

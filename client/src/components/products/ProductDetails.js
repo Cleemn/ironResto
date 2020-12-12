@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
 import { productById } from "../services/product-service";
+const baseURL = `${process.env.REACT_APP_APIURL || ""}`
 
 class ProductDetails extends Component {
   state = {
@@ -17,7 +17,7 @@ class ProductDetails extends Component {
   // 👨‍🏫
   getSingleProduct = () => {
       const { params } = this.props.match;
-      axios.get(`${process.env.REACT_APP_API_URL}/products/${params.id}`)
+      axios.get(`${baseURL}/products/${params.id}`)
         .then( responseFromApi =>{
           const theProduct = responseFromApi.data;
           this.setState(theProduct);

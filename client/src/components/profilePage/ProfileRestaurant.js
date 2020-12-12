@@ -1,7 +1,9 @@
 import React, { createRef, Component } from "react";
 import { Link } from "react-router-dom";
-import Axios from "axios";
+import axios from "axios";
 import * as d3 from "d3";
+
+const baseURL = `${process.env.REACT_APP_APIURL || ""}`
 
 const orderStatus = [
   "en_attente",
@@ -40,7 +42,7 @@ class ProfileRestaurant extends Component {
   }
 
   getDailyOrders = () => {
-    return Axios.get("http://localhost:5000/api/orders?date=today", {
+    return axios.get(`${baseURL}/api/orders?date=today`, {
       withCredentials: true,
     })
       .then((response) => {

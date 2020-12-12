@@ -4,7 +4,7 @@ const Product = require('../models/Product.model');
 const User = require('../models/User.model');
  
 const dbtitle = 'ironresto';
-mongoose.connect(`mongodb://localhost/${dbtitle}`, {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.MONGODB_URI, {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true})
   .then( db => {
   console.log(`connected to ${db}`);
 })

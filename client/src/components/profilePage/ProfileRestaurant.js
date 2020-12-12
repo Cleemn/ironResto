@@ -11,6 +11,8 @@ import PieChart, {
   Size
 } from 'devextreme-react/pie-chart';
 
+const baseURL = `${process.env.REACT_APP_APIURL || ""}`
+
 const orderStatus = [
   "en_attente",
   "acceptee",
@@ -35,7 +37,7 @@ class ProfileRestaurant extends Component {
   }
 
   getDailyOrders = () => {
-    return Axios.get("http://localhost:5000/api/orders?date=today", {
+    return axios.get(`${baseURL}/api/orders?date=today`, {
       withCredentials: true,
     })
       .then((response) => {

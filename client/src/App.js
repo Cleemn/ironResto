@@ -31,7 +31,7 @@ class App extends React.Component {
     console.log('process.env', process.env)
   }
 
-  socket = io('http://localhost:5000/', {autoConnect: false,});
+  socket = io(`${process.env.REACT_APP_APIURL || ""}`, {autoConnect: false,});
 
   fetchUser() {
     if (this.state.loggedInUser === null) {

@@ -75,7 +75,7 @@ orderRoutes.get("/orders", (req, res, next) => {
 
   Order.find(o)
     .populate("items.product_id") // faut on mettre une filtre de la journée ? {time:Date.now}
-    .populate("items.user_id")
+    .populate("user_id")
     .then((allOrders) => {
       const orders = allOrders.sort((o1, o2) => new Date(o2.date) -new Date(o1.date))
       res.status(200).json(orders);
@@ -104,6 +104,7 @@ orderRoutes.get("/orders/:id", (req, res, next) => {
 
   Order.find(filter)
   .populate("items.product_id")
+  .populate("user_id")
   .then((selectedOrder) => {
       res.status(200).json(selectedOrder);
     })
@@ -126,6 +127,8 @@ orderRoutes.put("/orders/:id", (req, res, next) => {
   }
 
   Order.findByIdAndUpdate(orderId, { status: newStatus }, { new: true })
+    .populate("items.product_id")
+    .populate("user_id")
     .then((updatedOrder) => {
       if (req.session.user.type === "user") {
         if (!(updatedOrder.user_id === req.session.user._id.toString())) {

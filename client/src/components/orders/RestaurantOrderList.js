@@ -110,6 +110,7 @@ class RestaurantOrderList extends Component {
                           orderId={order._id}
                           items={order.items}
                           status={order.status}
+                          user={order.user_id}
                           updateStatus={this.updateOrderStatus}
                           {...this.props}
                         />
@@ -147,10 +148,11 @@ class Accordion extends React.Component {
         >
           <h6 {...{ 
             className: "accordion-item__title", 
+            
             onClick: () => {
               this.props.history.push(`/orders/${this.props.orderId}`)
           },
-            }}>Commande passée à : {this.props.date}</h6>
+            }} style={{width: '70%'}}>Commande passée à : {this.props.date} par {this.props.user.firstName} {this.props.user.lastName}</h6>
           <h6 {...{ className: "accordion-item__price" }} style={{width: '30%'}}>
             {this.props.status.charAt(0).toUpperCase() + this.props.status.slice(1).replace('_', ' ')}
           </h6>
@@ -171,6 +173,22 @@ class Accordion extends React.Component {
               },
             }}
           />
+        </div>
+
+        <div {...{ className: "accordion-item__inner justify-content-between align-items-center" }}>
+          <div {...{ className: "accordion-item__content container" }}>
+            {this.props.items.map((item, i) => {
+              const product = item.product_id;
+              return (
+                <div key={i} {...{ className: "accordion-item__product" }}>
+                  <img src={`${product.photo}`} alt=""></img>
+                  <p>{item.quantity}</p>
+                  <p>{product.name}</p>
+                  <p className="price">{product.price}€</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
         <div {...{ className: "accordion-item__inner justify-content-between align-items-center" }}>
           <div {...{ className: "accordion-item__content d-flex justify-content-between" }} style={{paddingBottom: '0', backgroundColor: 'white'}}>

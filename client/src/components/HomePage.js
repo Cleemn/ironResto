@@ -10,8 +10,6 @@ import { productById } from "./services/product-service";
 
 SwiperCore.use([Navigation, Pagination]);
 
-const baseURL = `${process.env.REACT_APP_APIURL || ""}`
-
 class HomePage extends React.Component {
   state = {
     listOfProducts: [],
@@ -20,7 +18,7 @@ class HomePage extends React.Component {
 
   getAllProducts = () => {
     axios
-      .get(`${baseURL}/api/products`)
+      .get(`${process.env.REACT_APP_APIURL || ""}/api/products`)
       .then((responseFromApi) => {
         this.setState({
           listOfProducts: responseFromApi.data,
@@ -44,7 +42,7 @@ class HomePage extends React.Component {
 
   sortByType = (e) => {
     axios
-      .get(`${baseURL}/api/profile`)
+      .get(`${process.env.REACT_APP_APIURL || ""}/api/products`)
       .then((responseFromApi) => {
         const sortProducts = responseFromApi.data.filter(
           (product) => product.type === e.target.id
@@ -59,7 +57,7 @@ class HomePage extends React.Component {
   searchFilter = (e) => {
     this.setState({ search: e.target.value });
     axios
-      .get(`${baseURL}/api/profile`)
+      .get(`${process.env.REACT_APP_APIURL || ""}/api/products`)
       .then((responseFromApi) => {
         const sortProducts = responseFromApi.data.filter((product) =>
           product.name.toLowerCase().includes(this.state.search.toLowerCase())

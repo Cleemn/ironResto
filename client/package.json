@@ -26,7 +26,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "REACT_APP_APIURL=http://localhost:5000/ react-scripts start",
+    "start": "REACT_APP_APIURL=http://localhost:5000 react-scripts start",
     "build-dev": "dotenv -e .env.development react-scripts build",
     "build-prod": "dotenv -e .env.production react-scripts build",
     "build": "react-scripts build",

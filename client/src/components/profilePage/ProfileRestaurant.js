@@ -1,6 +1,6 @@
 import React, { createRef, Component } from "react";
 import { Link } from "react-router-dom";
-import Axios from "axios";
+import axios from "axios";
 import StyledContentLoader from 'styled-content-loader';
 
 import PieChart, {

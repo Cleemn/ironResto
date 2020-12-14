@@ -1,4 +1,4 @@
-.auth {
+.auth, .add-product {
   margin: 12px auto;
   
   form {
@@ -17,6 +17,12 @@
       &:focus {
         outline: 0;
         box-shadow: none;
+      }
+    }
+
+    select {
+      &:focus {
+        outline: none;
       }
     }
   }

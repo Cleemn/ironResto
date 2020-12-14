@@ -66,6 +66,7 @@ router.delete("/products/:id", (req, res, next) => {
 router.post("/products", (req, res, next) => {
   // vérifier si l'utilisateur est connecté et est le restaurateur
   const { name, price, description, type, portion, calories } = req.body;
+  console.log(req.body);
 
   if (name === "" || price === "" || description === "" || type === "" || portion === "" || calories === "") {
     res.status(400).json({ message: "Create product went wrong" });

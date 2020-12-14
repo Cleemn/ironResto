@@ -95,7 +95,7 @@ class ProfileRestaurant extends Component {
         ) : (
           <></>
         )}
-          <h5 className="text-center m4-2 mb-5">Aujourd'hui<span> {this.state.orders.length}</span> commandes ont été passées.</h5>
+          <h5 className="text-center mt-3 mb-5">Aujourd'hui<span> {this.state.orders.length}</span> commandes ont été passées.</h5>
         </div>
         <div className="accordion-item--opened accordion-list mb-4" style={{boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.12)'}}>
           <div className="accordion-item__line container py-3">

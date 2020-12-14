@@ -18,7 +18,7 @@ $breakpoints: (
   between: 1280px
 );
 
-@import "./stylesheets/auth.scss";
+@import "./stylesheets/form";
 @import "./stylesheets/button";
 @import "./stylesheets/font";
 @import "./stylesheets/navbar";
@@ -44,3 +44,15 @@ $breakpoints: (
 }
 
 $orange: #F98335;
+
+.css-yk16xz-control {
+  background-color: #F6F5F4 !important;
+  border-color: #fff !important;
+
+}
+
+.css-2b097c-container, .css-yk16xz-control {
+  &:focus {
+    outline: none !important;
+  }
+}

@@ -11,3 +11,7 @@ function productById(productId) {
   }
   export { productById };
 
+  function createProduct(name, price, description, type, portion, calories) {
+    return service.post("/api/products", { name, price, description, type, portion, calories }).then((response) => response.data);
+  }
+  export { createProduct };

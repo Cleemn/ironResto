@@ -22,7 +22,7 @@
   }
 
   .buttons {
-    // overflow-x: scroll;
+    overflow-x: scroll;
     display: flex;
     margin-top: 16px;
 
@@ -42,11 +42,20 @@
   }
 
   .swiper-container {
-    padding: 0 24px;
+    padding: 24px;
 
     .swiper-card {
+      padding: 24px 15px;
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      background-color: #FFF;
+      width: 244px;
+
       img {
         object-fit: cover;
+        width: 214px;
+        height: 214px;
+        border-radius: 12px;
       }
     }
   
@@ -55,7 +64,7 @@
     }
   
     .swiper-pagination {
-      margin-top: 12px;
+      margin-bottom: 24px;
       position: initial;
     }
   }

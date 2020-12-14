@@ -80,8 +80,8 @@ class Basket extends React.Component {
                   return (
                     <ProductCart
                       product={{ ...product }}
-                      IncreaseQuantity={this.IncreaseQuantity}
-                      DecreaseQuantity={this.DecreaseQuantity}
+                      // IncreaseQuantity={this.IncreaseQuantity}
+                      // DecreaseQuantity={this.DecreaseQuantity}
                       removeProduct={this.removeProduct}
                       key={i}
                     />

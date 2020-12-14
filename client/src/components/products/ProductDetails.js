@@ -38,7 +38,8 @@ class ProductDetails extends Component {
   }
 
   addToBasket = () => {
-    productById(this.state._id)
+    const { params } = this.props.match;
+    productById(params.id)
     .then(product => {
       this.props.updateBasket({ ...product, quantity: this.state.clicks })
     });
@@ -71,7 +72,10 @@ class ProductDetails extends Component {
                   <p>{this.state.description}</p>
                 </div>
               </div>
-              <button type="submit" className="btn btn-orange" onClick={() => this.addToBasket()}>Ajouter au panier</button>
+              <button type="submit" className="btn btn-orange" onClick={(e) => {
+                
+                this.addToBasket()
+                }}>Ajouter au panier</button>
             </div>
           </div>
         </div>

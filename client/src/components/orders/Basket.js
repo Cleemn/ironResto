@@ -80,9 +80,9 @@ class Basket extends React.Component {
                   return (
                     <ProductCart
                       product={{ ...product }}
-                      // IncreaseQuantity={this.IncreaseQuantity}
-                      // DecreaseQuantity={this.DecreaseQuantity}
                       removeProduct={this.removeProduct}
+                      basket={this.props.basket}
+                      updateBasket={this.props.updateBasket}
                       key={i}
                     />
                   );
@@ -117,6 +117,40 @@ class Basket extends React.Component {
 }
 
 class ProductCart extends React.Component {
+  state = {
+    clicks:1,
+  }
+
+  componentDidMount(){
+    this.setState( (prevState, props) => { return {clicks: this.props.product.quantity}})
+    }
+
+  componentDidUpdate(prevProps, prevState){
+    if(prevState.clicks !== this.state.clicks){
+      this.updateQuantity(this.props.product._id, this.state.clicks)
+    }
+  }
+
+  updateQuantity = (productId, quantity) => {
+    if (this.props.basket) {
+      const basket = this.props.basket.filter((product) => product._id !== productId);
+      let selectedProduct = this.props.basket.filter((product) => product._id === productId)[0];
+      selectedProduct.quantity = quantity
+      this.props.updateBasket([...basket, selectedProduct])
+    }
+  }
+
+  IncrementItem = () => {
+    this.setState({clicks: this.state.clicks + 1});
+    
+  }
+
+  DecreaseItem = () => {
+    if (this.state.clicks > 1) {
+      this.setState({ clicks: this.state.clicks - 1 });   
+    }
+  }
+
   render() {
     return (
       <div id="basket" className="all-orders container mt-3">
@@ -127,9 +161,8 @@ class ProductCart extends React.Component {
             <div className="accordion-item__content container">
               <div className="accordion-item__product">
                 <img src={`${this.props.product.photo}`}  alt=""></img>
-                <p>{this.props.product.quantity}</p>
                 <p>{this.props.product.name}</p>
-                <p className="price">{this.props.product.price}€</p>
+                <p className="price">{this.props.product.price}€</p>  
               </div>
               <div className="accordion-item__product d-flex justify-content-between align-items-center">
                 <img
@@ -141,6 +174,11 @@ class ProductCart extends React.Component {
                   className="basket-img"
                 ></img>
               </div>
+              <div className="d-flex justify-content-evenly">
+                    <button style={{border: 'none'}} className="remove" onClick={this.DecreaseItem}>-</button>
+                    <div className="px-2 pt-1 quantity">{ this.state.clicks }</div>
+                    <button style={{border: 'none'}} className="add" onClick={this.IncrementItem}>+</button>
+                  </div>
             </div>
           </div>
         </div>
@@ -150,7 +188,6 @@ class ProductCart extends React.Component {
 }
 
 class EmptyBasket extends React.Component {
-  state = {};
   render() {
     return (
       <div className="product-cart empty-basket container">

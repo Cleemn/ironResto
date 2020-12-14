@@ -35,8 +35,8 @@ class App extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.basket !== prevProps.basket) {
-      console.log("basket is changed", this.state.basket.length)
-      this.setLocalStorageBasket()
+      console.log("basket is changed", this.state.basket);
+      this.setLocalStorageBasket();
     }
   }
 
@@ -53,18 +53,15 @@ class App extends React.Component {
   }
 
   getLocalStorageBasket = () => {
-    let storageBasket = localStorage.getItem('basket')
-    let basket = storageBasket !== null ? JSON.parse(storageBasket) : []
-    this.setState({basket}) 
-  }
-
+    let storageBasket = localStorage.getItem("basket");
+    let basket = storageBasket !== null ? JSON.parse(storageBasket) : [];
+    this.setState({ basket });
+  };
 
   setLocalStorageBasket = () => {
-      const basket = JSON.stringify(this.state.basket)
-      localStorage.setItem('basket', basket)
-  }
-
-
+    const basket = JSON.stringify(this.state.basket);
+    localStorage.setItem("basket", basket);
+  };
 
   basketContains = (itemId) => {
     let isContains = false;
@@ -82,6 +79,16 @@ class App extends React.Component {
       this.setState({
         basket: [...this.state.basket, item],
       });
+    } else {
+      const basket = [...this.state.basket];
+      const filteredBasket = basket.filter(
+        (basketProduct) => basketProduct._id !== item._id.toString()
+      );
+      const selectedItem = basket.filter(
+        (basketProduct) => basketProduct._id === item._id.toString()
+      )[0];
+      selectedItem.quantity += 1;
+      this.setState({ basket: [...filteredBasket, selectedItem] });
     }
   };
 

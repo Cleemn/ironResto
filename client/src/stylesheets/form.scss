@@ -10,7 +10,7 @@
     margin-bottom: 24px;
     margin: 0 auto;
 
-    input {
+    input, textarea {
       border: 0px solid #ced4da;
       background-color: #F6F5F4;
 
@@ -24,6 +24,45 @@
       &:focus {
         outline: none;
       }
+    }
+
+    img {
+      max-width: 282px;
+    }
+
+    .inputfile {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+  
+    .inputfile + label {
+      font-size: 1.25em;
+      font-weight: 700;
+      color: #161032;
+      background-color: #cdfef3;
+      display: inline-block;
+      padding: 24px 0;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+  
+    .inputfile:focus + label,
+    .inputfile + label:hover {
+        background-color: #161032;
+        color: white
+    }
+  
+    .inputfile + label {
+      cursor: pointer; /* "hand" cursor */
+    }
+  
+    .inputfile:focus + label {
+      outline: 1px dotted #000;
+      outline: -webkit-focus-ring-color auto 5px;
     }
   }
 }

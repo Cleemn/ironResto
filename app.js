@@ -84,6 +84,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 app.use('/api', require('./routes/auth-routes'));
 app.use('/api', require('./routes/product-routes'));
 app.use('/api', require('./routes/order-routes'));
+app.use('/api', require('./routes/file-upload.routes'));
 
 // Serve static files from client/build folder
 app.use(express.static(path.join(__dirname, 'client/build')));

@@ -12,6 +12,7 @@
     "bootstrap": "^4.5.3",
     "devextreme": "20.2.4",
     "devextreme-react": "20.2.4",
+    "jquery": "^3.5.1",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",

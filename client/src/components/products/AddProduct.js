@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { createProduct } from "../services/product-service";
+import { createProduct, handleUpload } from "../services/product-service";
 
 class AddProduct extends Component{
   state = {
@@ -9,7 +9,9 @@ class AddProduct extends Component{
     type: '',
     portion: 0,
     calories: 0,
-    errorMessage: ""
+    photo: "",
+    errorMessage: "",
+    preview: ''
   }
 
   handleFormSubmit = (event) => {
@@ -20,8 +22,9 @@ class AddProduct extends Component{
     const type = this.state.type;
     const portion = this.state.portion;
     const calories = this.state.calories;
+    const photo = this.state.photo;
 
-    createProduct(name, price, description, type, portion, calories)
+    createProduct(name, price, description, type, portion, calories, photo)
       .then((response) => {
         this.setState({
           name: "",
@@ -29,8 +32,10 @@ class AddProduct extends Component{
           description: "",
           type: "",
           portion: "",
-          calories: ""
+          calories: "",
+          photo: ""
         });
+        this.props.history.push('/')
       })
       .catch((error) => {
         this.setState({ errorMessage: error.response.data.message });
@@ -41,6 +46,27 @@ class AddProduct extends Component{
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
+
+  handleFileUpload = e => {
+    console.log('The file to be uploaded is: ', e.target.files[0]);
+ 
+    const uploadData = new FormData();
+    uploadData.append('photo', e.target.files[0]);
+ 
+    handleUpload(uploadData)
+      .then(response => {
+        this.setState({ photo: response.secure_url, preview: URL.createObjectURL(e.target.files[0]) });
+      })
+      .catch(err => {
+        console.log('Error while uploading the file: ', err);
+      });
+  };
+  
+  componentDidMount() {
+    if (this.state.preview) {
+      this.handleChange();
+    }
+  }
 
   render(){
     return(
@@ -60,7 +86,7 @@ class AddProduct extends Component{
 
           <div className="form-group">
             <label>Description</label>
-            <input
+            <textarea
               type="textarea"
               className="form-control"
               name="description"
@@ -126,8 +152,20 @@ class AddProduct extends Component{
             />
           </div>
 
+          <div className="form-group">
+            {this.state.preview ? (
+              <img src={this.state.preview} alt=""/>
+            ) : (
+            <div>
+              <label for="photo">Choisir une photo</label>
+              <input type="file" id="photo" className="inputfile" onChange={e => this.handleFileUpload(e)} />
+            </div>
+            )}
+          </div>
+
+
           <button type="submit" className="btn btn-orange">
-            Je créé mon compte
+            Ajouter un produit
           </button>
 
           {this.state.errorMessage && (

@@ -29,10 +29,6 @@ class App extends React.Component {
     basket: []
   };
 
-  componentDidMount() {
-    console.log('process.env', process.env)
-  }
-
   socket = io(`${process.env.REACT_APP_APIURL || ""}`, {autoConnect: false,});
 
   fetchUser() {
@@ -160,8 +156,21 @@ class App extends React.Component {
                     />
                   )}
                 />
-                <Route exact path="/orders/:id" render={(props)=> (<UserOrderDetails socket={this.socket} {...props}/>)} />
-                <Route exact path="/products/new" component={AddProduct}/>
+                <Route
+                  exact
+                  path="/orders/:id"
+                  render={(props) => (
+                  <UserOrderDetails
+                    socket={this.socket}
+                    {...props}/>)} 
+                  />
+                <Route
+                  exact
+                  path="/products/new"
+                  render={(props) => (
+                    <AddProduct {...props} />
+                  )}
+                />
                 <Route exact path="/restaurant/orders/" render={(props)=> (<RestaurantOrderList socket={this.socket} {...props}/>)}/>        
 
                 <Fade bottom>

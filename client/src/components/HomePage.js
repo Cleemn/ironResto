@@ -86,10 +86,9 @@ class HomePage extends React.Component {
           </div>
           <div className="right">
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum
-              labore facere aperiam? Autem pariatur illum maiores cumque
-              consequuntur. Nihil laborum rerum illo dolore cupiditate et
-              placeat minima consectetur blanditiis accusantium!
+            IronResto c'est nouveau et c'est déjà un sacré succès !
+            C'est un immense food market au look arty signé Starck, le fameux groupe de restauration spécialisé dans la cuisine italienne à base de bons produits de la botte.
+            Sous une halle à la grande verrière, on trouve plusieurs espaces de restauration qui proposent principalement de la cuisine italienne : pasta, pizzas, panna cotta, tiramisu...
             </p>
           </div>
         </div>
@@ -113,25 +112,14 @@ class HomePage extends React.Component {
 
         <Swiper
           spaceBetween={32}
-          slidesPerView={1.3}
+          slidesPerView= "auto"
           pagination={{ clickable: true }}
-          breakpoints={{
-            768: {
-              slidesPerView: 4.8 || "auto",
-            },
-            1440: {
-              slidesPerView: 5.4 || "auto",
-            },
-            1920: {
-              slidesPerView: 7.3 || "auto",
-            },
-          }}
         >
           {this.state.listOfProducts.map((product) => {
             return (
               <SwiperSlide className="swiper-card container" key={product._id}>
                 <Link to={`/products/${product._id}`}>
-                  <img src={product.photo} alt="" className="m-auto" />
+                  <img src={product.photo} alt="" className="d-flex justify-content-center" />
                 </Link>
                 <div className="infos">
                   <h6 className="mt-3">{product.name}</h6>

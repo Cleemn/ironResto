@@ -70,7 +70,7 @@ class EditProduct extends Component{
       <div className="container">
         {this.props.userInSession ? (
           <div>
-            <Link to={"/profile/restaurant"}>
+            <Link to={"/products"}>
               <img src="/arrow-black-left.png" alt="" style={{width: '32px', height: '32px'}}></img>
             </Link>
             <div className="add-product text-center">

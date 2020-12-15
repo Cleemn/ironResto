@@ -57,7 +57,7 @@ class RestaurantOrderList extends Component {
 
   sortByType = (e) => {
     axios
-      .get("http://localhost:5000/api/orders?date=today", {
+      .get(`${baseURL}/api/orders?date=today`, {
         withCredentials: true,
       })
       .then(responseFromApi => {

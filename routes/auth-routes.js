@@ -7,7 +7,7 @@ authRoutes.post("/signup", (req, res, next) => {
   const { firstName, lastName, email, password, phone, type } = req.body;
 
   if (!firstName || !lastName || !email || !password || !phone || !type) {
-    res.status(400).json({ message: "Provide all the information" });
+    res.status(400).json({ message: "Merci de fournir toutes les informations." });
   }
 
   const salt = bcrypt.genSaltSync(10);
@@ -22,10 +22,10 @@ authRoutes.post("/signup", (req, res, next) => {
       if (error.code === 11000) {
         res.status(500).json({
           errorMessage:
-            "Email need to be unique. This email is already used.",
+            "Cet email est déjà utilisé. Veuillez réessayer avec un autre email.",
         });
       } else {
-        res.status(400).json({ message: "Create user went wrong" });
+        res.status(400).json({ message: "Une erreur s'est produite pendant la création de l'utilisateur. veuillez réessayer." });
       }
     });
 });
@@ -36,14 +36,12 @@ authRoutes.post("/login", (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if (!user) {
-        res
-          .status(400)
-          .json({ message: "User not found. Email invalid." });
+        res.status(400).json({ message: "Utilisateur non présent en base. Veuillez réessayer avec un autre email." });
         return;
       }
 
       if (bcrypt.compareSync(password, user.passwordHash) !== true) {
-        res.status(400).json({ message: "Wrong password" });
+        res.status(400).json({ message: "Combinaison email/mot de passe invalide." });
         return;
       } else {
         req.session.user = user;
@@ -51,7 +49,7 @@ authRoutes.post("/login", (req, res, next) => {
       }
     })
     .catch((err) => {
-      res.status(400).json({ message: "Something went wrong while login" });
+      res.status(400).json({ message: "Une erreur s'est produite pendant l'authentification. Veuillez réessayer." });
     });
 });
 
@@ -60,12 +58,12 @@ authRoutes.get("/loggedin", (req, res, next) => {
     res.status(200).json(req.session.user);
     return;
   }
-  res.status(403).json({ message: "Unauthorized" });
+  res.status(403).json({ message: "Non authorisé" });
 });
 
 authRoutes.post("/logout", (req, res, next) => {
   req.session.destroy();
-  res.json({message: 'Your are now logged out.'});
+  res.json({message: 'Vous êtes maintenant déconnecté.'});
 });
 
 authRoutes.put("/edit", (req, res, next) => {
@@ -73,7 +71,7 @@ authRoutes.put("/edit", (req, res, next) => {
   const id = req.session.user._id
 
   if (!req.session.user) {
-    res.status(401).json({message: "You need to be logged in!"});
+    res.status(401).json({message: "Vous êtes connecté !"});
     return;
   }
 

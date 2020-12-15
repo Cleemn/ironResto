@@ -19,5 +19,20 @@
         box-shadow: none;
       }
     }
+
+  }
+
+  .error-message {
+    border: solid 1px red;
+    background-color: rgba(255, 0, 0, 0.281);
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+
+    p {
+      margin: 0;
+      color: black;
+    }
   }
 }

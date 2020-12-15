@@ -7,7 +7,7 @@ class Login extends React.Component {
   state = { 
     password: '',
     email: '',
-    errorMessage:''
+    errorMessage: ''
   }
 
   handleFormSubmit = (event) => {
@@ -20,16 +20,14 @@ class Login extends React.Component {
         this.setState({password: "", email: ""});
         this.props.updateUser(response)        
         if(response.type === "user"){
-
-
           this.props.history.push('/profile/user')
         }
         else if(response.type === "restaurant"){
           this.props.history.push('/profile/restaurant')
         }
       })
-      .catch( error => {
-        this.setState({errorMessage:error})
+      .catch(error => {
+        this.setState({errorMessage: error.response.data.message})
       })
   }
 
@@ -62,7 +60,7 @@ class Login extends React.Component {
             </small>
           </div>
           { this.state.errorMessage && (
-            <div className="message">
+            <div className="error-message">
             <p>{this.state.errorMessage}</p>
           </div>
           )}

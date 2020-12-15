@@ -105,7 +105,7 @@ class EditUser extends React.Component {
                   <button type="submit" className="btn btn-orange my-3">Enregistrer les modifications</button>
 
                   {this.state.errorMessage && (
-                    <div className="message">
+                    <div className="error-message">
                       <p>{this.state.errorMessage}</p>
                     </div>
                   )}

@@ -72,7 +72,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <div id="home">
-        <div className="hero container">
+        <div className="hero">
           <div className="left">
             <h1>Bienvenue chez IronResto</h1>
             <p>Vous avez faim ? Ca tombe bien !</p>
@@ -114,7 +114,6 @@ class HomePage extends React.Component {
           spaceBetween={32}
           slidesPerView= "auto"
           pagination={{ clickable: true }}
-          className="container"
         >
           {this.state.listOfProducts.map((product) => {
             return (

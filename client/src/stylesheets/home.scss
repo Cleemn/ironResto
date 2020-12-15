@@ -1,5 +1,7 @@
 #home {
   .hero {
+    padding: 0 15px;
+
     .left {
       
       input {
@@ -40,8 +42,7 @@
   }
 
   .swiper-container {
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding: 24px 15px;  
 
     .swiper-card {
       padding: 24px 15px;

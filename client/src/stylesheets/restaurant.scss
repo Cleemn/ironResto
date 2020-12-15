@@ -25,6 +25,10 @@
     .buttons {
         overflow-x: scroll;
         display: flex;
+
+        @include breakpoint(mobile, min) {
+            overflow-x: hidden;
+        }
     
         button {
           border: none;

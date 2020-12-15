@@ -23,7 +23,7 @@ import { loggedin } from "./components/auth/auth-service";
 class App extends React.Component {
   state = {
     loggedInUser: null,
-    basket: [].sort((a,b) => a.name.localeCompare(b.name)),
+    basket: [],
   };
 
   socket = io(`${process.env.REACT_APP_APIURL || ""}`, { autoConnect: false });
@@ -35,7 +35,6 @@ class App extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.basket !== prevProps.basket) {
-      console.log("basket is changed", this.state.basket);
       this.setLocalStorageBasket();
     }
   }

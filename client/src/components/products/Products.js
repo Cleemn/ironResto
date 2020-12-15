@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { deleteProduct } from '../services/product-service';
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 
 class Products extends React.Component {
   state = {
@@ -71,25 +72,29 @@ class Products extends React.Component {
             value={this.state.search}
             onChange={this.searchFilter}
           />
-        <div className="cards">
+          <ResponsiveMasonry
+              columnsCountBreakPoints={{350: 1, 1024: 2, 1100: 3}}
+          >
+              <Masonry>
           {this.state.listOfProducts.map((product) => {
             return (
-              <div className="card container py-4 mb-4" key={product._id}>
-                <div className="top d-flex align-items-center">
-                  <img className="product-img" src={product.photo} alt={product.name}/>
-                  <div className="infos ml-3">
-                    <h6>{product.name}</h6>
-                    <p>{product.price}€</p>
-                    {product.portion > 1 ? (
-                      <p>Pour {product.portion} personnes</p>
-                    ) : (
-                      <p>Pour {product.portion} personne</p>
-                    )}
-                    <p>{product.calories} kcal</p>
+                <div className="card container py-4 mb-4" key={product._id}>
+                  <div className="top d-flex align-items-center">
+                    <img className="product-img" src={product.photo} alt={product.name}/>
+                    <div className="infos ml-3">
+                      <h6>{product.name}</h6>
+                      <p>{product.price}€</p>
+                      {product.portion > 1 ? (
+                        <p>Pour {product.portion} personnes</p>
+                      ) : (
+                        <p>Pour {product.portion} personne</p>
+                      )}
+                      <p>{product.calories} kcal</p>
+                    </div>
                   </div>
-                </div>
-                <div className="bottom mt-3">
-                  <p>{product.description}</p>
+                  <div className="bottom mt-3">
+                    <p>{product.description}</p>
+                  </div>
                   <div className="buttons d-flex align-items-end justify-content-between">
                     <Link to={`/products/edit/${product._id}`}>
                       <button className="btn btn-orange">Modifier</button>
@@ -105,10 +110,10 @@ class Products extends React.Component {
                     ></img>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+              </Masonry>
+          </ResponsiveMasonry>
       </div>  
     )
   }

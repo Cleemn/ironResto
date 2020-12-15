@@ -169,6 +169,7 @@ class App extends React.Component {
                   path="/orders/:id"
                   render={(props) => (
                   <UserOrderDetails
+                    userInSession={this.state.loggedInUser}
                     socket={this.socket}
                     {...props}/>)} 
                   />
@@ -184,6 +185,7 @@ class App extends React.Component {
                   path="/restaurant/orders/"
                   render={(props)=> (
                     <RestaurantOrderList
+                    userInSession={this.state.loggedInUser}
                     socket={this.socket}
                     {...props}/>
                   )}

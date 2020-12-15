@@ -1,7 +1,5 @@
 #home {
   .hero {
-    margin: auto 24px;
-
     .left {
       
       input {
@@ -42,7 +40,8 @@
   }
 
   .swiper-container {
-    padding: 24px;
+    padding-top: 24px;
+    padding-bottom: 24px;
 
     .swiper-card {
       padding: 24px 15px;

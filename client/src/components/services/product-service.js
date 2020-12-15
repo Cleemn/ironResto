@@ -26,3 +26,9 @@ function deleteProduct(productId) {
   return service.delete(`/api/products/${productId}`).then((response) => response.data);
 }
 export { deleteProduct };
+
+function editProduct(productId, {name, price, description, type, portion, calories, photo}) {
+  return service.put(`/api/products/${productId}`, {name, price, description, type, portion, calories, photo}).then((response) => response.data);
+}
+
+export { editProduct };

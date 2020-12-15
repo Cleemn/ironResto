@@ -18,6 +18,7 @@ import Basket from "./components/orders/Basket";
 import UserOrderDetails from "./components/orders/UserOrderDetails";
 import EditUser from "./components/profilePage/EditUser";
 import AddProduct from "./components/products/AddProduct";
+import EditProduct from "./components/products/EditProduct";
 import Products from "./components/products/Products";
 import RestaurantOrderList from "./components/orders/RestaurantOrderList";
 
@@ -136,6 +137,16 @@ class App extends React.Component {
                     <EditUser
                       userInSession={this.state.loggedInUser}
                       updateUser={this.updateLoggedInUser}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/products/edit/:id"
+                  render={(props) => (
+                    <EditProduct
+                      userInSession={this.state.loggedInUser}
                       {...props}
                     />
                   )}

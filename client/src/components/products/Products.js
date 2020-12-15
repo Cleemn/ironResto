@@ -97,7 +97,7 @@ class Products extends React.Component {
                   </div>
                   <div className="buttons d-flex align-items-end justify-content-between">
                     <Link to={`/products/edit/${product._id}`}>
-                      <button className="btn btn-orange">Modifier</button>
+                      <button className="btn btn-orange" product={this.product}>Modifier</button>
                     </Link>
                     <img
                       src="../dustbin.svg"

@@ -23,7 +23,7 @@ import { loggedin } from "./components/auth/auth-service";
 class App extends React.Component {
   state = {
     loggedInUser: null,
-    basket: [],
+    basket: [].sort((a,b) => a.name.localeCompare(b.name)),
   };
 
   socket = io(`${process.env.REACT_APP_APIURL || ""}`, { autoConnect: false });
@@ -77,7 +77,7 @@ class App extends React.Component {
   addToBasket = (item) => {
     if (!this.basketContains(item._id)) {
       this.setState({
-        basket: [...this.state.basket, item],
+        basket: [...this.state.basket, item].sort((a,b) => a.name.localeCompare(b.name)),
       });
     } else {
       const basket = [...this.state.basket];
@@ -88,7 +88,7 @@ class App extends React.Component {
         (basketProduct) => basketProduct._id === item._id.toString()
       )[0];
       selectedItem.quantity += 1;
-      this.setState({ basket: [...filteredBasket, selectedItem] });
+      this.setState({ basket: [...filteredBasket, selectedItem].sort((a,b) => a.name.localeCompare(b.name)) });
     }
   };
 

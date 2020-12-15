@@ -73,7 +73,7 @@ class AddProduct extends Component{
         <Link to={"/profile/restaurant"}>
           <img src="/arrow-black-left.png" alt="" style={{width: '32px', height: '32px'}}></img>
         </Link>
-        <div className="add-product container text-center">
+        <div className="add-product text-center">
           <form onSubmit={this.handleFormSubmit}>
             <div className="form-group">
               <label>Nom du produit</label>

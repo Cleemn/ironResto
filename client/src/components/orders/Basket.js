@@ -60,6 +60,13 @@ class Basket extends React.Component {
     this.removeProduct();
   }
 
+  componentDidUpdate(prevProps, prevState){
+    if(this.props.basket !== prevProps.basket){
+      this.totalPrice()
+    }
+
+  }
+
   render() {
     return (
       <div className="basket">
@@ -68,10 +75,13 @@ class Basket extends React.Component {
         ) : (
           <div className="basket-details">
             <div className="restaurant-details container mt-4">
-                <h6>Adresse du restaurant</h6>
-                <p>123 boulevard Saint-Germain
-                <br/>75006, Paris</p>
-                <span>📍</span>
+              <h6>Adresse du restaurant</h6>
+              <p>
+                123 boulevard Saint-Germain
+                <br />
+                75006, Paris
+              </p>
+              <span>📍</span>
             </div>
             <h6 className="restaurant-details container mt-4">Ma commande :</h6>
             <ul className="product-list">
@@ -80,10 +90,10 @@ class Basket extends React.Component {
                   return (
                     <ProductCart
                       product={{ ...product }}
-                      IncreaseQuantity={this.IncreaseQuantity}
-                      DecreaseQuantity={this.DecreaseQuantity}
                       removeProduct={this.removeProduct}
-                      key={i}
+                      basket={this.props.basket}
+                      updateBasket={this.props.updateBasket}
+                      key={product._id}
                     />
                   );
                 })}
@@ -117,17 +127,54 @@ class Basket extends React.Component {
 }
 
 class ProductCart extends React.Component {
+  state = {
+    clicks: 1,
+  };
+
+  componentDidMount() {
+    this.setState((prevState, props) => {
+      return { clicks: this.props.product.quantity };
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.clicks !== this.state.clicks && prevProps.product._id === this.props.product._id) {
+      this.updateQuantity(this.props.product._id, this.state.clicks);
+    }
+  }
+
+  updateQuantity = (productId, quantity) => {
+    if (this.props.basket) {
+      const basket = this.props.basket.filter(
+        (product) => product._id !== productId
+      );
+      let selectedProduct = this.props.basket.filter(
+        (product) => product._id === productId
+      )[0];
+      selectedProduct.quantity = quantity;
+      this.props.updateBasket([...basket, selectedProduct]);
+    }
+  };
+
+  IncrementItem = () => {
+    this.setState({ clicks: this.state.clicks + 1 });
+  };
+
+  DecreaseItem = () => {
+    if (this.state.clicks > 1) {
+      this.setState({ clicks: this.state.clicks - 1 });
+    }
+  };
+
   render() {
     return (
       <div id="basket" className="all-orders container mt-3">
         <div className="ongoing-orders">
           <div className="accordion-item--opened accordion-list">
-            <div className="accordion-item__line container">
-            </div>
+            <div className="accordion-item__line container"></div>
             <div className="accordion-item__content container">
               <div className="accordion-item__product">
-                <img src={`${this.props.product.photo}`}  alt=""></img>
-                <p>{this.props.product.quantity}</p>
+                <img src={`${this.props.product.photo}`} alt=""></img>
                 <p>{this.props.product.name}</p>
                 <p className="price">{this.props.product.price}€</p>
               </div>
@@ -140,6 +187,21 @@ class ProductCart extends React.Component {
                   }}
                   className="basket-img"
                 ></img>
+                <div className="d-flex justify-content-evenly">
+                  <button
+                    style={{ border: "none" }}
+                    onClick={this.DecreaseItem}
+                  >
+                    -
+                  </button>
+                  <div className="px-2">{this.state.clicks}</div>
+                  <button
+                    style={{ border: "none" }}
+                    onClick={this.IncrementItem}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -150,13 +212,14 @@ class ProductCart extends React.Component {
 }
 
 class EmptyBasket extends React.Component {
-  state = {};
   render() {
     return (
       <div className="product-cart empty-basket container">
         <img src="../shopping-basket-color.svg" alt=""></img>
         <h5 className="text-center">Votre panier semble bien vide 😢</h5>
-        <p className="text-center">On dirait que vous n'avez pas encore trouvé votre bonheur...</p>
+        <p className="text-center">
+          On dirait que vous n'avez pas encore trouvé votre bonheur...
+        </p>
         <div className="buttons">
           <Button href="/" className="btn btn-orange">
             Découvrir la carte

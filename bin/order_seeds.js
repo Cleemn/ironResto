@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Order = require('../models/Order.model');
 const Product = require('../models/Product.model');
 const User = require('../models/User.model');
+require('dotenv').config();
  
+Order.collection.drop();
+
 const dbtitle = 'ironresto';
 mongoose.connect(process.env.MONGODB_URI, {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true})
   .then( db => {
@@ -11,9 +14,6 @@ mongoose.connect(process.env.MONGODB_URI, {useCreateIndex: true, useNewUrlParser
   .catch(err => {
   console.log(`Connexion problem: ${err}`);
 });
-
-
-Order.collection.drop();
 
 const user_list = [];
 const product_list = [];

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { createProduct, handleUpload } from "../services/product-service";
 
-class AddProduct extends Component{
+class EditProduct extends Component{
   state = {
     name: '',
     price: 0,
@@ -35,7 +35,7 @@ class AddProduct extends Component{
           calories: "",
           photo: ""
         });
-        this.props.history.push('/products')
+        this.props.history.push('/')
       })
       .catch((error) => {
         this.setState({ errorMessage: error.response.data.message });
@@ -48,6 +48,8 @@ class AddProduct extends Component{
   };
 
   handleFileUpload = e => {
+    console.log('The file to be uploaded is: ', e.target.files[0]);
+ 
     const uploadData = new FormData();
     uploadData.append('photo', e.target.files[0]);
  
@@ -155,7 +157,7 @@ class AddProduct extends Component{
               <img src={this.state.preview} alt=""/>
             ) : (
             <div>
-              <label htmlFor="photo">Choisir une photo</label>
+              <label for="photo">Choisir une photo</label>
               <input type="file" id="photo" className="inputfile" onChange={e => this.handleFileUpload(e)} />
             </div>
             )}
@@ -177,4 +179,4 @@ class AddProduct extends Component{
   }
 }
 
-export default AddProduct
+export default EditProduct

@@ -20,5 +20,9 @@ export { createProduct };
 function handleUpload(photo) {
   return service.post('/api/upload', photo).then((response) => response.data);
 }
-
 export { handleUpload };
+
+function deleteProduct(productId) {
+  return service.delete(`/api/products/${productId}`).then((response) => response.data);
+}
+export { deleteProduct };

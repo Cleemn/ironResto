@@ -17,8 +17,9 @@ import ProfileUser from "./components/profilePage/ProfileUser";
 import Basket from "./components/orders/Basket";
 import UserOrderDetails from "./components/orders/UserOrderDetails";
 import EditUser from "./components/profilePage/EditUser";
-import AddProduct from "./components/products/AddProduct"
-import RestaurantOrderList from "./components/orders/RestaurantOrderList"
+import AddProduct from "./components/products/AddProduct";
+import Products from "./components/products/Products";
+import RestaurantOrderList from "./components/orders/RestaurantOrderList";
 
 import { loggedin } from "./components/auth/auth-service";
 
@@ -98,6 +99,13 @@ class App extends React.Component {
                 />
                 <Route
                   exact
+                  path="/products"
+                  render={(props) => (
+                    <Products userInSession={this.state.loggedInUser} {...props} />
+                  )}
+                />
+                <Route
+                  exact
                   path="/login"
                   render={(props) => (
                     <Login updateUser={this.updateLoggedInUser} {...props} />
@@ -171,8 +179,15 @@ class App extends React.Component {
                     <AddProduct {...props} />
                   )}
                 />
-                <Route exact path="/restaurant/orders/" render={(props)=> (<RestaurantOrderList socket={this.socket} {...props}/>)}/>        
-
+                <Route
+                  exact
+                  path="/restaurant/orders/"
+                  render={(props)=> (
+                    <RestaurantOrderList
+                    socket={this.socket}
+                    {...props}/>
+                  )}
+                />
                 <Fade bottom>
                   <Route
                     exact

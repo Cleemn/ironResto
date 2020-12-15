@@ -109,7 +109,7 @@ class ProfileRestaurant extends Component {
         </div>
         <div className="accordion-item--opened accordion-list mb-4" style={{boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.12)'}}>
           <div className="accordion-item__line container py-3">
-            <Link to="/restaurant/products/">
+            <Link to="/products/">
                 <p>Gestion de produits</p>
             </Link>
             <Link to="/restaurant/products/">

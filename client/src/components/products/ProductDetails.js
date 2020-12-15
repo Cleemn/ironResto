@@ -17,7 +17,7 @@ class ProductDetails extends Component {
   // 👨‍🏫
   getSingleProduct = () => {
       const { params } = this.props.match;
-      axios.get(`${baseURL}/products/${params.id}`)
+      axios.get(`${process.env.REACT_APP_APIURL || ""}/api/products/${params.id}`)
         .then( responseFromApi =>{
           const theProduct = responseFromApi.data;
           this.setState(theProduct);

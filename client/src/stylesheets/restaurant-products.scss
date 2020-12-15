@@ -1,0 +1,31 @@
+.restaurant-products {
+  .cards {
+
+  }
+  .card {
+    max-width: 330px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    border: 0;
+
+    .top {
+      .infos {
+        p {
+          margin-bottom: 2px;
+        }
+      }
+    }
+
+    .product-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .buttons {
+      img {
+        width: 24px;
+      }
+    }
+  }
+}

@@ -4,11 +4,18 @@
 
 .basket-icon {
 	width: 40px;
-	.number{
-		color: black;
-    	margin: -1px 0px 0px 3px;
-    	font-size: 12px;
-    	font-weight: bold;
+
+	span {
+		font-size: 10px;
+		font-weight: bold;
+		position: absolute;
+		top: -40px;
+		left: 27px;
+		background-color: #FA8334;
+		color: #ffffff;
+		border-radius: 50%;
+		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+		padding: 2px 5px;
 	}
 }
 
@@ -28,14 +35,6 @@
 	position: relative;
 
 	div {
-		position: absolute;
-		top: 10px;
-		left: 27px;
-		background-color: #FA8334;
-		color: #ffffff;
-		border-radius: 50%;
-		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-		width: 12px;
-		height: 12px;
+
 	}
 }

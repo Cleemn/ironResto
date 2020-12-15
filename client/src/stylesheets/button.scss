@@ -17,3 +17,28 @@
     outline: none;
   }
 }
+
+.rmc_swipe .rmc_swipe_btn {
+  width: fit-content !important;
+  padding: 3px;
+}
+
+.rmc_swipe_content{
+  position: relative;
+  background-color: #fff;
+  transition: all .25s;
+  touch-action: pan-y;
+  left: 0px;
+  &.is_swiped_1{
+    left: -70px;
+  }
+  &.is_swiped_2{
+    left: -140px;
+  }
+  &.is_swiped_3{
+    left: -210px;
+  }
+  &.is_swiped_4{
+    left: -250px;
+  }
+}

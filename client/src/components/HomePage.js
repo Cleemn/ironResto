@@ -72,7 +72,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <div id="home">
-        <div className="hero">
+        <div className="hero container">
           <div className="left">
             <h1>Bienvenue chez IronResto</h1>
             <p>Vous avez faim ? Ca tombe bien !</p>
@@ -93,19 +93,19 @@ class HomePage extends React.Component {
           </div>
         </div>
         <div className="buttons container">
-          <button onClick={this.getAllProducts} className="my-3 mx-2">
+          <button onClick={this.getAllProducts} className="my-3 mr-3">
             🍽&nbsp;&nbsp;La&nbsp;carte
           </button>
-          <button onClick={this.sortByType} id="entree" className="my-3 mx-2">
+          <button onClick={this.sortByType} id="entree" className="my-3 mr-3">
             🥗&nbsp;&nbsp;Entrées
           </button>
-          <button onClick={this.sortByType} id="plat" className="my-3 mx-2">
+          <button onClick={this.sortByType} id="plat" className="my-3 mr-3">
             🍝&nbsp;&nbsp;Plats
           </button>
-          <button onClick={this.sortByType} id="dessert" className="my-3 mx-2">
+          <button onClick={this.sortByType} id="dessert" className="my-3 mr-3">
             🍰&nbsp;&nbsp;Desserts
           </button>
-          <button onClick={this.sortByType} id="boisson" className="my-3 mx-2">
+          <button onClick={this.sortByType} id="boisson" className="my-3 mr-3">
             🍹&nbsp;&nbsp;Boissons
           </button>
         </div>
@@ -114,10 +114,11 @@ class HomePage extends React.Component {
           spaceBetween={32}
           slidesPerView= "auto"
           pagination={{ clickable: true }}
+          className="container"
         >
           {this.state.listOfProducts.map((product) => {
             return (
-              <SwiperSlide className="swiper-card container" key={product._id}>
+              <SwiperSlide className="swiper-card" key={product._id}>
                 <Link to={`/products/${product._id}`}>
                   <img src={product.photo} alt="" className="d-flex justify-content-center" />
                 </Link>

@@ -187,23 +187,21 @@ class ProductCart extends React.Component {
                   }}
                   className="basket-img"
                 ></img>
-              </div>
-              <div className="d-flex justify-content-evenly">
-                <button
-                  style={{ border: "none" }}
-                  className="remove"
-                  onClick={this.DecreaseItem}
-                >
-                  -
-                </button>
-                <div className="px-2 pt-1 quantity">{this.state.clicks}</div>
-                <button
-                  style={{ border: "none" }}
-                  className="add"
-                  onClick={this.IncrementItem}
-                >
-                  +
-                </button>
+                <div className="d-flex justify-content-evenly">
+                  <button
+                    style={{ border: "none" }}
+                    onClick={this.DecreaseItem}
+                  >
+                    -
+                  </button>
+                  <div className="px-2">{this.state.clicks}</div>
+                  <button
+                    style={{ border: "none" }}
+                    onClick={this.IncrementItem}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
           </div>

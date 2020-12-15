@@ -47,8 +47,8 @@ class AccordionItem extends React.Component {
             }}
           />
         </div>
-        <div {...{ className: "accordion-item__inner" }} style={{backgroundColor: this.state.bg}}>
-          <div {...{ className: "accordion-item__content container" }} style={{backgroundColor: this.state.bg}}>
+        <div {...{ className: "accordion-item__inner" }}>
+          <div {...{ className: "accordion-item__content container" }}>
             {this.props.items.map((item, i) => {
               const product = item.product_id;
               return (

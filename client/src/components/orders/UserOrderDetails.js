@@ -38,6 +38,7 @@ class UserOrderDetails extends React.Component {
     name: "",
     total_price: 0,
     status: "",
+    date: '',
     photo: "",
     dayWeek: "",
     day: "",
@@ -49,7 +50,7 @@ class UserOrderDetails extends React.Component {
   };
 
   convertDate(date) {
-    let orderDate = new Date(Date(date));
+    let orderDate = new Date(date);
     let dayWeek = frenchDays[orderDate.getDay()];
     let day = orderDate.getDate();
     let month = frenchMonths[orderDate.getMonth()];
@@ -58,7 +59,7 @@ class UserOrderDetails extends React.Component {
     let min = orderDate.getMinutes();
     min < 10 ? min = '0' + min : min = min;
     hour < 10 ? hour = '0' + hour : hour = hour;
-    this.setState({ dayWeek, day, month, year, min, hour });
+    return { dayWeek, day, month, year, min, hour };
   }
 
   convertStatus(status) {
@@ -83,9 +84,8 @@ class UserOrderDetails extends React.Component {
     // get new status from order:update:orderId topic
     this.props.socket.on(`order:update:${params.id}`, (newStatus) => {
       this.setState({status:newStatus})
-      this.convertStatus(this.state.status)
+      this.convertStatus(this.state.status);
     })
-    
     
   }
 
@@ -109,9 +109,9 @@ class UserOrderDetails extends React.Component {
         const order = response.data[0];
         if (order) {
           const { items, name, total_price, status, date } = order;
-          this.setState({ items, name, total_price, status });
-          this.convertDate(date);
+          this.setState({ items, name, total_price, status, date });
           this.convertStatus(status);
+          this.convertDate(date);
         }
       })
       .catch((error) => {
@@ -122,7 +122,8 @@ class UserOrderDetails extends React.Component {
   };
 
   render() {
-    const date = `${this.state.dayWeek} ${this.state.day} ${this.state.month} à ${this.state.hour}h${this.state.min}`;
+    const { dayWeek, day, month, hour, min } = this.convertDate(this.state.date);
+    const date = `${dayWeek} ${day} ${month} à ${hour}h${min}`;
     const price = `${this.state.total_price}€`;
     return (
       <div id="order-details" className="all-orders container mt-3">
@@ -153,8 +154,7 @@ class UserOrderDetails extends React.Component {
                   </div>
                 );
               })}
-            </div>
-            
+            </div> 
           </div>
           <div className="status">
             <p>{this.state.time}</p>

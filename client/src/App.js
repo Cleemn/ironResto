@@ -4,6 +4,8 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import io from "socket.io-client";
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 
 import HomePage from "./components/HomePage";
 import ProductDetails from "./components/products/ProductDetails";
@@ -16,6 +18,8 @@ import Basket from "./components/orders/Basket";
 import UserOrderDetails from "./components/orders/UserOrderDetails";
 import EditUser from "./components/profilePage/EditUser";
 import AddProduct from "./components/products/AddProduct";
+import EditProduct from "./components/products/EditProduct";
+import Products from "./components/products/Products";
 import RestaurantOrderList from "./components/orders/RestaurantOrderList";
 
 import { loggedin } from "./components/auth/auth-service";
@@ -123,6 +127,13 @@ class App extends React.Component {
                 />
                 <Route
                   exact
+                  path="/products"
+                  render={(props) => (
+                    <Products userInSession={this.state.loggedInUser} {...props} />
+                  )}
+                />
+                <Route
+                  exact
                   path="/login"
                   render={(props) => (
                     <Login updateUser={this.updateLoggedInUser} {...props} />
@@ -159,10 +170,21 @@ class App extends React.Component {
                 />
                 <Route
                   exact
+                  path="/products/edit/:id"
+                  render={(props) => (
+                    <EditProduct
+                      userInSession={this.state.loggedInUser}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route
+                  exact
                   path="/profile/restaurant"
                   render={(props) => (
                     <ProfileRestaurant
                       userInSession={this.state.loggedInUser}
+                      updateUser={this.updateLoggedInUser}
                       {...props}
                     />
                   )}
@@ -184,18 +206,28 @@ class App extends React.Component {
                   exact
                   path="/orders/:id"
                   render={(props) => (
-                    <UserOrderDetails socket={this.socket} {...props} />
+                  <UserOrderDetails
+                    userInSession={this.state.loggedInUser}
+                    socket={this.socket}
+                    {...props}/>)} 
+                  />
+                <Route
+                  exact
+                  path="/products/new"
+                  render={(props) => (
+                    <AddProduct {...props} />
                   )}
                 />
-                <Route exact path="/products/new" component={AddProduct} />
                 <Route
                   exact
                   path="/restaurant/orders/"
-                  render={(props) => (
-                    <RestaurantOrderList socket={this.socket} {...props} />
+                  render={(props)=> (
+                    <RestaurantOrderList
+                    userInSession={this.state.loggedInUser}
+                    socket={this.socket}
+                    {...props}/>
                   )}
                 />
-
                 <Fade bottom>
                   <Route
                     exact

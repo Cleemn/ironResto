@@ -10,7 +10,7 @@ class Signup extends React.Component {
     email: "",
     phone: "",
     type: "user",
-    errorMessage: "",
+    errorMessage: ""
   };
 
   handleFormSubmit = (event) => {

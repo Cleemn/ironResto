@@ -34,9 +34,9 @@ class AppNavbar extends React.Component {
               <Flip right>
                 <img src="/shopping-basket-white-black.png" alt="" className="align-center basket-icon"/>
                 <div className="align-center basket-icon">
-                <p className="align-center basket-icon number">
-                  {this.getTotalProductNumber()}
-                  </p>
+                  <span>
+                    {this.getTotalProductNumber()}
+                  </span>
                 </div>
               </Flip>
             ) : (
@@ -59,7 +59,11 @@ class AppNavbar extends React.Component {
               </Nav.Link>
               
               <Nav.Link as={NavLink} to="/" onClick={this.closeNavbar}>La carte</Nav.Link>
-              <Nav.Link as={NavLink} to="/profile/user" onClick={this.closeNavbar}>Mes commandes</Nav.Link>
+              {this.props.userInSession.type === 'restaurant' ? (
+                <Nav.Link as={NavLink} to="/profile/restaurant" onClick={this.closeNavbar}>Mon dashboard</Nav.Link>
+              ) : (
+                <Nav.Link as={NavLink} to="/profile/user" onClick={this.closeNavbar}>Mes commandes</Nav.Link>
+              )}
               <Nav.Link as={NavLink} to="/edit" onClick={this.closeNavbar}>Modifier mon profil</Nav.Link>
               <Button
                   onClick={(e) => {

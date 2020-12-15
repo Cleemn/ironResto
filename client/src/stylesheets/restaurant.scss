@@ -1,0 +1,63 @@
+.profile-restaurant {
+    .user-info {
+        margin: 32px auto 0 auto;
+    }
+
+    a {
+        text-decoration: none;
+        color: #818180 !important;
+
+        p {
+            font-weight: 500;
+        }
+    }
+
+    .accordion-item--opened .accordion-item__icon {
+        transform: rotate(270deg) !important;
+    }
+
+    #pie {
+        height: 310px;
+      }
+}
+
+.restaurant-list {
+    .buttons {
+        overflow-x: scroll;
+        display: flex;
+
+        @include breakpoint(mobile, min) {
+            overflow-x: hidden;
+        }
+    
+        button {
+          border: none;
+          background: #FFF;
+          box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+          border-radius: 24px;
+          font-size: 10px;
+          padding: 0.5rem !important;
+          display: inline-block;
+    
+          &:focus {
+            outline: none;
+          }
+        }
+    }
+
+    .order-card {
+        background: #F6F5F4;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.12);
+        border-radius: 10px;
+
+        .left {
+            width: 70%;
+            height: 100%;
+        }
+
+        .right {
+            width: 30%;
+            height: 100%;
+        }
+    }
+}

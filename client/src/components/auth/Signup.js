@@ -126,7 +126,7 @@ class Signup extends React.Component {
           </div>
 
           {this.state.errorMessage && (
-            <div className="message">
+            <div className="error-message">
               <p>{this.state.errorMessage}</p>
             </div>
           )}

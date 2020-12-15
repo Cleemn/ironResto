@@ -70,15 +70,19 @@ class ProfileRestaurant extends Component {
   render() {
     return (
       <div className="profile-restaurant container">
-        <div className="user-info">
-          {this.props.userInSession ?
-            (
+        {this.props.userInSession ?
+          (
+            <div className="user-info">
               <h2> {this.capitalizeFirstLetter(this.props.userInSession.firstName)} <br/> {this.capitalizeFirstLetter(this.props.userInSession.lastName)}</h2>
-            ) : 
-            (<StyledContentLoader></StyledContentLoader>)
-          }
-          <img src="/avatar.jpeg" alt=""></img>
-        </div>
+              {this.props.userInSession.type === 'user' ? (
+                <img src="/avatar.jpeg" alt=""></img>
+              ) : (
+                <img src="/chef.jpg" alt=""></img>
+              )}
+            </div>
+          ) : 
+          (<StyledContentLoader></StyledContentLoader>)
+        }
         <div className="daily-orders">
         {this.state.chartData.length > 0 ? (
           <div className="chart">
@@ -112,7 +116,7 @@ class ProfileRestaurant extends Component {
             <Link to="/products/">
                 <p>Gestion de produits</p>
             </Link>
-            <Link to="/restaurant/products/">
+            <Link to="/products/">
               <div className="accordion-item__icon"></div>
             </Link>
           </div>

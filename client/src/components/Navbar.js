@@ -19,6 +19,12 @@ class AppNavbar extends React.Component {
     nav.classList.remove('show');
   }
 
+  getTotalProductNumber = () => {
+    let totalProduct = this.props.basket.reduce((acc, product) => acc + product.quantity, 0)
+    console.log(totalProduct)
+    return totalProduct
+  }
+
   render() {
 
     return (
@@ -26,7 +32,12 @@ class AppNavbar extends React.Component {
           <Navbar.Brand as={Link} to="/user/order" className="nav-item">
             {this.props.basket.length > 0 ? (
               <Flip right>
-                <img src="/basket-color.png" alt="" className="align-center basket-icon"/>
+                <img src="/shopping-basket-white-black.png" alt="" className="align-center basket-icon"/>
+                <div className="align-center basket-icon">
+                <p className="align-center basket-icon number">
+                  {this.getTotalProductNumber()}
+                  </p>
+                </div>
               </Flip>
             ) : (
               <img src="/basket-white.png" alt="" className="align-center basket-icon"/>

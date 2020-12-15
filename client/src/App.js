@@ -15,23 +15,29 @@ import ProfileUser from "./components/profilePage/ProfileUser";
 import Basket from "./components/orders/Basket";
 import UserOrderDetails from "./components/orders/UserOrderDetails";
 import EditUser from "./components/profilePage/EditUser";
-import AddProduct from "./components/products/AddProduct"
-import RestaurantOrderList from "./components/orders/RestaurantOrderList"
+import AddProduct from "./components/products/AddProduct";
+import RestaurantOrderList from "./components/orders/RestaurantOrderList";
 
 import { loggedin } from "./components/auth/auth-service";
-
 
 class App extends React.Component {
   state = {
     loggedInUser: null,
-    basket: []
+    basket: [],
   };
 
+  socket = io(`${process.env.REACT_APP_APIURL || ""}`, { autoConnect: false });
+
   componentDidMount() {
-    console.log('process.env', process.env)
+    this.getLocalStorageBasket();
+    this.fetchUser();
   }
 
-  socket = io(`${process.env.REACT_APP_APIURL || ""}`, {autoConnect: false,});
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.basket !== prevProps.basket) {
+      this.setLocalStorageBasket();
+    }
+  }
 
   fetchUser() {
     if (this.state.loggedInUser === null) {
@@ -44,6 +50,17 @@ class App extends React.Component {
         });
     }
   }
+
+  getLocalStorageBasket = () => {
+    let storageBasket = localStorage.getItem("basket");
+    let basket = storageBasket !== null ? JSON.parse(storageBasket) : [];
+    this.setState({ basket });
+  };
+
+  setLocalStorageBasket = () => {
+    const basket = JSON.stringify(this.state.basket);
+    localStorage.setItem("basket", basket);
+  };
 
   basketContains = (itemId) => {
     let isContains = false;
@@ -59,18 +76,24 @@ class App extends React.Component {
   addToBasket = (item) => {
     if (!this.basketContains(item._id)) {
       this.setState({
-        basket: [...this.state.basket, item],
+        basket: [...this.state.basket, item].sort((a,b) => a.name.localeCompare(b.name)),
       });
+    } else {
+      const basket = [...this.state.basket];
+      const filteredBasket = basket.filter(
+        (basketProduct) => basketProduct._id !== item._id.toString()
+      );
+      const selectedItem = basket.filter(
+        (basketProduct) => basketProduct._id === item._id.toString()
+      )[0];
+      selectedItem.quantity += 1;
+      this.setState({ basket: [...filteredBasket, selectedItem].sort((a,b) => a.name.localeCompare(b.name)) });
     }
   };
 
   updateBasket = (basket) => {
     this.setState({ basket });
   };
-
-  componentDidMount() {
-    this.fetchUser();
-  }
 
   updateLoggedInUser = (userObj) => {
     this.setState({
@@ -157,9 +180,21 @@ class App extends React.Component {
                     />
                   )}
                 />
-                <Route exact path="/orders/:id" render={(props)=> (<UserOrderDetails socket={this.socket} {...props}/>)} />
-                <Route exact path="/products/new" component={AddProduct}/>
-                <Route exact path="/restaurant/orders/" render={(props)=> (<RestaurantOrderList socket={this.socket} {...props}/>)}/>        
+                <Route
+                  exact
+                  path="/orders/:id"
+                  render={(props) => (
+                    <UserOrderDetails socket={this.socket} {...props} />
+                  )}
+                />
+                <Route exact path="/products/new" component={AddProduct} />
+                <Route
+                  exact
+                  path="/restaurant/orders/"
+                  render={(props) => (
+                    <RestaurantOrderList socket={this.socket} {...props} />
+                  )}
+                />
 
                 <Fade bottom>
                   <Route
@@ -167,8 +202,9 @@ class App extends React.Component {
                     path="/products/:id"
                     render={(props) => (
                       <ProductDetails
-                      updateBasket={this.addToBasket}
-                        {...props} />
+                        updateBasket={this.addToBasket}
+                        {...props}
+                      />
                     )}
                   />
                 </Fade>

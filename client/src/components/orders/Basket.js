@@ -60,6 +60,13 @@ class Basket extends React.Component {
     this.removeProduct();
   }
 
+  componentDidUpdate(prevProps, prevState){
+    if(this.props.basket !== prevProps.basket){
+      this.totalPrice()
+    }
+
+  }
+
   render() {
     return (
       <div className="basket">

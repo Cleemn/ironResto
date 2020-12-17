@@ -13,19 +13,30 @@ class RestaurantOrderList extends Component {
     this.getDailyOrders();
     this.props.socket.connect();
     this.props.socket.on(`add:order`, (newOrder) => {
-      this.updateOrder(newOrder)
+      const stateOrders = [...this.state.orders]
+      this.setState({orders:[newOrder, ...stateOrders]})
     })
   }
 
-  updateOrder = (newOrder) => {
+  updateOrder = (order) => {
     const orders = [...this.state.orders];
-    const nonUpdatedOrders = orders.filter((order) => {
-      return order._id !== newOrder._id;
-    });
-    const sortedNewOrders = [...nonUpdatedOrders, newOrder].sort(
-      (o1, o2) => new Date(o2.date) - new Date(o1.date)
-    );
-    this.setState({ orders: sortedNewOrders });
+      const idx = orders.findIndex( o => o._id === order._id)
+      if(idx >= 0){
+        orders[idx] = order
+      }    
+      this.setState({orders})
+
+    // const orders = [...this.state.orders];
+    // const nonUpdatedOrders = orders.filter((order) => {
+    //   return order._id !== newOrder._id;
+    // });
+    // const sortedNewOrders = [...nonUpdatedOrders, newOrder].sort(
+    //   (o1, o2) => {
+    //     const diff = new Date(o2.date) - new Date(o1.date)
+    //     return diff
+    //   }
+    // );
+    // this.setState({ orders: sortedNewOrders });
   };
 
   updateOrderStatus = (orderId, newStatus) => {
@@ -52,7 +63,7 @@ class RestaurantOrderList extends Component {
       .then((response) => {
         this.setState({ orders: response.data });
       })
-      .catch((error) => this.setState({ errorMessage: error }));
+      .catch((error) => this.setState({ errorMessage: error.message }));
   };
 
   sortByType = (e) => {
@@ -66,7 +77,7 @@ class RestaurantOrderList extends Component {
           orders: sortOrders,
         });
       })
-      .catch((err) => console.log("Error while fetching orders", err));
+      .catch((error) => this.setState({ errorMessage: error.message }));
   };
   
   render() {
@@ -106,7 +117,7 @@ class RestaurantOrderList extends Component {
                   {this.state.orders.map((order, key) => {
                     const date = `${(new Date(order.date)).getHours()}:${(new Date(order.date)).getMinutes()}:${(new Date(order.date)).getSeconds()}`
                     return (
-                      <li {...{ className: "accordion-list__item", key }}>
+                      <li {...{ className: "accordion-list__item" }} key={order._id}>
                         <Accordion
                           date={date}
                           orderId={order._id}
@@ -115,6 +126,7 @@ class RestaurantOrderList extends Component {
                           user={order.user_id}
                           updateStatus={this.updateOrderStatus}
                           {...this.props}
+                          key={order._id}
                         />
                       </li>
                     );

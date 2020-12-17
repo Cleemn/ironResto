@@ -161,7 +161,7 @@ class UserOrderDetails extends React.Component {
             <p>{this.state.time}</p>
             <ProgressBar
               percent={this.state.progress}
-              filledBackground="linear-gradient(to right, #fcbf99, #FA8334)"
+              filledBackground="linear-gradient(to right, #fcbf99, #fcbf99, #FA8334)"
             />
           </div>
           {isMobile ? (

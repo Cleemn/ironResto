@@ -116,15 +116,19 @@
         }
 
         .acceptee {
-            background-color: #FA8334;
+            background-color: rgba(28, 177, 245, 0.6);
         }
 
         .en_cours {
-            background-color: #D8EFB4;
+            background-color: rgba(245, 85, 74, 0.6);
         }
 
         .commande_prete {
-            background-color: #F7FCEE;
+            background-color: rgba(150, 201, 91, 0.6);
+        }
+
+        .commande_recuperee {
+            background-color: rgba(255, 199, 33, 0.6);
         }
     }
 

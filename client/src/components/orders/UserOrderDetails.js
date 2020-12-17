@@ -46,7 +46,8 @@ class UserOrderDetails extends React.Component {
     progress: 0,
     time: "",
     min: "",
-    hour: ""
+    hour: "",
+    isMobile: window.innerWidth < 1270
   };
 
   convertDate(date) {
@@ -86,7 +87,6 @@ class UserOrderDetails extends React.Component {
       this.setState({status:newStatus})
       this.convertStatus(this.state.status);
     })
-    
   }
 
   componentWillUnmount() {
@@ -122,6 +122,7 @@ class UserOrderDetails extends React.Component {
   };
 
   render() {
+    const isMobile = this.state.isMobile;
     const { dayWeek, day, month, hour, min } = this.convertDate(this.state.date);
     const date = `${dayWeek} ${day} ${month} à ${hour}h${min}`;
     const price = `${this.state.total_price}€`;
@@ -163,10 +164,25 @@ class UserOrderDetails extends React.Component {
               filledBackground="linear-gradient(to right, #fcbf99, #fcbf99, #FA8334)"
             />
           </div>
-          <div className="map">
-            <p>Le restaurant se situe ici :</p>
-            <img src="/map.png" alt=""/>
-          </div>
+          {isMobile ? (
+            <div className="map">
+              <p>Le restaurant se situe ici :
+                <a href="https://www.google.fr/maps/place/123+Boulevard+Saint-Germain,+75006+Paris/@48.8527706,2.3346575,17z/data=!3m1!4b1!4m5!3m4!1s0x47e671d91379f137:0x3532ea842e3bd17a!8m2!3d48.8527671!4d2.3368462">
+                  &nbsp;123 boulevard Saint-Germain, 75006, Paris
+                </a>
+              </p>
+              <img src="/map.png" alt=""/>
+            </div>
+          ) : (
+            <div className="map">
+              <p>Le restaurant se situe ici :
+                <a href="https://www.google.fr/maps/place/123+Boulevard+Saint-Germain,+75006+Paris/@48.8527706,2.3346575,17z/data=!3m1!4b1!4m5!3m4!1s0x47e671d91379f137:0x3532ea842e3bd17a!8m2!3d48.8527671!4d2.3368462">
+                  &nbsp;123 boulevard Saint-Germain, 75006, Paris
+                </a>
+              </p>
+              <img src="/map-large.png" alt=""/>
+            </div>
+          )}
 
           {this.state.errorMessage && (
             <div className="error-message">

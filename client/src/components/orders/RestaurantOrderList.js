@@ -112,7 +112,7 @@ class RestaurantOrderList extends Component {
         {this.state.orders.length === 0 ? (
               <p>Il n'y a pas de commande pour le moment.</p>
             ) : (
-              <div {...{ className: "wrapper" }}>
+              <div {...{ className: "wrapper" }} style={{marginBottom: '24px'}}>
                 <ul {...{ className: "accordion-list" }}>
                   {this.state.orders.map((order, key) => {
                     const date = `${(new Date(order.date)).getHours()}:${(new Date(order.date)).getMinutes()}:${(new Date(order.date)).getSeconds()}`

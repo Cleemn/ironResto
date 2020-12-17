@@ -31,14 +31,33 @@ class AppNavbar extends React.Component {
         <Navbar expand="lg" sticky="top" bg="white">
           <Navbar.Brand as={Link} to="/user/order" className="nav-item">
             {this.props.basket.length > 0 ? (
-              <Flip right>
-                <img src="/shopping-basket-white-black.png" alt="" className="align-center basket-icon"/>
-                <div className="align-center basket-icon">
-                  <span>
-                    {this.getTotalProductNumber()}
-                  </span>
-                </div>
-              </Flip>
+              <div>
+                {this.props.userInSession ? (
+                  <div>
+                    {this.props.userInSession.type === 'user' ? (
+                      <Flip right>
+                        <img src="/shopping-basket-white-black.png" alt="" className="align-center basket-icon"/>
+                        <div className="align-center basket-icon">
+                          <span>
+                            {this.getTotalProductNumber()}
+                          </span>
+                        </div>
+                      </Flip>
+                    ) : (
+                      <img src="/basket-white.png" alt="" className="align-center basket-icon"/>
+                    )}
+                  </div>
+                ) : (
+                  <Flip right>
+                    <img src="/shopping-basket-white-black.png" alt="" className="align-center basket-icon"/>
+                    <div className="align-center basket-icon">
+                      <span>
+                        {this.getTotalProductNumber()}
+                      </span>
+                    </div>
+                  </Flip>
+                )}
+              </div>
             ) : (
               <img src="/basket-white.png" alt="" className="align-center basket-icon"/>
             )}

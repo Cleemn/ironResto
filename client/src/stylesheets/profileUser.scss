@@ -47,6 +47,10 @@ $cLightGray: rgba(#000, 0.1);
         
         img {
             max-width: 330px;
+
+            @include breakpoint(mobile, min) {
+                max-width: 1110px;
+            }
         }
     }
 }

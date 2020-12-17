@@ -60,11 +60,10 @@ class Basket extends React.Component {
     this.removeProduct();
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if(this.props.basket !== prevProps.basket){
-      this.totalPrice()
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.basket !== prevProps.basket) {
+      this.totalPrice();
     }
-
   }
 
   render() {
@@ -85,19 +84,18 @@ class Basket extends React.Component {
             </div>
             <h6 className="restaurant-details container mt-4">Ma commande :</h6>
             <ul className="product-list">
-              <li className="product-list-content">
-                {this.props.basket.map((product, i) => {
-                  return (
+              {this.props.basket.map((product, i) => {
+                return (
+                  <li className="product-list-content" key={product._id}>
                     <ProductCart
                       product={{ ...product }}
                       removeProduct={this.removeProduct}
                       basket={this.props.basket}
                       updateBasket={this.props.updateBasket}
-                      key={product._id}
                     />
-                  );
-                })}
-              </li>
+                  </li>
+                );
+              })}
             </ul>
 
             <h5>Prix total : {this.state.totalPrice}€</h5>
@@ -138,21 +136,25 @@ class ProductCart extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.clicks !== this.state.clicks && prevProps.product._id === this.props.product._id) {
+    if (
+      prevState.clicks !== this.state.clicks &&
+      prevProps.product._id === this.props.product._id
+    ) {
       this.updateQuantity(this.props.product._id, this.state.clicks);
     }
   }
 
   updateQuantity = (productId, quantity) => {
+
     if (this.props.basket) {
-      const basket = this.props.basket.filter(
-        (product) => product._id !== productId
-      );
-      let selectedProduct = this.props.basket.filter(
-        (product) => product._id === productId
-      )[0];
-      selectedProduct.quantity = quantity;
-      this.props.updateBasket([...basket, selectedProduct]);
+    const basket = [...this.props.basket];
+    const idx = basket.findIndex( product => product._id === productId)
+    if(idx >= 0){
+      let productToModif = basket[idx]
+      productToModif.quantity = quantity
+      basket[idx] = productToModif
+    }      
+      this.props.updateBasket(basket);
     }
   };
 

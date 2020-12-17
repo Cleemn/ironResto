@@ -80,18 +80,17 @@ class App extends React.Component {
   addToBasket = (item) => {
     if (!this.basketContains(item._id)) {
       this.setState({
-        basket: [...this.state.basket, item].sort((a,b) => a.name.localeCompare(b.name)),
+        basket: [...this.state.basket, item],
       });
     } else {
       const basket = [...this.state.basket];
-      const filteredBasket = basket.filter(
-        (basketProduct) => basketProduct._id !== item._id.toString()
-      );
-      const selectedItem = basket.filter(
-        (basketProduct) => basketProduct._id === item._id.toString()
-      )[0];
-      selectedItem.quantity += 1;
-      this.setState({ basket: [...filteredBasket, selectedItem].sort((a,b) => a.name.localeCompare(b.name)) });
+      const idx = basket.findIndex( product => product._id === item._id)
+      if(idx >= 0){
+        let productToModif = basket[idx]
+        productToModif.quantity += 1
+        basket[idx] = productToModif
+      }    
+      this.setState({basket})
     }
   };
 

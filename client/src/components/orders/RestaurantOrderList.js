@@ -14,23 +14,29 @@ class RestaurantOrderList extends Component {
     this.props.socket.connect();
     this.props.socket.on(`add:order`, (newOrder) => {
       const stateOrders = [...this.state.orders]
-      this.setState({orders:[...stateOrders, newOrder]})
-      // this.updateOrder(newOrder)
+      this.setState({orders:[newOrder, ...stateOrders]})
     })
   }
 
-  updateOrder = (newOrder) => {
+  updateOrder = (order) => {
     const orders = [...this.state.orders];
-    const nonUpdatedOrders = orders.filter((order) => {
-      return order._id !== newOrder._id;
-    });
-    const sortedNewOrders = [...nonUpdatedOrders, newOrder].sort(
-      (o1, o2) => {
-        const diff = new Date(o2.date) - new Date(o1.date)
-        return diff
-      }
-    );
-    this.setState({ orders: sortedNewOrders });
+      const idx = orders.findIndex( o => o._id === order._id)
+      if(idx >= 0){
+        orders[idx] = order
+      }    
+      this.setState({orders})
+
+    // const orders = [...this.state.orders];
+    // const nonUpdatedOrders = orders.filter((order) => {
+    //   return order._id !== newOrder._id;
+    // });
+    // const sortedNewOrders = [...nonUpdatedOrders, newOrder].sort(
+    //   (o1, o2) => {
+    //     const diff = new Date(o2.date) - new Date(o1.date)
+    //     return diff
+    //   }
+    // );
+    // this.setState({ orders: sortedNewOrders });
   };
 
   updateOrderStatus = (orderId, newStatus) => {

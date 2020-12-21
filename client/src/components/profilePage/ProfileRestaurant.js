@@ -2,6 +2,8 @@ import React, { createRef, Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import StyledContentLoader from 'styled-content-loader';
+import Login from '../auth/Login';
+import NoAccess from '../errors/NoAccess';
 
 import PieChart, {
   Legend,
@@ -69,70 +71,80 @@ class ProfileRestaurant extends Component {
 
   render() {
     return (
-      <div className="profile-restaurant container">
-        {this.props.userInSession ?
-          (
-            <div className="user-info">
-              <h2> {this.capitalizeFirstLetter(this.props.userInSession.firstName)} <br/> {this.capitalizeFirstLetter(this.props.userInSession.lastName)}</h2>
-              {this.props.userInSession.type === 'user' ? (
-                <img src="/avatar.jpeg" alt=""></img>
-              ) : (
-                <img src="/chef.jpg" alt=""></img>
-              )}
+      <>
+      {this.props.userInSession ? (
+        <>{this.props.userInSession.type === 'restaurant' ? (
+          <div className="profile-restaurant container">
+            {this.props.userInSession ?
+              (
+                <div className="user-info">
+                  <h2> {this.capitalizeFirstLetter(this.props.userInSession.firstName)} <br/> {this.capitalizeFirstLetter(this.props.userInSession.lastName)}</h2>
+                  {this.props.userInSession.type === 'user' ? (
+                    <img src="/avatar.jpeg" alt=""></img>
+                  ) : (
+                    <img src="/chef.jpg" alt=""></img>
+                  )}
+                </div>
+              ) : 
+              (<StyledContentLoader></StyledContentLoader>)
+            }
+            <div className="daily-orders">
+            {this.state.chartData.length > 0 ? (
+              <div className="chart">
+              <PieChart id="pie" type="doughnut" dataSource={this.state.chartData}>
+                <Size height={310} />
+                <Series argumentField="label">
+                  <Label visible={true} format="fixedPoint" customizeText={this.customizeLabel}>
+                    <Connector visible={true} />
+                  </Label>
+                </Series>
+                <Legend visible={false}/>
+              </PieChart>
+              </div>
+            ) : (
+              <></>
+            )}
+              <h5 className="text-center mt-3 mb-5">Aujourd'hui<span> {this.state.orders.length}</span> commandes ont été passées.</h5>
             </div>
-          ) : 
-          (<StyledContentLoader></StyledContentLoader>)
-        }
-        <div className="daily-orders">
-        {this.state.chartData.length > 0 ? (
-          <div className="chart">
-          <PieChart id="pie" type="doughnut" dataSource={this.state.chartData}>
-            <Size height={310} />
-            <Series argumentField="label">
-              <Label visible={true} format="fixedPoint" customizeText={this.customizeLabel}>
-                <Connector visible={true} />
-              </Label>
-            </Series>
-            <Legend visible={false}/>
-          </PieChart>
-          </div>
-        ) : (
-          <></>
-        )}
-          <h5 className="text-center mt-3 mb-5">Aujourd'hui<span> {this.state.orders.length}</span> commandes ont été passées.</h5>
-        </div>
-        <div className="accordion-item--opened accordion-list mb-4" style={{boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.12)'}}>
-          <div className="accordion-item__line container py-3">
-            <Link to="/restaurant/orders/">
-                <p>Gestion de commandes</p>
-            </Link>
-            <Link to="/restaurant/orders/">
-              <div className="accordion-item__icon"></div>
-            </Link>
-          </div>
-        </div>
-        <div className="accordion-item--opened accordion-list mb-4" style={{boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.12)'}}>
-          <div className="accordion-item__line container py-3">
-            <Link to="/products/">
-                <p>Gestion de produits</p>
-            </Link>
-            <Link to="/products/">
-              <div className="accordion-item__icon"></div>
-            </Link>
-          </div>
-        </div>
-        <div className="accordion-item--opened accordion-list mb-4" style={{boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.12)'}}>
-          <div className="accordion-item__line container py-3">
-            <Link to="/products/new/">
-                <p>Ajouter un produit</p>
+            <div className="accordion-item--opened accordion-list mb-4" style={{boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.12)'}}>
+              <div className="accordion-item__line container py-3">
+                <Link to="/restaurant/orders/">
+                    <p>Gestion de commandes</p>
+                </Link>
+                <Link to="/restaurant/orders/">
+                  <div className="accordion-item__icon"></div>
+                </Link>
+              </div>
+            </div>
+            <div className="accordion-item--opened accordion-list mb-4" style={{boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.12)'}}>
+              <div className="accordion-item__line container py-3">
+                <Link to="/products/">
+                    <p>Gestion de produits</p>
+                </Link>
+                <Link to="/products/">
+                  <div className="accordion-item__icon"></div>
+                </Link>
+              </div>
+            </div>
+            <div className="accordion-item--opened accordion-list mb-4" style={{boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.12)'}}>
+              <div className="accordion-item__line container py-3">
+                <Link to="/products/new/">
+                    <p>Ajouter un produit</p>
 
-            </Link>
-            <Link to="/products/new/">
-              <div className="accordion-item__icon"></div>
-            </Link>
+                </Link>
+                <Link to="/products/new/">
+                  <div className="accordion-item__icon"></div>
+                </Link>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+
+        ) : (
+          <NoAccess />
+        )}</>
+      ) : (
+        <Login />
+      )}</>
     );
   }
 }

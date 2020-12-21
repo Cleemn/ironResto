@@ -1,4 +1,3 @@
-import { Component } from "devextreme-react/core/component";
 import React from "react";
 
 class NoAccess extends React.Component {

@@ -2,6 +2,7 @@ import React from "react";
 import { orders } from "../services/order-service";
 import StyledContentLoader from 'styled-content-loader';
 import AccordionItem from './Accordion';
+import Login from '../auth/Login';
 // import { Link } from "react-router-dom";
 
 const frenchDays = [
@@ -74,16 +75,21 @@ class ProfileUser extends React.Component {
   render() {
     return (
       <>
-        {this.props.userInSession ? (
+      {this.props.userInSession ? (
         <div className="container">
           <div className="user-info">
+              {this.props.userInSession ? (
               <h2>
                 {this.capitalizeFirstLetter(this.props.userInSession.firstName)}
                 <br/>
                 {this.capitalizeFirstLetter(this.props.userInSession.lastName)}
               </h2>
+              ) : (
+                <StyledContentLoader>
+                </StyledContentLoader>
+              )}
             <img
-              src={this.props.userInSession.photo}
+              src="/avatar.jpeg"
               alt=""
             ></img>
           </div>
@@ -146,11 +152,9 @@ class ProfileUser extends React.Component {
             </div>
           </div>
         </div>
-        ) : (
-          <StyledContentLoader>
-          </StyledContentLoader>
-        )}
-      </>
+      ) : (
+        <Login />
+      )}</>
     );
   }
 }

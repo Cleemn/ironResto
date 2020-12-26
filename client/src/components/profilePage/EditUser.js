@@ -1,5 +1,5 @@
 import React from "react";
-import { edit } from "../auth/auth-service";
+import { edit, handleUpload } from "../auth/auth-service";
 
 import StyledContentLoader from 'styled-content-loader';
 
@@ -10,7 +10,9 @@ class EditUser extends React.Component {
     email: this.props.userInSession.email,
     password: this.props.userInSession.password,
     phone: this.props.userInSession.phone,
-    errorMessage: ""
+    errorMessage: "",
+    photo: this.props.userInSession.photo,
+    preview: this.props.userInSession.photo
   };
 
   handleFormSubmit = (event) => {
@@ -20,8 +22,9 @@ class EditUser extends React.Component {
     const email = this.state.email;
     const password = this.state.password;
     const phone = this.state.phone;
+    const photo = this.state.photo;
     
-    edit(firstName, lastName, email, password, phone)
+    edit(firstName, lastName, email, password, phone, photo)
       .then((response) => {
 
         this.props.updateUser(response);
@@ -35,6 +38,19 @@ class EditUser extends React.Component {
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
+  };
+
+  handleFileUpload = e => {
+    const uploadData = new FormData();
+    uploadData.append('photo', e.target.files[0]);
+ 
+    handleUpload(uploadData)
+      .then(response => {
+        this.setState({ photo: response.secure_url, preview: URL.createObjectURL(e.target.files[0]) });
+      })
+      .catch(err => {
+        console.log('Error while uploading the file: ', err);
+      });
   };
 
   render() {
@@ -102,6 +118,13 @@ class EditUser extends React.Component {
                       onChange={(e) => this.handleChange(e)}
                     />
                   </div>
+
+                  <div className="form-group">
+                    <img src={this.state.preview} alt=""/>
+                    <label htmlFor="photo">Choisir une photo</label>
+                    <input type="file" id="photo" className="inputfile" onChange={e => this.handleFileUpload(e)} />
+                  </div>
+
                   <button type="submit" className="btn btn-orange my-3">Enregistrer les modifications</button>
 
                   {this.state.errorMessage && (

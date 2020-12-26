@@ -4,16 +4,16 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User.model");
 
 authRoutes.post("/signup", (req, res, next) => {
-  const { firstName, lastName, email, password, phone, type } = req.body;
+  const { firstName, lastName, email, password, phone, photo, type } = req.body;
 
-  if (!firstName || !lastName || !email || !password || !phone || !type) {
+  if (!firstName || !lastName || !email || !password || !phone || !photo || !type) {
     res.status(400).json({ message: "Merci de fournir toutes les informations." });
   }
 
   const salt = bcrypt.genSaltSync(10);
   const passwordHash = bcrypt.hashSync(password, salt);
 
-  User.create({ firstName, lastName, email, passwordHash, phone, type })
+  User.create({ firstName, lastName, email, passwordHash, phone, photo, type })
     .then((userFromDB) => {
       req.session.user = userFromDB;
       res.status(200).json(userFromDB);
@@ -67,7 +67,7 @@ authRoutes.post("/logout", (req, res, next) => {
 });
 
 authRoutes.put("/edit", (req, res, next) => {
-  const { firstName, lastName, email, password, phone } = req.body;
+  const { firstName, lastName, email, password, phone, photo } = req.body;
   const id = req.session.user._id
 
   if (!req.session.user) {
@@ -75,7 +75,7 @@ authRoutes.put("/edit", (req, res, next) => {
     return;
   }
 
-  User.findByIdAndUpdate(id, { firstName, lastName, email, password, phone }, {new: true})
+  User.findByIdAndUpdate(id, { firstName, lastName, email, password, phone, photo }, {new: true})
   .then(user => {
     req.session.user = user
     res.status(200).json(user);

@@ -32,6 +32,9 @@ const userSchema = new Schema(
       type: String,
       enum: ['user', 'restaurant'],
       default: 'user'
+    },
+    photo: {
+      type: String
     }
   },
   {

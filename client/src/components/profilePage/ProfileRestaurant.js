@@ -69,20 +69,14 @@ class ProfileRestaurant extends Component {
 
   render() {
     return (
+      <>
+      {this.props.userInSession ?
+        (
       <div className="profile-restaurant container">
-        {this.props.userInSession ?
-          (
             <div className="user-info">
               <h2> {this.capitalizeFirstLetter(this.props.userInSession.firstName)} <br/> {this.capitalizeFirstLetter(this.props.userInSession.lastName)}</h2>
-              {this.props.userInSession.type === 'user' ? (
-                <img src="/avatar.jpeg" alt=""></img>
-              ) : (
-                <img src="/chef.jpg" alt=""></img>
-              )}
+              <img src={this.props.userInSession.photo} alt=""></img>
             </div>
-          ) : 
-          (<StyledContentLoader></StyledContentLoader>)
-        }
         <div className="daily-orders">
         {this.state.chartData.length > 0 ? (
           <div className="chart">
@@ -133,6 +127,13 @@ class ProfileRestaurant extends Component {
           </div>
         </div>
       </div>
+      ) : 
+      (
+        <StyledContentLoader>
+        </StyledContentLoader>
+      )
+    }
+    </>
     );
   }
 }

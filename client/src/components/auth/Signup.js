@@ -1,5 +1,5 @@
 import React from "react";
-import { signup } from "./auth-service";
+import { signup, handleUpload } from "./auth-service";
 import { Link } from "react-router-dom";
 
 class Signup extends React.Component {
@@ -9,8 +9,10 @@ class Signup extends React.Component {
     password: "",
     email: "",
     phone: "",
+    photo: "",
     type: "user",
-    errorMessage: ""
+    errorMessage: "",
+    preview: ''
   };
 
   handleFormSubmit = (event) => {
@@ -21,8 +23,9 @@ class Signup extends React.Component {
     const phone = this.state.phone;
     const email = this.state.email;
     const type = this.state.type;
+    const photo = this.state.photo;
 
-    signup(firstName, lastName, password, email, phone, type)
+    signup(firstName, lastName, password, email, phone, photo, type)
       .then((response) => {
         this.setState({
           firstName: "",
@@ -30,6 +33,7 @@ class Signup extends React.Component {
           password: "",
           phone: "",
           email: "",
+          photo: "",
           type: "user",
         });
         this.props.updateUser(response);
@@ -44,10 +48,29 @@ class Signup extends React.Component {
       });
   };
 
+  handleFileUpload = e => {
+    const uploadData = new FormData();
+    uploadData.append('photo', e.target.files[0]);
+ 
+    handleUpload(uploadData)
+      .then(response => {
+        this.setState({ photo: response.secure_url, preview: URL.createObjectURL(e.target.files[0]) });
+      })
+      .catch(err => {
+        console.log('Error while uploading the file: ', err);
+      });
+  };
+
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
+
+  componentDidMount() {
+    if (this.state.preview) {
+      this.handleChange();
+    }
+  }
 
   render() {
     return (
@@ -112,6 +135,17 @@ class Signup extends React.Component {
               className="form-control"
             />
           </div>
+
+          <div className="form-group">
+              {this.state.preview ? (
+                <img src={this.state.preview} alt=""/>
+              ) : (
+              <div>
+                <label htmlFor="photo">Choisir une photo</label>
+                <input type="file" id="photo" className="inputfile" onChange={e => this.handleFileUpload(e)} />
+              </div>
+              )}
+            </div>
 
           <button type="submit" className="btn btn-orange">
             Je créé mon compte

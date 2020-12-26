@@ -138,7 +138,6 @@ class ProfileRestaurant extends Component {
               </div>
             </div>
           </div>
-
         ) : (
           <NoAccess />
         )}</>

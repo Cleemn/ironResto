@@ -1,26 +1,31 @@
 import "./App.scss";
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import io from "socket.io-client";
-import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.light.css';
 
 import HomePage from "./components/HomePage";
-import ProductDetails from "./components/products/ProductDetails";
 import AppNavbar from "./components/Navbar";
+
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
+import Confirm from "./components/auth/Confirm"
+
 import ProfileRestaurant from "./components/profilePage/ProfileRestaurant";
 import ProfileUser from "./components/profilePage/ProfileUser";
+import EditUser from "./components/profilePage/EditUser";
+
 import Basket from "./components/orders/Basket";
 import UserOrderDetails from "./components/orders/UserOrderDetails";
-import EditUser from "./components/profilePage/EditUser";
+import RestaurantOrderList from "./components/orders/RestaurantOrderList";
+
+import ProductDetails from "./components/products/ProductDetails";
 import AddProduct from "./components/products/AddProduct";
 import EditProduct from "./components/products/EditProduct";
 import Products from "./components/products/Products";
-import RestaurantOrderList from "./components/orders/RestaurantOrderList";
 
 import { loggedin } from "./components/auth/auth-service";
 
@@ -227,6 +232,24 @@ class App extends React.Component {
                     {...props}/>
                   )}
                 />
+                <Route
+                  exact
+                  path="/confirm/:email/:token"
+                  render={(props)=> (
+                    <Confirm
+                    userInSession={this.state.loggedInUser}
+                    {...props}/>
+                  )}
+                />
+                {/* <Route
+                  exact
+                  path="/notification"
+                  render={(props)=> (
+                    <MailSendedNofication
+                    userInSession={this.state.loggedInUser}
+                    {...props}/>
+                  )}
+                /> */}
                 <Fade bottom>
                   <Route
                     exact

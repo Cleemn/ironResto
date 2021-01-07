@@ -13,6 +13,7 @@ import AppNavbar from "./components/Navbar";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import Confirm from "./components/auth/Confirm"
+import MailSended from "./components/auth/MailSended"
 
 import ProfileRestaurant from "./components/profilePage/ProfileRestaurant";
 import ProfileUser from "./components/profilePage/ProfileUser";
@@ -241,15 +242,15 @@ class App extends React.Component {
                     {...props}/>
                   )}
                 />
-                {/* <Route
+                <Route
                   exact
-                  path="/notification"
+                  path="/verification/:email"
                   render={(props)=> (
-                    <MailSendedNofication
+                    <MailSended
                     userInSession={this.state.loggedInUser}
                     {...props}/>
                   )}
-                /> */}
+                />
                 <Fade bottom>
                   <Route
                     exact

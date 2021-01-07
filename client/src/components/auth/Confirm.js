@@ -1,5 +1,5 @@
 import React from 'react';
-import { confirm, resend } from './auth-service';
+import { confirm } from './auth-service';
 
 
 class Confirm extends React.Component{
@@ -18,7 +18,7 @@ class Confirm extends React.Component{
     render () {
         return ( 
         <div className="confirm-container">
-            <img src="/check-icon.svg" alt="" className="check-icon"/>
+            <img src="/check-icon.svg" alt="check-icon" className="check-icon"/>
             <h1>👏</h1>
             <h3>Vous êtes prêt pour passer la commande !</h3>
             <p>Votre email est confirmé. Veuillez vous connecter.</p>

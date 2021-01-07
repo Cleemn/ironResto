@@ -28,11 +28,91 @@ authRoutes.post("/signup", (req, res, next) => {
     }
     // if email is exist into database i.e. email is associated with another user.
     else if (user) {
-      res.status(400).json({
-        message:
-          "This email address is already associated with another account.",
-      });
-      return;
+      if (!user.isVerified) {
+        Token.findOne({ _userId: user._id })
+          .then((token) => {
+            if (!token) {
+              var token = new Token({
+                _userId: user._id,
+                token: generateRandomToken(),
+              });
+
+              token.save(function (err) {
+                if (err) {
+                  res.status(500).json({ message: err.message });
+                  return;
+                }
+
+                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+                sgMail
+                  .send({
+                    from: process.env.SENDER_MAIL,
+                    to: user.email,
+                    subject: `Welcome to IronResto ${user.firstName}`,
+                    html: `
+                          <p>Thanks to join our community! Please confirm your account clicking on the following link:</p>
+                          <a href="${host}/confirm/${user.email}/${token.token}">Confirme Your Email By Clicking Here!</a>
+                          <h4>Great to see you creating awesome webpages you with us!</h4>
+                      `,
+                  })
+                  .then(() => {
+                    console.log(`mail sended to ${user.email}`);
+                    res
+                      .status(200)
+                      .json
+                      // {message: `A verification email has been sent to ${user.email}. It will be expire after one day. If you not get verification Email click on resend token.`}
+                      ();
+                  })
+                  .catch((error) => {
+                    res
+                      .status(500)
+                      .json({
+                        message: `Technical Issue while sending mail! Issue : ${error.message}`,
+                      });
+                  });
+              });
+            } else {
+              sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+              sgMail
+                .send({
+                  from: process.env.SENDER_MAIL,
+                  to: user.email,
+                  subject: `Welcome to IronResto ${user.firstName}`,
+                  html: `
+                  <p>Thanks to join our community! Please confirm your account clicking on the following link:</p>
+                  <a href="${host}/confirm/${user.email}/${token.token}">Confirme Your Email By Clicking Here!</a>
+                  <h4>Great to see you creating awesome webpages you with us!</h4>
+              `,
+                })
+                .then(() => {
+                  console.log(`mail sended to ${user.email}`);
+                  res
+                    .status(200)
+                    .json
+                    // {message: `A verification email has been sent to ${user.email}. It will be expire after one day. If you not get verification Email click on resend token.`}
+                    ();
+                })
+                .catch((error) => {
+                  res
+                    .status(500)
+                    .json({
+                      message: `Technical Issue while sending mail! Issue : ${error.message}`,
+                    });
+                });
+            }
+          })
+          .catch((error) => {
+            res
+              .status(500)
+              .json({ message: `Technical Issue! Issue : ${error.message}` });
+          });
+      } else {
+        res.status(400).json({
+          message:
+            "This email address is already associated with another account. Please login.",
+        });
+        return;
+      }
     }
     // if user is not exist into database then save the user into database for register account
     else {
@@ -78,9 +158,11 @@ authRoutes.post("/signup", (req, res, next) => {
             })
             .then(() => {
               console.log(`mail sended to ${user.email}`);
-              res.status(354).json({
-                message: `A verification email has been sent to ${user.email}. It will be expire after one day. If you not get verification Email click on resend token.`
-              });
+              res
+                .status(200)
+                .json
+                // {message: `A verification email has been sent to ${user.email}. It will be expire after one day. If you not get verification Email click on resend token.`}
+                ();
             })
             .catch((error) => {
               res
@@ -101,8 +183,7 @@ authRoutes.get("/confirm/:email/:token", (req, res, next) => {
           "Your verification link may have expired. Please click on resend for verify your Email.",
       });
       return;
-    }
-    else {
+    } else {
       User.findOne(
         { _id: token._userId, email: req.params.email },
         function (err, user) {
@@ -178,7 +259,7 @@ authRoutes.post("/resend", (req, res, next) => {
           .send({
             from: process.env.SENDER_MAIL,
             to: user.email,
-            subject: `Welcome to IronResto ${user.firstName}`,
+            subject: `REEE Welcome to IronResto ${user.firstName}`,
             html: `
                 <p>Thanks to join our community! Please confirm your account clicking on the following link:</p>
                 <a href="${host}/confirm/${user.email}/${token.token}">Confirme Your Email By Clicking Here!</a>
@@ -187,11 +268,9 @@ authRoutes.post("/resend", (req, res, next) => {
           })
           .then(() => {
             console.log(`mail REsended to ${user.email}`);
-            res
-              .status(354)
-              .json({
-                message: `A verification email has been sent to ${user.email}. It will be expire after one day.`,
-              });
+            res.status(354).json({
+              message: `A verification email has been sent to ${user.email}. It will be expire after one day.`,
+            });
           })
           .catch((error) => {
             res

@@ -33,13 +33,6 @@ class Signup extends React.Component {
           email: "",
           type: "user",
         });
-        // this.props.updateUser(response);
-        // console.log(`signuped name : ${response.firstName}, surname: ${response.lastname}, email: ${response.email}`)
-        // if (response.type === "user") {
-        //   this.props.history.push("/profile/user");
-        // } else if (response.type === "restaurant") {
-        //   this.props.history.push("/profile/restaurant");
-        // }
       })
       .catch((error) => {
         this.setState({ errorMessage: error.response.data.message });

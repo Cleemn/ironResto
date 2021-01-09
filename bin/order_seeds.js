@@ -61,7 +61,7 @@ Promise.all([users, products])
         status: 'commande_recuperee'
       },
       { 
-        user_id: user_list[1]._id,
+        user_id: user_list[0]._id,
         items: [
           { product_id: product_list[0]._id,
             quantity: 2,

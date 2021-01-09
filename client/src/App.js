@@ -220,7 +220,10 @@ class App extends React.Component {
                   exact
                   path="/products/new"
                   render={(props) => (
-                    <AddProduct {...props} />
+                    <AddProduct
+                      userInSession={this.state.loggedInUser}
+                      {...props}
+                    />
                   )}
                 />
                 <Route

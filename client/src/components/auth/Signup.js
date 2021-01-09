@@ -27,6 +27,7 @@ class Signup extends React.Component {
 
     signup(firstName, lastName, password, email, phone, photo, type)
       .then((response) => {
+        this.props.history.push(`/verification/${this.state.email}`)
         this.setState({
           firstName: "",
           lastName: "",
@@ -36,12 +37,6 @@ class Signup extends React.Component {
           photo: "",
           type: "user",
         });
-        this.props.updateUser(response);
-        if (response.type === "user") {
-          this.props.history.push("/profile/user");
-        } else if (response.type === "restaurant") {
-          this.props.history.push("/profile/restaurant");
-        }
       })
       .catch((error) => {
         this.setState({ errorMessage: error.response.data.message });

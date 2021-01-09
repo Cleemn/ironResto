@@ -35,3 +35,13 @@ function loggedin() {
   return service.get('/api/loggedin').then(response => response.data)
 }
 export {loggedin}
+
+function resend(email) {
+  return service.post('/api/resend', {email}).then(response=>response.data)
+}
+export {resend}
+
+function confirm(email, token){
+  return service.get(`/api/confirm/${email}/${token}`).then(response => response.data)
+}
+export {confirm}

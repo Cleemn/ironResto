@@ -35,7 +35,8 @@ const userSchema = new Schema(
     },
     photo: {
       type: String
-    }
+    },
+    isVerified: { type: Boolean, default: false },
   },
   {
     timestamps: true

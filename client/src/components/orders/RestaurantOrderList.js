@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import NoAccess from '../errors/NoAccess';
+import Login from '../auth/Login';
 
 
 const baseURL = `${process.env.REACT_APP_APIURL || ""}`
@@ -82,60 +84,72 @@ class RestaurantOrderList extends Component {
   
   render() {
     return (
-      <div className="restaurant-list">
-        <div className="links container d-flex justify-content-between align-items-center">
-          <a href="/profile/restaurant">
-            <img src="/arrow-black-left.png" alt="" style={{width: '32px', height: '32px'}}></img>
-          </a>
-        </div>
-        <div className="buttons container">
-          <button onClick={this.getDailyOrders} className="my-3 mx-2">
-            Voir tout
-          </button>
-          <button onClick={this.sortByType} id="en_attente" className="my-3 mx-2">
-            En attente
-          </button>
-          <button onClick={this.sortByType} id="acceptee" className="my-3 mx-2">
-            Acceptée
-          </button>
-          <button onClick={this.sortByType} id="en_cours" className="my-3 mx-2">
-            En prep.
-          </button>
-          <button onClick={this.sortByType} id="commande_prete" className="my-3 mx-2">
-            Prête
-          </button>
-          <button onClick={this.sortByType} id="commande_recuperee" className="my-3 mx-2">
-            Récupérée
-          </button>
-        </div>
-        <div className="container">
-        {this.state.orders.length === 0 ? (
-              <p>Il n'y a pas de commande pour le moment.</p>
-            ) : (
-              <div {...{ className: "wrapper" }} style={{marginBottom: '24px'}}>
-                <ul {...{ className: "accordion-list" }}>
-                  {this.state.orders.map((order, key) => {
-                    const date = `${(new Date(order.date)).getHours()}:${(new Date(order.date)).getMinutes()}:${(new Date(order.date)).getSeconds()}`
-                    return (
-                      <li {...{ className: "accordion-list__item" }} key={order._id}>
-                        <Accordion
-                          date={date}
-                          orderId={order._id}
-                          items={order.items}
-                          status={order.status}
-                          user={order.user_id}
-                          updateStatus={this.updateOrderStatus}
-                          {...this.props}
-                          key={order._id}
-                        />
-                      </li>
-                    );
-                  })}
-                </ul>
+      <>
+        {this.props.userInSession ? (
+          <>
+            {this.props.userInSession.type === 'restaurant' ? (
+              <div className="restaurant-list">
+                <div className="links container d-flex justify-content-between align-items-center">
+                  <a href="/profile/restaurant">
+                    <img src="/arrow-black-left.png" alt="" style={{width: '32px', height: '32px'}}></img>
+                  </a>
+                </div>
+                <div className="buttons container">
+                  <button onClick={this.getDailyOrders} className="my-3 mx-2">
+                    Voir tout
+                  </button>
+                  <button onClick={this.sortByType} id="en_attente" className="my-3 mx-2">
+                    En attente
+                  </button>
+                  <button onClick={this.sortByType} id="acceptee" className="my-3 mx-2">
+                    Acceptée
+                  </button>
+                  <button onClick={this.sortByType} id="en_cours" className="my-3 mx-2">
+                    En prep.
+                  </button>
+                  <button onClick={this.sortByType} id="commande_prete" className="my-3 mx-2">
+                    Prête
+                  </button>
+                  <button onClick={this.sortByType} id="commande_recuperee" className="my-3 mx-2">
+                    Récupérée
+                  </button>
+                </div>
+                <div className="container">
+                {this.state.orders.length === 0 ? (
+                      <p>Il n'y a pas de commande pour le moment.</p>
+                    ) : (
+                      <div {...{ className: "wrapper" }} style={{marginBottom: '24px'}}>
+                        <ul {...{ className: "accordion-list" }}>
+                          {this.state.orders.map((order, key) => {
+                            const date = `${(new Date(order.date)).getHours()}:${(new Date(order.date)).getMinutes()}:${(new Date(order.date)).getSeconds()}`
+                            return (
+                              <li {...{ className: "accordion-list__item" }} key={order._id}>
+                                <Accordion
+                                  date={date}
+                                  orderId={order._id}
+                                  items={order.items}
+                                  status={order.status}
+                                  user={order.user_id}
+                                  updateStatus={this.updateOrderStatus}
+                                  {...this.props}
+                                  key={order._id}
+                                />
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    )}
+                </div>
               </div>
+            ) : (
+              <NoAccess />
             )}
-        </div>
-      </div>
+          </>
+        ) : (
+          <Login />
+        )}
+      </>
     );
   }
 }

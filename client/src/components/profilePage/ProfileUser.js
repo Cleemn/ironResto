@@ -2,6 +2,8 @@ import React from "react";
 import { orders } from "../services/order-service";
 import StyledContentLoader from 'styled-content-loader';
 import AccordionItem from './Accordion';
+import Login from '../auth/Login';
+import NoAccess from '../errors/NoAccess';
 // import { Link } from "react-router-dom";
 
 const frenchDays = [
@@ -74,83 +76,90 @@ class ProfileUser extends React.Component {
   render() {
     return (
       <>
-        {this.props.userInSession ? (
-        <div className="container">
-          <div className="user-info">
-              <h2>
-                {this.capitalizeFirstLetter(this.props.userInSession.firstName)}
-                <br/>
-                {this.capitalizeFirstLetter(this.props.userInSession.lastName)}
-              </h2>
-            <img
-              src={this.props.userInSession.photo}
-              alt=""
-            ></img>
-          </div>
-          <div className="all-orders">
-            <div className="ongoing-orders">
-              <h6>Mes commandes en cours</h6>
-              {this.state.onGoingOrders.length === 0 ? (
-                <p>Vous n'avez pas de commande en cours.</p>
-              ) : (
-                <div {...{ className: "wrapper" }}>
-                  <ul {...{ className: "accordion-list" }}>
-                    {this.state.onGoingOrders.map((order, key) => {
-                      const { dayWeek, day, month, hour, min } = this.convertDate(order.date);
-                      const date = `${dayWeek} ${day} ${month} à ${hour}h${min}`;
-                      const price = `${order.total_price}€`;
-                      return (
-                        <li {...{ className: "accordion-list__item", key }}>
-                          <AccordionItem
-                            orderId={order._id}
-                            date={date}
-                            price={price}
-                            items={order.items}
-                            status={order.status}
-                            {...this.props}
-                          />
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
+      {this.props.userInSession ? (
+        <>{this.props.userInSession.type === 'user' ? (
+          <div className="container">
+            <div className="user-info">
+                {this.props.userInSession ? (
+                <h2>
+                  {this.capitalizeFirstLetter(this.props.userInSession.firstName)}
+                  <br/>
+                  {this.capitalizeFirstLetter(this.props.userInSession.lastName)}
+                </h2>
+                ) : (
+                  <StyledContentLoader>
+                  </StyledContentLoader>
+                )}
+              <img
+                src={this.props.userInSession.photo}
+                alt=""
+              ></img>
             </div>
-            <div className="previous-orders">
-            <h6>Mes commandes passées</h6>
-              {this.state.prevOrders.length === 0 ? (
-                <p>Vous n'avez pas encore de commande terminée.</p>
-              ) : (
-                <div {...{ className: "wrapper" }}>
-                  <ul {...{ className: "accordion-list" }}>
-                    {this.state.prevOrders.map((order, key) => {
-                      const { dayWeek, day, month, hour, min } = this.convertDate(order.date);
-                      const date = `${dayWeek} ${day} ${month} à ${hour}h${min}`;
-                      const price = `${order.total_price}€`;
-                      return (
-                        <li {...{ className: "accordion-list__item", key }}>
-                          <AccordionItem
-                            orderId={order._id}
-                            date={date}
-                            price={price}
-                            items={order.items}
-                            status={order.status}
-                            {...this.props}
-                          />
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
+            <div className="all-orders">
+              <div className="ongoing-orders">
+                <h6>Mes commandes en cours</h6>
+                {this.state.onGoingOrders.length === 0 ? (
+                  <p>Vous n'avez pas de commande en cours.</p>
+                ) : (
+                  <div {...{ className: "wrapper" }}>
+                    <ul {...{ className: "accordion-list" }}>
+                      {this.state.onGoingOrders.map((order, key) => {
+                        const { dayWeek, day, month, hour, min } = this.convertDate(order.date);
+                        const date = `${dayWeek} ${day} ${month} à ${hour}h${min}`;
+                        const price = `${order.total_price}€`;
+                        return (
+                          <li {...{ className: "accordion-list__item", key }}>
+                            <AccordionItem
+                              orderId={order._id}
+                              date={date}
+                              price={price}
+                              items={order.items}
+                              status={order.status}
+                              {...this.props}
+                            />
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+              </div>
+              <div className="previous-orders">
+              <h6>Mes commandes passées</h6>
+                {this.state.prevOrders.length === 0 ? (
+                  <p>Vous n'avez pas encore de commande terminée.</p>
+                ) : (
+                  <div {...{ className: "wrapper" }}>
+                    <ul {...{ className: "accordion-list" }}>
+                      {this.state.prevOrders.map((order, key) => {
+                        const { dayWeek, day, month, hour, min } = this.convertDate(order.date);
+                        const date = `${dayWeek} ${day} ${month} à ${hour}h${min}`;
+                        const price = `${order.total_price}€`;
+                        return (
+                          <li {...{ className: "accordion-list__item", key }}>
+                            <AccordionItem
+                              orderId={order._id}
+                              date={date}
+                              price={price}
+                              items={order.items}
+                              status={order.status}
+                              {...this.props}
+                            />
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
         </div>
         ) : (
-          <StyledContentLoader>
-          </StyledContentLoader>
-        )}
-      </>
+          <NoAccess />
+        )}</>
+      ) : (
+        <Login />
+      )}</>
     );
   }
 }

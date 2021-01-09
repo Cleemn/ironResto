@@ -32,7 +32,8 @@ const userSchema = new Schema(
       type: String,
       enum: ['user', 'restaurant'],
       default: 'user'
-    }
+    },
+    isVerified: { type: Boolean, default: false },
   },
   {
     timestamps: true

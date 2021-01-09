@@ -24,6 +24,7 @@ class Signup extends React.Component {
 
     signup(firstName, lastName, password, email, phone, type)
       .then((response) => {
+        this.props.history.push(`/verification/${this.state.email}`)
         this.setState({
           firstName: "",
           lastName: "",
@@ -32,12 +33,6 @@ class Signup extends React.Component {
           email: "",
           type: "user",
         });
-        this.props.updateUser(response);
-        if (response.type === "user") {
-          this.props.history.push("/profile/user");
-        } else if (response.type === "restaurant") {
-          this.props.history.push("/profile/restaurant");
-        }
       })
       .catch((error) => {
         this.setState({ errorMessage: error.response.data.message });
@@ -112,10 +107,11 @@ class Signup extends React.Component {
               className="form-control"
             />
           </div>
+            <button type="submit" className="btn btn-orange">
+              Je créé mon compte 
+            </button>
 
-          <button type="submit" className="btn btn-orange">
-            Je créé mon compte
-          </button>
+          
           <div className="forgot-password text-right">
             <small>
               J'ai déjà un compte !

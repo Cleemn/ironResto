@@ -23,7 +23,8 @@ const dataUser = [
     email: "pamela.anderson@yahoo.com",
     passwordHash: bcryptjs.hashSync("testpassword", salt),
     phone: "0612345678",
-    type: "user"
+    type: "user",
+    isVerified: true,
   },
   {
     firstName: "Eddy",
@@ -31,8 +32,8 @@ const dataUser = [
     email: "eddy.malou@yahoo.com",
     passwordHash: bcryptjs.hashSync("testpassword", salt),
     phone: "0612345678",
-    type: "user"
-
+    type: "user",
+    isVerified: false,
   },
   {
     firstName: "Bradley",
@@ -40,7 +41,8 @@ const dataUser = [
     email: "bradleycooper@yahoo.com",
     passwordHash: bcryptjs.hashSync("testpassword", salt),
     phone: "0612345678",
-    type: "user"
+    type: "user",
+    isVerified: true,
   },
   {
     firstName: "Pierre",
@@ -48,7 +50,8 @@ const dataUser = [
     email: "pherme@gmail.com",
     passwordHash: bcryptjs.hashSync("testpassword", salt),
     phone: "0612345678",
-    type: "restaurant"
+    type: "restaurant",
+    isVerified: true,
   }
 ];
 

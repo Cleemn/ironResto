@@ -79,7 +79,7 @@ npm run build
 ---
 
 
-## Project Screen Shots
+## Project Screenshots
 
 ### Home page
 

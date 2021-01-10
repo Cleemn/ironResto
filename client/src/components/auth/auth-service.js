@@ -6,8 +6,8 @@ const service = axios.create({
 });
 export default service;
 
-function signup(firstName, lastName, password, email, phone, type) {
-  return service.post('/api/signup', {firstName, lastName, password, email, phone, type}).then(response => response.data)
+function signup(firstName, lastName, password, email, phone, photo, type) {
+  return service.post('/api/signup', {firstName, lastName, password, email, phone, photo, type}).then(response => response.data)
 }
 export {signup}
 
@@ -16,8 +16,13 @@ function login(password, email) {
 }
 export {login}
 
-function edit(firstName, lastName, email, password, phone) {
-  return service.put('/api/edit', {firstName, lastName, email, password, phone}).then(response => response.data)
+function handleUpload(photo) {
+  return service.post('/api/upload', photo).then((response) => response.data);
+}
+export { handleUpload };
+
+function edit(firstName, lastName, email, password, phone, photo) {
+  return service.put('/api/edit', {firstName, lastName, email, password, phone, photo}).then(response => response.data)
 }
 export {edit}
 

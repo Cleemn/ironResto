@@ -33,6 +33,9 @@ const userSchema = new Schema(
       enum: ['user', 'restaurant'],
       default: 'user'
     },
+    photo: {
+      type: String
+    },
     isVerified: { type: Boolean, default: false },
   },
   {

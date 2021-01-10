@@ -91,7 +91,7 @@ class ProfileUser extends React.Component {
                   </StyledContentLoader>
                 )}
               <img
-                src="/avatar.jpeg"
+                src={this.props.userInSession.photo}
                 alt=""
               ></img>
             </div>

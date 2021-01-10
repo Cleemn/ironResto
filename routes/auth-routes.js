@@ -125,6 +125,7 @@ authRoutes.post("/signup", (req, res, next) => {
         phone: req.body.phone,
         email: req.body.email,
         passwordHash: req.body.password,
+        photo: req.body.photo
       });
       user.save(function (err) {
         if (err) {
@@ -332,26 +333,22 @@ authRoutes.post("/logout", (req, res, next) => {
 });
 
 authRoutes.put("/edit", (req, res, next) => {
-  const { firstName, lastName, email, password, phone } = req.body;
-  const id = req.session.user._id;
+  const { firstName, lastName, email, password, phone, photo } = req.body;
+  const id = req.session.user._id
 
   if (!req.session.user) {
     res.status(401).json({ message: "Vous êtes connecté !" });
     return;
   }
 
-  User.findByIdAndUpdate(
-    id,
-    { firstName, lastName, email, password, phone },
-    { new: true }
-  )
-    .then((user) => {
-      req.session.user = user;
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      res.status(500).json(err);
-    });
+  User.findByIdAndUpdate(id, { firstName, lastName, email, password, phone, photo }, {new: true})
+  .then(user => {
+    req.session.user = user
+    res.status(200).json(user);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
 });
 
 module.exports = authRoutes;

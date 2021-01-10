@@ -79,11 +79,7 @@ class ProfileRestaurant extends Component {
               (
                 <div className="user-info">
                   <h2> {this.capitalizeFirstLetter(this.props.userInSession.firstName)} <br/> {this.capitalizeFirstLetter(this.props.userInSession.lastName)}</h2>
-                  {this.props.userInSession.type === 'user' ? (
-                    <img src="/avatar.jpeg" alt=""></img>
-                  ) : (
-                    <img src="/chef.jpg" alt=""></img>
-                  )}
+                  <img src={this.props.userInSession.photo} alt=""></img>
                 </div>
               ) : 
               (<StyledContentLoader></StyledContentLoader>)

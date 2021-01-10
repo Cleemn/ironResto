@@ -54,10 +54,27 @@ db version v4.2.11
 
 ### Setup
 
+Create `.env` file:
+```txt
+PORT=5000
+MONGODB_URI=*****
+CORS=*****
+CLOUDINARY_NAME=*****
+CLOUDINARY_KEY=*****
+CLOUDINARY_SECRET=ZG-*****
+SENDGRID_API_KEY=SG.*****
+SENDER_MAIL=*****@*****
+```
+Then execute:
+
+ ```sh
+ npm install
+ ```
 ### Build
 
-### Deployment
-
+```sh
+npm run build
+```
 
 ## API
 

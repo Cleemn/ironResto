@@ -1,7 +1,5 @@
 # IRONRESTO
 
-## Table of contents
-
 ## About Project
 
 A website prototype for restaurants to allow for online ordering (click & collect).  
@@ -17,6 +15,9 @@ This project is currently in development. Users can filter tweets by username an
 ## Project Screen Shot(s)
 
 ### User side
+
+#### Home page
+
 
 #### User profile
 [ScreenShoots 1]

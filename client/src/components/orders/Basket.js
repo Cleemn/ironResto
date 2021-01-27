@@ -1,6 +1,7 @@
 import React from "react";
 import { createOrder } from "../services/order-service";
 import { Button } from "react-bootstrap";
+import StripeContainer from "../../Stripe/StripeContainer";
 
 const INIT_STATE = {
   errorMessage: "",
@@ -117,6 +118,8 @@ class Basket extends React.Component {
                 Valider la commande
               </button>
             )}
+
+            <StripeContainer />
           </div>
         )}
       </div>

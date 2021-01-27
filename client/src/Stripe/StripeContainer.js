@@ -8,12 +8,15 @@ const PUBLIC_KEY = "pk_test_51I84ptAwjgq5UqYoqZYTsUOd3X4A5wZ3GamaItoeHhm42satB3u
 
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
-const Stripe = () => {
-  return (
-    <Elements stripe={stripeTestPromise}>
-      <CheckoutForm />
-    </Elements>
-  );
+class Stripe extends React.Component {
+
+    render() {
+        return (
+          <Elements stripe={stripeTestPromise}>
+            <CheckoutForm amount={this.props.amount}/>
+          </Elements>
+        );
+    }
 };
 
 export default Stripe;

@@ -119,7 +119,7 @@ class Basket extends React.Component {
               </button>
             )}
 
-            <StripeContainer />
+            <StripeContainer amount={this.state.totalPrice} />
           </div>
         )}
       </div>

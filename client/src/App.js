@@ -4,7 +4,7 @@ import 'devextreme/dist/css/dx.light.css';
 
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Fade from "react-reveal/Fade";
+// import Fade from "react-reveal/Fade";
 import io from "socket.io-client";
 
 import HomePage from "./components/HomePage";
@@ -42,7 +42,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getLocalStorageBasket();
-    // this.fetchUser();
+    this.fetchUser();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -256,18 +256,16 @@ class App extends React.Component {
                     {...props}/>
                   )}
                 />
-                <Fade bottom>
-                  <Route
-                    exact
-                    path="/products/:id"
-                    render={(props) => (
-                      <ProductDetails
-                        updateBasket={this.addToBasket}
-                        {...props}
-                      />
-                    )}
-                  />
-                </Fade>
+                <Route
+                  exact
+                  path="/products/:id"
+                  render={(props) => (
+                    <ProductDetails
+                      updateBasket={this.addToBasket}
+                      {...props}
+                    />
+                  )}
+                />
                 <Route component={NotFound} />
               </Switch>
             </>

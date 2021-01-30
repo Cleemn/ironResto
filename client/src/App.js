@@ -28,6 +28,8 @@ import AddProduct from "./components/products/AddProduct";
 import EditProduct from "./components/products/EditProduct";
 import Products from "./components/products/Products";
 
+import NotFound from "./components/errors/NotFound"
+
 import { loggedin } from "./components/auth/auth-service";
 
 class App extends React.Component {
@@ -40,7 +42,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getLocalStorageBasket();
-    this.fetchUser();
+    // this.fetchUser();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -266,6 +268,7 @@ class App extends React.Component {
                     )}
                   />
                 </Fade>
+                <Route component={NotFound} />
               </Switch>
             </>
           )}

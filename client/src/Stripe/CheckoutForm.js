@@ -36,11 +36,31 @@ export const CheckoutForm = (props) => {
       console.log(error.message);
     }
   };
+  
 
   return (
     <form onSubmit={handleSubmit} style={{ width: 312 }} className="m-4">
-      <CardElement />
-      <button>Pay</button>
+      <CardElement
+        options={{
+          style: {
+            base: {
+              fontSize: '16px',
+              color: '#424770',
+              '::placeholder': {
+                color: '#aab7c4',
+              },
+              backgroundColor: 'white',
+              border: 'solid 1px black',
+            },
+            invalid: {
+              color: '#9e2146',
+            },
+          },
+        }}
+      />
+      <button className="btn btn-orange my-3" type="submit">
+        Payer
+      </button>
     </form>
   );
 };

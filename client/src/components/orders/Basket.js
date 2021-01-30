@@ -56,6 +56,13 @@ class Basket extends React.Component {
     }
   };
 
+
+  handleOptionChange = (changeEvent) => {
+    this.setState({
+      selectedOption: changeEvent.target.value
+    });
+  }
+
   componentDidMount() {
     this.totalPrice();
     this.removeProduct();
@@ -100,26 +107,54 @@ class Basket extends React.Component {
             </ul>
 
             <h5>Prix total : {this.state.totalPrice}€</h5>
-            <p>A payer sur place</p>
-
-            {this.state.errorMessage ? (
-              <div className="error-message">
-                <p>{this.state.errorMessage}</p>
+            Je paye
+            <form className="d-flex align-items-center justify-content-around container">
+              <div class="form-check my-3">
+                <input class="form-check-input mt-1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="checkout" checked={this.state.selectedOption === 'checkout'} onChange={this.handleOptionChange} />
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Sur place
+                </label>
               </div>
-            ) : (
-              <button
-                className="btn btn-orange"
-                onClick={(e) => {
-                  this.props.userInSession
-                    ? this.addOrder(e)
-                    : this.props.history.push("/login");
-                }}
-              >
-                Valider la commande
-              </button>
-            )}
+              <div class="form-check my-3">
+                <input class="form-check-input mt-1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="pay_now" checked={this.state.selectedOption === 'pay_now'} onChange={this.handleOptionChange} />
+                <label class="form-check-label" for="flexRadioDefault1">
+                  En ligne
+                </label>
+              </div>
+            </form>
 
-            <StripeContainer amount={this.state.totalPrice} />
+            <div>
+              {(() => {
+                if (this.state.selectedOption === 'checkout') {
+                  return (
+                    <div>
+                      {this.state.errorMessage ? (
+                        <div className="error-message">
+                          <p>{this.state.errorMessage}</p>
+                        </div>
+                      ) : (
+                        <button
+                          className="btn btn-orange"
+                          onClick={(e) => {
+                            this.props.userInSession
+                              ? this.addOrder(e)
+                              : this.props.history.push("/login");
+                          }}
+                        >
+                          Valider la commande
+                        </button>
+                      )}
+                    </div>
+                  )
+                } else if (this.state.selectedOption === 'pay_now') {
+                  return (
+                    <div>
+                      <StripeContainer amount={this.state.totalPrice} />
+                    </div>
+                  )
+                }
+              })()}
+            </div>
           </div>
         )}
       </div>

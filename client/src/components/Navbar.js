@@ -21,7 +21,6 @@ class AppNavbar extends React.Component {
 
   getTotalProductNumber = () => {
     let totalProduct = this.props.basket.reduce((acc, product) => acc + product.quantity, 0)
-    console.log(totalProduct)
     return totalProduct
   }
 

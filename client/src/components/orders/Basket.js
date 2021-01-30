@@ -58,9 +58,13 @@ class Basket extends React.Component {
 
 
   handleOptionChange = (changeEvent) => {
-    this.setState({
-      selectedOption: changeEvent.target.value
-    });
+    if (this.props.userInSession) {
+      this.setState({
+        selectedOption: changeEvent.target.value
+      });
+    } else {
+      this.props.history.push('/login');
+    }
   }
 
   componentDidMount() {
@@ -109,15 +113,15 @@ class Basket extends React.Component {
             <h5>Prix total : {this.state.totalPrice}€</h5>
             Je paye
             <form className="d-flex align-items-center justify-content-around container">
-              <div class="form-check my-3">
-                <input class="form-check-input mt-1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="checkout" checked={this.state.selectedOption === 'checkout'} onChange={this.handleOptionChange} />
-                <label class="form-check-label" for="flexRadioDefault1">
+              <div className="form-check my-3">
+                <input className="form-check-input mt-1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="checkout" checked={this.state.selectedOption === 'checkout'} onChange={this.handleOptionChange} />
+                <label className="form-check-label" htmlFor="flexRadioDefault1">
                   Sur place
                 </label>
               </div>
-              <div class="form-check my-3">
-                <input class="form-check-input mt-1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="pay_now" checked={this.state.selectedOption === 'pay_now'} onChange={this.handleOptionChange} />
-                <label class="form-check-label" for="flexRadioDefault1">
+              <div className="form-check my-3">
+                <input className="form-check-input mt-1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="pay_now" checked={this.state.selectedOption === 'pay_now'} onChange={this.handleOptionChange} />
+                <label className="form-check-label" htmlFor="flexRadioDefault1">
                   En ligne
                 </label>
               </div>
@@ -149,7 +153,7 @@ class Basket extends React.Component {
                 } else if (this.state.selectedOption === 'pay_now') {
                   return (
                     <div>
-                      <StripeContainer amount={this.state.totalPrice} />
+                      <StripeContainer amount={this.state.totalPrice} userInSession={this.props.userInSession} addOrder={this.addOrder} {...this.props}/>
                     </div>
                   )
                 }

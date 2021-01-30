@@ -14,23 +14,28 @@ export const CheckoutForm = (props) => {
     });
 
     if (!error) {
-      console.log("Stripe 23 | token generated!", paymentMethod);
-      try {
-        const { id } = paymentMethod;
-        const response = await axios.post(
-          "http://localhost:5000/stripe/charge",
-          {
-            amount: props.amount * 100,
-            id: id,
+      if (props.userInSession) {
+        console.log("Stripe 23 | token generated!", paymentMethod);
+        try {
+          const { id } = paymentMethod;
+          const response = await axios.post(
+            "http://localhost:5000/stripe/charge",
+            {
+              amount: props.amount * 100,
+              id: id,
+            }
+          );
+  
+          console.log("Stripe 35 | data", response.data.success);
+          if (response.data.success) {
+            console.log("CheckoutForm.js 25 | payment successful!");
+            props.addOrder(event);
           }
-        );
-
-        console.log("Stripe 35 | data", response.data.success);
-        if (response.data.success) {
-          console.log("CheckoutForm.js 25 | payment successful!");
+        } catch (error) {
+          console.log("CheckoutForm.js 28 | ", error);
         }
-      } catch (error) {
-        console.log("CheckoutForm.js 28 | ", error);
+      } else {
+        props.history.push("/login");
       }
     } else {
       console.log(error.message);
@@ -49,8 +54,6 @@ export const CheckoutForm = (props) => {
               '::placeholder': {
                 color: '#aab7c4',
               },
-              backgroundColor: 'white',
-              border: 'solid 1px black',
             },
             invalid: {
               color: '#9e2146',

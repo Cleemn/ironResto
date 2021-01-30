@@ -13,7 +13,7 @@ class Stripe extends React.Component {
     render() {
         return (
           <Elements stripe={stripeTestPromise}>
-            <CheckoutForm amount={this.props.amount}/>
+            <CheckoutForm amount={this.props.amount} userInSession={this.props.userInSession} addOrder={this.props.addOrder} {...this.props} />
           </Elements>
         );
     }

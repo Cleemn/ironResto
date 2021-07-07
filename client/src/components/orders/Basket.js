@@ -1,6 +1,7 @@
 import React from "react";
 import { createOrder } from "../services/order-service";
 import { Button } from "react-bootstrap";
+import StripeContainer from "../../Stripe/StripeContainer";
 
 const INIT_STATE = {
   errorMessage: "",
@@ -55,6 +56,17 @@ class Basket extends React.Component {
     }
   };
 
+
+  handleOptionChange = (changeEvent) => {
+    if (this.props.userInSession) {
+      this.setState({
+        selectedOption: changeEvent.target.value
+      });
+    } else {
+      this.props.history.push('/login');
+    }
+  }
+
   componentDidMount() {
     this.totalPrice();
     this.removeProduct();
@@ -99,24 +111,54 @@ class Basket extends React.Component {
             </ul>
 
             <h5>Prix total : {this.state.totalPrice}€</h5>
-            <p>A payer sur place</p>
-
-            {this.state.errorMessage ? (
-              <div className="error-message">
-                <p>{this.state.errorMessage}</p>
+            Je paye
+            <form className="d-flex align-items-center justify-content-around container">
+              <div className="form-check my-3">
+                <input className="form-check-input mt-1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="checkout" checked={this.state.selectedOption === 'checkout'} onChange={this.handleOptionChange} />
+                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                  Sur place
+                </label>
               </div>
-            ) : (
-              <button
-                className="btn btn-orange"
-                onClick={(e) => {
-                  this.props.userInSession
-                    ? this.addOrder(e)
-                    : this.props.history.push("/login");
-                }}
-              >
-                Valider la commande
-              </button>
-            )}
+              <div className="form-check my-3">
+                <input className="form-check-input mt-1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="pay_now" checked={this.state.selectedOption === 'pay_now'} onChange={this.handleOptionChange} />
+                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                  En ligne
+                </label>
+              </div>
+            </form>
+
+            <div>
+              {(() => {
+                if (this.state.selectedOption === 'checkout') {
+                  return (
+                    <div>
+                      {this.state.errorMessage ? (
+                        <div className="error-message">
+                          <p>{this.state.errorMessage}</p>
+                        </div>
+                      ) : (
+                        <button
+                          className="btn btn-orange"
+                          onClick={(e) => {
+                            this.props.userInSession
+                              ? this.addOrder(e)
+                              : this.props.history.push("/login");
+                          }}
+                        >
+                          Valider la commande
+                        </button>
+                      )}
+                    </div>
+                  )
+                } else if (this.state.selectedOption === 'pay_now') {
+                  return (
+                    <div>
+                      <StripeContainer amount={this.state.totalPrice} userInSession={this.props.userInSession} addOrder={this.addOrder} {...this.props}/>
+                    </div>
+                  )
+                }
+              })()}
+            </div>
           </div>
         )}
       </div>

@@ -9,6 +9,7 @@ const logger       = require('morgan');
 const path         = require('path');
 const session = require('express-session');
 const cors = require('cors');
+const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
 
 
 mongoose
@@ -28,7 +29,7 @@ const app = express();
 // Middleware Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const corsOptions = {
@@ -37,6 +38,33 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions));
+
+// Init Stripe payments
+app.post("/stripe/charge", cors(), async (req, res) => {
+  console.log("stripe-routes.js 9 | route reached", req.body);
+  let { amount, id } = req.body;
+  console.log("stripe-routes.js 10 | amount and id", amount, id);
+  try {
+    const payment = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: "EUR",
+      description: "Tartine payment",
+      payment_method: id,
+      confirm: true,
+    });
+    console.log("stripe-routes.js 19 | payment", payment);
+    res.json({
+      message: "Payment Successful",
+      success: true,
+    });
+  } catch (error) {
+    console.log("stripe-routes.js 17 | error", error);
+    res.json({
+      message: "Payment Failed",
+      success: false,
+    });
+  }
+});
 
 const server = require('http').createServer(app);
 const io = require("socket.io")(server,  {

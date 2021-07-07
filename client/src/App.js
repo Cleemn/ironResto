@@ -4,7 +4,7 @@ import 'devextreme/dist/css/dx.light.css';
 
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Fade from "react-reveal/Fade";
+// import Fade from "react-reveal/Fade";
 import io from "socket.io-client";
 
 import HomePage from "./components/HomePage";
@@ -27,6 +27,8 @@ import ProductDetails from "./components/products/ProductDetails";
 import AddProduct from "./components/products/AddProduct";
 import EditProduct from "./components/products/EditProduct";
 import Products from "./components/products/Products";
+
+import NotFound from "./components/errors/NotFound"
 
 import { loggedin } from "./components/auth/auth-service";
 
@@ -254,18 +256,17 @@ class App extends React.Component {
                     {...props}/>
                   )}
                 />
-                <Fade bottom>
-                  <Route
-                    exact
-                    path="/products/:id"
-                    render={(props) => (
-                      <ProductDetails
-                        updateBasket={this.addToBasket}
-                        {...props}
-                      />
-                    )}
-                  />
-                </Fade>
+                <Route
+                  exact
+                  path="/products/:id"
+                  render={(props) => (
+                    <ProductDetails
+                      updateBasket={this.addToBasket}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route component={NotFound} />
               </Switch>
             </>
           )}
